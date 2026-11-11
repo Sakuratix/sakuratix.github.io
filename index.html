@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Климентий Матвеев — DevOps-инженер</title>
-<meta name="description" content="Климентий Матвеев — DevOps-инженер: Kubernetes, Terraform, CI/CD, мониторинг. Москва / удалённо.">
+<title>Климентий Матвеев · DevOps-инженер</title>
+<meta name="description" content="Климентий Матвеев, DevOps-инженер: Kubernetes, Terraform, CI/CD, мониторинг. Москва / удалённо.">
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#0a0b0d">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -44,7 +44,7 @@ header.nav.scrolled{border-bottom-color:var(--line)}
 @keyframes blink{50%{opacity:0}}
 .nav ul{position:relative;display:flex;gap:6px;list-style:none;font-family:var(--mono);font-size:13px}
 .nav li{opacity:0;transform:translateY(-10px);animation:navin .6s cubic-bezier(.2,.7,.2,1) forwards}
-.nav li:nth-child(1){animation-delay:.15s}.nav li:nth-child(2){animation-delay:.22s}.nav li:nth-child(3){animation-delay:.29s}.nav li:nth-child(4){animation-delay:.36s}.nav li:nth-child(5){animation-delay:.43s}
+.nav li:nth-child(1){animation-delay:.15s}.nav li:nth-child(2){animation-delay:.22s}.nav li:nth-child(3){animation-delay:.29s}.nav li:nth-child(4){animation-delay:.36s}.nav li:nth-child(5){animation-delay:.43s}.nav li:nth-child(6){animation-delay:.5s}
 @keyframes navin{to{opacity:1;transform:none}}
 .nav ul a{position:relative;z-index:1;display:inline-flex;gap:6px;padding:7px 12px;border-radius:8px;color:var(--muted);transition:color .25s}
 .nav ul a span{color:var(--dim);display:inline-block;transition:color .25s,transform .35s cubic-bezier(.2,.7,.2,1)}
@@ -138,7 +138,7 @@ h2{font-size:clamp(32px,4.4vw,56px);line-height:1.04;letter-spacing:-.035em;font
 .box li span{color:var(--dim)}
 
 /* certs */
-.certs{margin-top:56px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:820px}
+.certs{margin-top:56px;display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;max-width:820px}
 .cert{position:relative;border:1px solid var(--line);border-radius:16px;padding:26px;background:linear-gradient(160deg,rgba(142,240,198,.06),rgba(12,13,16,.9) 50%);overflow:hidden}
 .cert .badge{font-family:var(--mono);font-size:34px;font-weight:500;letter-spacing:-.03em;color:var(--fg)}
 .cert p{color:var(--muted);font-size:14px;margin-top:8px}
@@ -146,6 +146,7 @@ h2{font-size:clamp(32px,4.4vw,56px);line-height:1.04;letter-spacing:-.035em;font
 
 /* projects */
 .projects{margin-top:56px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;max-width:820px}
+.proj.wide{grid-column:1/-1}
 .proj{min-width:0;border:1px solid var(--line);border-radius:16px;padding:28px;background:rgba(12,13,16,.88);display:flex;flex-direction:column;gap:14px;transition:border-color .3s}
 .proj:hover{border-color:var(--mint)}
 .proj .top{display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:13px;color:var(--dim)}
@@ -154,6 +155,21 @@ h2{font-size:clamp(32px,4.4vw,56px);line-height:1.04;letter-spacing:-.035em;font
 .tree{font-family:var(--mono);font-size:12.5px;color:var(--muted);line-height:1.55;white-space:pre;overflow-x:auto;padding:14px;border-radius:10px;background:#07080a;border:1px solid var(--line)}
 .tree b{color:var(--blue);font-weight:400}
 
+/* about extras */
+.sub + .sub{margin-top:12px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:56px;max-width:820px}
+.mini{font-size:15px;font-weight:500;letter-spacing:-.01em;color:var(--fg);margin-bottom:14px;font-family:var(--mono)}
+.ticks{list-style:none;display:grid;gap:10px}
+.ticks li{color:var(--muted);font-size:15px;padding-left:22px;position:relative;line-height:1.5}
+.ticks li::before{content:"✓";position:absolute;left:0;color:var(--mint);font-family:var(--mono);font-size:13px}
+/* toolbox */
+.tools{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden;max-width:820px}
+.tool{background:rgba(12,13,16,.9);padding:16px 20px;display:flex;flex-direction:column;gap:2px;transition:background .25s}
+.tool b{font-family:var(--mono);font-weight:500;font-size:14px;color:var(--fg);transition:color .25s}
+.tool span{font-size:13.5px;color:var(--muted)}
+.tool:hover{background:rgba(20,24,28,.95)}
+.tool:hover b{color:var(--mint)}
+.grad2{background:linear-gradient(100deg,var(--mint),var(--blue));-webkit-background-clip:text;background-clip:text;color:transparent}
 /* contact */
 .contact{padding:160px 0 120px}
 .contact h2{font-size:clamp(40px,7vw,92px);max-width:none}
@@ -183,6 +199,7 @@ body.eaten, body.eaten *{cursor:none !important}
   .job{grid-template-columns:1fr;gap:8px}
   .stack,.certs{grid-template-columns:1fr 1fr}
   .projects{grid-template-columns:minmax(0,1fr)}
+  .two,.tools{grid-template-columns:1fr}
   .tree{font-size:11px}
   #gl{opacity:.45}
   section{padding:100px 0}
@@ -211,8 +228,9 @@ body.eaten, body.eaten *{cursor:none !important}
       <li><a href="#about"><span>01</span><em>обо мне</em></a></li>
       <li><a href="#pipeline"><span>02</span><em>подход</em></a></li>
       <li><a href="#experience"><span>03</span><em>опыт</em></a></li>
-      <li><a href="#stack"><span>04</span><em>стек</em></a></li>
-      <li><a href="#contact"><span>05</span><em>связь</em></a></li>
+      <li><a href="#projects"><span>04</span><em>проекты</em></a></li>
+      <li><a href="#stack"><span>05</span><em>стек</em></a></li>
+      <li><a href="#contact"><span>06</span><em>связь</em></a></li>
       <i class="pill" id="pill"></i>
     </ul>
   </div>
@@ -222,8 +240,8 @@ body.eaten, body.eaten *{cursor:none !important}
   <section class="hero">
     <div class="wrap">
       <div class="status reveal"><span class="dot"></span>открыт к предложениям · Москва / удалённо</div>
-      <h1 class="reveal d1">Делаю релизы <span class="grad">скучными.</span></h1>
-      <p class="lead reveal d2">Привет, я Климентий — <b>DevOps-инженер</b>. Собираю пайплайны, поднимаю Kubernetes и описываю инфраструктуру кодом, чтобы алерт приходил раньше, чем жалоба клиента.</p>
+      <h1 class="reveal d1">Делаю релизы <span class="grad">скучными</span></h1>
+      <p class="lead reveal d2">Привет, я Климентий, <b>DevOps-инженер</b> из Москвы. Собираю пайплайны, поднимаю Kubernetes и описываю инфраструктуру кодом, чтобы алерт приходил раньше, чем жалоба клиента.</p>
       <div class="cta reveal d3">
         <a class="btn primary" href="#contact">Написать мне
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
@@ -231,7 +249,7 @@ body.eaten, body.eaten *{cursor:none !important}
         <a class="btn" href="https://t.me/MountewDew" target="_blank" rel="noopener">Telegram</a>
       </div>
       <div class="term reveal d4">
-        <div class="bar"><i></i><i></i><i></i><em>zsh — 80×24</em></div>
+        <div class="bar"><i></i><i></i><i></i><em>zsh · 80×24</em></div>
         <pre id="term"></pre>
       </div>
     </div>
@@ -241,13 +259,36 @@ body.eaten, body.eaten *{cursor:none !important}
   <section id="about">
     <div class="wrap">
       <div class="kicker reveal">01 / обо мне</div>
-      <h2 class="reveal d1">От сетевого кабеля до Helm-чарта.</h2>
-      <p class="sub reveal d2">Начинал с железа и сетей компьютерных клубов, дошёл до CI/CD, Kubernetes и Terraform на проектах аутсорс-команд. Поэтому одинаково спокойно смотрю и в <code>tcpdump</code>, и в Grafana. Профильное образование — РАНХиГС, «Системное администрирование». Английский C1.</p>
+      <h2 class="reveal d1">От сетевого кабеля до Helm-чарта</h2>
+      <p class="sub reveal d2">Начинал с железа и сетей компьютерных клубов: серверы, хранилища, MikroTik и Zabbix. Потом ушёл в DevOps на проектах аутсорс-команд: CI/CD, Kubernetes, Terraform, мониторинг. Поэтому одинаково спокойно смотрю и в <code>tcpdump</code>, и в Grafana.</p>
+      <p class="sub reveal d2">Профильное образование: РАНХиГС, «Системное администрирование». Английский C1: прошёл курсы, читаю документацию и issue-трекеры без переводчика, свободно общаюсь.</p>
       <div class="facts">
         <div class="fact reveal d1"><div class="k">опыт</div><div class="v">3+ года<small>эксплуатация и DevOps</small></div></div>
         <div class="fact reveal d2"><div class="k">сертификаты</div><div class="v">CKA · TF<small>+ MTCNA</small></div></div>
-        <div class="fact reveal d3"><div class="k">английский</div><div class="v">C1<small>доки, issues, переписка</small></div></div>
-        <div class="fact reveal d4"><div class="k">формат</div><div class="v">Remote<small>или гибрид, Москва</small></div></div>
+        <div class="fact reveal d3"><div class="k">английский</div><div class="v">C1<small>курсы + ежедневная практика</small></div></div>
+        <div class="fact reveal d4"><div class="k">формат</div><div class="v">Remote<small>гибрид, переезд, командировки</small></div></div>
+      </div>
+      <div class="two">
+        <div class="reveal d1">
+          <h3 class="mini">Что могу забрать на себя</h3>
+          <ul class="ticks">
+            <li>Построить CI/CD с нуля или навести порядок в существующем</li>
+            <li>Перевезти сервисы с docker-compose на Kubernetes без простоя</li>
+            <li>Описать облако в Terraform и закрыть «ручные» ресурсы</li>
+            <li>Настроить мониторинг и алерты, которые читают, а не мьютят</li>
+            <li>Сети и железо: VLAN, VPN, MikroTik, хранилища на ZFS</li>
+          </ul>
+        </div>
+        <div class="reveal d2">
+          <h3 class="mini">Как я работаю</h3>
+          <ul class="ticks">
+            <li>Всё, что делается дважды, превращается в скрипт или пайплайн</li>
+            <li>Изменения инфраструктуры только через git и ревью</li>
+            <li>После инцидента пишу разбор и закрываю причину, а не симптом</li>
+            <li>Документирую так, чтобы коллега справился без меня</li>
+            <li>Есть машина: если надо, приеду на площадку сам</li>
+          </ul>
+        </div>
       </div>
     </div>
   </section>
@@ -255,15 +296,15 @@ body.eaten, body.eaten *{cursor:none !important}
   <section id="pipeline">
     <div class="wrap">
       <div class="kicker reveal">02 / подход</div>
-      <h2 class="reveal d1">Как код попадает в прод.</h2>
-      <p class="sub reveal d2">Каждый коммит проходит один и тот же путь. Ручных шагов в нём — ноль, кроме кнопки «в прод».</p>
+      <h2 class="reveal d1">Как код попадает в прод</h2>
+      <p class="sub reveal d2">Каждый коммит проходит один и тот же путь. Ручных шагов в нём нет, кроме кнопки «в прод».</p>
       <div class="pipe">
         <div class="runner"></div>
         <div class="step reveal d1"><div class="n">01</div><h3>Commit</h3><p>Ветка, MR, ревью. Pre-commit хуки и линтеры.</p></div>
         <div class="step reveal d2"><div class="n">02</div><h3>Build</h3><p>Многоступенчатый Dockerfile, кэш слоёв. <code>gitlab-ci</code></p></div>
-        <div class="step reveal d3"><div class="n">03</div><h3>Test & scan</h3><p>Тесты, <code>trivy</code>, <code>hadolint</code>, <code>tflint</code>.</p></div>
+        <div class="step reveal d3"><div class="n">03</div><h3>Test & scan</h3><p>Тесты, <code>trivy</code>, <code>hadolint</code>, <code>kubeconform</code>.</p></div>
         <div class="step reveal d4"><div class="n">04</div><h3>Release</h3><p>Образ с тегом коммита в registry, Helm-чарт с версией.</p></div>
-        <div class="step reveal d5"><div class="n">05</div><h3>Deploy</h3><p>Helm / Argo CD в dev → stage → prod. Rollback одной командой.</p></div>
+        <div class="step reveal d5"><div class="n">05</div><h3>Deploy</h3><p>Argo CD в dev, stage, prod. Откат одной командой.</p></div>
         <div class="step reveal d5"><div class="n">06</div><h3>Observe</h3><p>Prometheus, Grafana, Loki. Алерты в Telegram.</p></div>
       </div>
     </div>
@@ -272,7 +313,7 @@ body.eaten, body.eaten *{cursor:none !important}
   <section id="experience">
     <div class="wrap">
       <div class="kicker reveal">03 / опыт</div>
-      <h2 class="reveal d1">Где я это делал.</h2>
+      <h2 class="reveal d1">Где я это делал</h2>
       <div class="xp">
         <div class="job reveal">
           <div class="when">проекты · по н.в.</div>
@@ -283,13 +324,13 @@ body.eaten, body.eaten *{cursor:none !important}
               <li>CI/CD в GitLab CI: сборка, тесты, сканирование образов, деплой по окружениям</li>
               <li>Перевёл сервисы с docker-compose в Kubernetes: Helm-чарты, Ingress, cert-manager, HPA</li>
               <li>Инфраструктура Yandex Cloud на Terraform с remote state и модулями</li>
-              <li>Мониторинг kube-prometheus-stack + Loki, алерты в Telegram</li>
+              <li>Мониторинг kube-prometheus-stack и Loki, алерты в Telegram</li>
             </ul>
             <div class="tags"><span class="tag">Kubernetes</span><span class="tag">Helm</span><span class="tag">Terraform</span><span class="tag">GitLab CI</span><span class="tag">Ansible</span><span class="tag">Prometheus</span><span class="tag">Vault</span></div>
           </div>
         </div>
         <div class="job reveal">
-          <div class="when">10.2024 — н.в.</div>
+          <div class="when">с 10.2024</div>
           <div>
             <h3>Инженер инфраструктуры</h3>
             <div class="where">LANGAME SOFTWARE · Москва</div>
@@ -302,7 +343,7 @@ body.eaten, body.eaten *{cursor:none !important}
           </div>
         </div>
         <div class="job reveal">
-          <div class="when">05.2023 — 10.2024</div>
+          <div class="when">05.2023 - 10.2024</div>
           <div>
             <h3>Специалист бэк-офиса, антифрод</h3>
             <div class="where">Т-Банк · Москва</div>
@@ -316,9 +357,55 @@ body.eaten, body.eaten *{cursor:none !important}
     </div>
   </section>
 
+  <section id="projects">
+    <div class="wrap">
+      <div class="kicker reveal">04 / проекты</div>
+      <h2 class="reveal d1">Что можно потрогать</h2>
+      <p class="sub reveal d2">Всё открыто на GitHub, с README, CI и объяснением, почему сделано именно так.</p>
+      <div class="projects">
+        <a class="proj wide reveal d1" href="https://github.com/Sakuratix/infra-lab" target="_blank" rel="noopener">
+          <div class="top"><span>Sakuratix/infra-lab</span><span>↗</span></div>
+          <h3>infra-lab</h3>
+          <p>Путь сервиса от кода до прода в одном репозитории: Docker, Helm, Terraform для Yandex Cloud, Ansible, CI с Trivy и мониторинг.</p>
+<div class="tree"><b>infra-lab/</b>
+├── app/            <span># Python-сервис + /metrics</span>
+├── helm/app/       <span># probes, HPA, PDB, ingress</span>
+├── terraform/      <span># VPC, Managed k8s, PostgreSQL</span>
+├── ansible/        <span># харденинг + node_exporter</span>
+├── monitoring/     <span># prometheus · grafana · alerts</span>
+└── .github/workflows/</div>
+        </a>
+        <a class="proj reveal d1" href="https://github.com/Sakuratix/k3s-gitops" target="_blank" rel="noopener">
+          <div class="top"><span>Sakuratix/k3s-gitops</span><span>↗</span></div>
+          <h3>k3s-gitops</h3>
+          <p>Однонодовый k3s, где всё после Argo CD создаётся из git по схеме app of apps: ingress-nginx, cert-manager, kube-prometheus-stack.</p>
+          <div class="tags"><span class="tag">Argo CD</span><span class="tag">k3s</span><span class="tag">Helm</span><span class="tag">kubeconform</span></div>
+        </a>
+        <a class="proj reveal d2" href="https://github.com/Sakuratix/alertmanager-telegram-relay" target="_blank" rel="noopener">
+          <div class="top"><span>Sakuratix/alertmanager-telegram-relay</span><span>↗</span></div>
+          <h3>alertmanager-telegram-relay</h3>
+          <p>Webhook от Alertmanager в Telegram без зависимостей: группировка, иконки по severity, лимиты Telegram, тесты.</p>
+          <div class="tags"><span class="tag">Python</span><span class="tag">Alertmanager</span><span class="tag">Docker</span></div>
+        </a>
+        <a class="proj reveal d1" href="https://github.com/Sakuratix/pg-backup-s3" target="_blank" rel="noopener">
+          <div class="top"><span>Sakuratix/pg-backup-s3</span><span>↗</span></div>
+          <h3>pg-backup-s3</h3>
+          <p>Бэкап PostgreSQL в S3 с ротацией, systemd-таймером, метриками для Prometheus и алертом, если бэкап не снимался сутки.</p>
+          <div class="tags"><span class="tag">Bash</span><span class="tag">PostgreSQL</span><span class="tag">S3</span><span class="tag">systemd</span></div>
+        </a>
+        <a class="proj reveal d2" href="https://github.com/Sakuratix/mikrotik-config-backup" target="_blank" rel="noopener">
+          <div class="top"><span>Sakuratix/mikrotik-config-backup</span><span>↗</span></div>
+          <h3>mikrotik-config-backup</h3>
+          <p>Ночной экспорт конфигов MikroTik в git: история изменений по каждому роутеру и откат за минуту.</p>
+          <div class="tags"><span class="tag">RouterOS</span><span class="tag">Bash</span><span class="tag">Git</span></div>
+        </a>
+      </div>
+    </div>
+  </section>
+
   <section id="stack">
     <div class="wrap">
-      <div class="kicker reveal">04 / стек</div>
+      <div class="kicker reveal">05 / стек</div>
       <h2 class="reveal d1">$ ls ~/stack</h2>
       <div class="stack">
         <div class="box reveal d1"><div class="cmd"><b>$</b> ls containers/</div><ul><li>docker <span>/ compose</span></li><li>kubernetes <span>(CKA)</span></li><li>helm</li><li>ingress-nginx</li><li>argo-cd</li></ul></div>
@@ -328,57 +415,41 @@ body.eaten, body.eaten *{cursor:none !important}
         <div class="box reveal d2"><div class="cmd"><b>$</b> ls data/</div><ul><li>postgresql</li><li>mysql</li><li>redis</li><li>kafka</li><li>truenas <span>/ zfs</span></li></ul></div>
         <div class="box reveal d3"><div class="cmd"><b>$</b> ls cloud/ code/</div><ul><li>yandex cloud</li><li>selectel</li><li>proxmox</li><li>bash</li><li>python</li></ul></div>
       </div>
+
+      <h3 class="mini reveal" style="margin-top:72px">Малоизвестное, но полезное: ставлю почти в каждый проект</h3>
+      <div class="tools">
+        <a class="tool reveal d1" href="https://github.com/yannh/kubeconform" target="_blank" rel="noopener"><b>kubeconform</b><span>проверка манифестов по схемам, включая CRD</span></a>
+        <a class="tool reveal d2" href="https://github.com/FairwindsOps/pluto" target="_blank" rel="noopener"><b>pluto</b><span>находит deprecated API перед апгрейдом кластера</span></a>
+        <a class="tool reveal d1" href="https://github.com/doitintl/kube-no-trouble" target="_blank" rel="noopener"><b>kube-no-trouble</b><span>то же для живого кластера: что сломается в новой версии</span></a>
+        <a class="tool reveal d2" href="https://github.com/derailed/popeye" target="_blank" rel="noopener"><b>popeye</b><span>аудит кластера: забытые лимиты, мёртвые ConfigMap</span></a>
+        <a class="tool reveal d1" href="https://github.com/stackrox/kube-linter" target="_blank" rel="noopener"><b>kube-linter</b><span>линтер Helm-чартов на безопасность и best practices</span></a>
+        <a class="tool reveal d2" href="https://github.com/stern/stern" target="_blank" rel="noopener"><b>stern</b><span>логи сразу со всех подов по маске</span></a>
+        <a class="tool reveal d1" href="https://github.com/terraform-docs/terraform-docs" target="_blank" rel="noopener"><b>terraform-docs</b><span>README для модулей генерируется из кода</span></a>
+        <a class="tool reveal d2" href="https://github.com/terraform-linters/tflint" target="_blank" rel="noopener"><b>tflint</b><span>ловит ошибки в Terraform до plan</span></a>
+        <a class="tool reveal d1" href="https://github.com/getsops/sops" target="_blank" rel="noopener"><b>sops</b><span>секреты в git, но зашифрованные</span></a>
+        <a class="tool reveal d2" href="https://github.com/wagoodman/dive" target="_blank" rel="noopener"><b>dive</b><span>показывает, что раздувает Docker-образ</span></a>
+      </div>
     </div>
   </section>
 
   <section id="certs">
     <div class="wrap">
-      <div class="kicker reveal">сертификаты</div>
-      <h2 class="reveal d1">Подтверждено экзаменами.</h2>
+      <div class="kicker reveal">обучение</div>
+      <h2 class="reveal d1">Подтверждено экзаменами</h2>
       <div class="certs">
         <div class="cert reveal d1"><span class="yr">2026</span><div class="badge">CKA</div><p>Certified Kubernetes Administrator · Linux Foundation</p></div>
         <div class="cert reveal d2"><span class="yr">2026</span><div class="badge">Terraform</div><p>HashiCorp Certified: Terraform Associate</p></div>
-        <div class="cert reveal d3"><span class="yr">2026</span><div class="badge">MTCNA</div><p>MikroTik Certified Network Associate</p></div>
-      </div>
-    </div>
-  </section>
-
-  <section id="projects">
-    <div class="wrap">
-      <div class="kicker reveal">open source</div>
-      <h2 class="reveal d1">Что можно потрогать.</h2>
-      <div class="projects">
-        <a class="proj reveal d1" href="https://github.com/Sakuratix/infra-lab" target="_blank" rel="noopener">
-          <div class="top"><span>Sakuratix/infra-lab</span><span>↗</span></div>
-          <h3>infra-lab</h3>
-          <p>Путь сервиса от кода до прода в одном репозитории: Docker, Helm, Terraform, Ansible, CI и мониторинг.</p>
-<div class="tree"><b>infra-lab/</b>
-├── app/            <span># Python-сервис + /metrics</span>
-├── helm/app/       <span># чарт: probes, HPA, ingress</span>
-├── terraform/      <span># Yandex Cloud: VPC, k8s, PG</span>
-├── ansible/        <span># харденинг + node_exporter</span>
-├── monitoring/     <span># prometheus · grafana</span>
-└── .github/workflows/</div>
-        </a>
-        <a class="proj reveal d2" href="https://github.com/Sakuratix" target="_blank" rel="noopener">
-          <div class="top"><span>этот сайт</span><span>↗</span></div>
-          <h3>Портфолио</h3>
-          <p>Один HTML-файл без сборщика, WebGL на three.js. Деплой в GitHub Pages через GitHub Actions на каждый пуш в main.</p>
-<div class="tree"><b>on:</b> push → main
-<b>jobs:</b>
-  deploy:
-    - actions/checkout
-    - actions/upload-pages-artifact
-    - actions/deploy-pages   <span># ✓ 14s</span></div>
-        </a>
+        <div class="cert reveal d3"><span class="yr">2026</span><div class="badge">MTCNA</div><p>MikroTik Certified Network Associate · Softline</p></div>
+        <div class="cert reveal d1"><span class="yr">C1</span><div class="badge">English</div><p>Курсы английского языка, уровень Advanced</p></div>
+        <div class="cert reveal d2"><span class="yr">2023</span><div class="badge">РАНХиГС</div><p>Бакалавр, прикладная информатика, «Системное администрирование»</p></div>
       </div>
     </div>
   </section>
 
   <section class="contact" id="contact">
     <div class="wrap">
-      <div class="kicker reveal">05 / связь</div>
-      <h2 class="reveal d1">Давайте <span class="grad" style="background:linear-gradient(100deg,var(--mint),var(--blue));-webkit-background-clip:text;background-clip:text;color:transparent">поговорим.</span></h2>
+      <div class="kicker reveal">06 / связь</div>
+      <h2 class="reveal d1">Давайте <span class="grad2">поговорим</span></h2>
       <p class="sub reveal d2">Ищу команду, где можно забрать CI/CD, Kubernetes и мониторинг и довести их до уровня «работает само». Отвечаю в течение дня.</p>
       <div class="mail reveal d3">
         <span class="addr" id="addr">sakuratoxs@gmail.com</span>
@@ -391,6 +462,7 @@ body.eaten, body.eaten *{cursor:none !important}
     </div>
   </section>
 </main>
+
 
 <footer>
   <div class="wrap"><span>© 2026 · собрано на Bash и three.js</span><span id="egg-note">uptime: 100% · подсказка: нажми на облако точек</span></div>
@@ -444,7 +516,7 @@ addEventListener('scroll', spy, {passive:true}); addEventListener('resize', spy)
 const term = document.getElementById('term');
 const script = [
   ['cmd','whoami'],
-  ['out','<span class="c">devops</span> — linux · k8s · terraform · ci/cd'],
+  ['out','<span class="c">devops</span> · linux · k8s · terraform · ci/cd'],
   ['cmd','kubectl get nodes'],
   ['out','NAME        STATUS   ROLES    AGE\nk8s-cp-01   <span class="ok">Ready</span>    control  412d\nk8s-wk-01   <span class="ok">Ready</span>    worker   412d'],
   ['cmd','terraform plan | tail -1'],
@@ -470,7 +542,7 @@ const copyBtn = document.getElementById('copy');
 copyBtn.addEventListener('click', async () => {
   const txt = document.getElementById('addr').textContent;
   try { await navigator.clipboard.writeText(txt); copyBtn.textContent = 'скопировано ✓'; }
-  catch(e){ const r = document.createRange(); r.selectNodeContents(document.getElementById('addr')); const s = getSelection(); s.removeAllRanges(); s.addRange(r); copyBtn.textContent = 'выделено — ⌘/Ctrl+C'; }
+  catch(e){ const r = document.createRange(); r.selectNodeContents(document.getElementById('addr')); const s = getSelection(); s.removeAllRanges(); s.addRange(r); copyBtn.textContent = 'выделено, жми Ctrl+C'; }
   setTimeout(() => copyBtn.textContent = 'скопировать', 2200);
 });
 
@@ -635,21 +707,21 @@ async function eat(sx, sy){
   document.body.classList.add('eaten'); fake.style.display = 'block';
   const c0 = coreScreen();
   const a0 = Math.atan2(sy - c0.y, sx - c0.x), d0 = Math.hypot(sx - c0.x, sy - c0.y);
-  // 1 — spiral in
+  // 1: spiral in
   await anim(1100, t => {
     const c = coreScreen(), e = t*t*(3-2*t), ang = a0 + e*Math.PI*3.2, d = d0*(1-e);
     placeFake(c.x + Math.cos(ang)*d, c.y + Math.sin(ang)*d, 1 - e*.85, e*540);
     suck = e; mat.uniforms.uGlow.value = e*.6;
   });
   fake.style.display = 'none';
-  // 2 — digest
+  // 2: digest
   let c = coreScreen(); coretext.style.left = c.x+'px'; coretext.style.top = (c.y + c.r*.85)+'px';
   coretext.textContent = 'scheduling cursor…'; coretext.classList.add('on');
   await anim(500, t => { suck = 1 + Math.sin(t*Math.PI*6)*.06; mat.uniforms.uGlow.value = .6 + t*.4; });
   coretext.textContent = 'pod/cursor-' + Math.random().toString(16).slice(2,7) + ' · CrashLoopBackOff';
   await anim(450, t => { suck = 1 + Math.sin(t*Math.PI*10)*.08; });
   coretext.classList.remove('on');
-  // 3 — spit out to where the real mouse is now
+  // 3: spit out to where the real mouse is now
   fake.style.display = 'block';
   await anim(850, t => {
     const c = coreScreen(), tx = realX, ty = realY;
