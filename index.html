@@ -416,8 +416,8 @@ body.dimcore #gl{opacity:.1}
 }
 
 /* smoothness */
-.lang-fade main, .lang-fade header .nav ul, .lang-fade .cvbtn, .lang-fade footer{opacity:0;filter:blur(4px);transform:translateY(4px)}
-main, header .nav ul, .cvbtn, footer{transition:opacity .22s ease, filter .22s ease, transform .22s ease}
+.lang-fade main, .lang-fade footer{opacity:0;filter:blur(4px);transform:translateY(4px)}
+main, footer{transition:opacity .22s ease, filter .22s ease, transform .22s ease}
 .nav ul a em{display:inline-block;text-align:center}
 .cvbtn{justify-content:space-between}
 .cvbtn > span{display:inline-block}
@@ -440,6 +440,45 @@ body{animation:pagein .7s ease both}
   .kicker::before{transform:none}
   body{animation:none}
 }
+
+/* work switcher */
+.workbox{margin-top:36px}
+.wtabs{display:flex;align-items:stretch;gap:2px;border-bottom:1px solid var(--line);overflow-x:auto;scrollbar-width:none}
+.wtabs::-webkit-scrollbar{display:none}
+.wtab{all:unset;cursor:pointer;position:relative;font-family:var(--mono);font-size:13px;color:var(--muted);padding:12px 16px 13px;white-space:nowrap;transition:color .25s}
+.wtab span{color:var(--dim);margin-right:8px;transition:color .25s}
+.wtab:hover{color:var(--fg)}
+.wtab.on{color:var(--fg)}
+.wtab.on span{color:var(--mint)}
+.wtab::after{content:"";position:absolute;left:12px;right:12px;bottom:-1px;height:2px;background:linear-gradient(90deg,var(--mint),var(--blue));transform:scaleX(0);transform-origin:left;transition:transform .45s cubic-bezier(.2,.7,.2,1)}
+.wtab.on::after{transform:scaleX(1)}
+.wtab:focus-visible{outline:1px solid var(--mint)}
+.wnav{margin-left:auto;display:flex;gap:6px;align-items:center;padding-left:12px}
+.wnav button{all:unset;cursor:pointer;width:32px;height:32px;display:grid;place-items:center;border:1px solid var(--line2);border-radius:8px;color:var(--muted);font-family:var(--mono);transition:all .2s}
+.wnav button:hover{color:var(--mint);border-color:var(--mint)}
+.cases{display:grid}
+.cases > .case{grid-area:1/1;padding:40px 0 0;border:0;margin:0;opacity:0;visibility:hidden;transform:translateY(14px);transition:opacity .45s ease,transform .55s cubic-bezier(.2,.7,.2,1),visibility 0s .55s}
+.cases > .case.on{opacity:1;visibility:visible;transform:none;transition:opacity .45s ease .05s,transform .55s cubic-bezier(.2,.7,.2,1) .05s,visibility 0s}
+.case-head{display:flex;align-items:center;gap:20px}
+.case-head .ascii{position:static;display:block;width:auto;margin:0;font-size:4.6px;line-height:4.6px;letter-spacing:0;flex-shrink:0;opacity:.85}
+.case-head .case-h{margin:0}
+.case .case-lead{margin-top:18px}
+.tlog{margin:0;min-height:330px;padding:16px 18px;font-family:var(--mono);font-size:12px;line-height:1.75;color:var(--muted);white-space:pre-wrap;word-break:break-all}
+.tlog b{display:block;font-weight:400;animation:msgin .3s ease forwards;opacity:0}
+.tlog .c{color:var(--fg)} .tlog .c::first-letter{color:var(--mint)}
+.tlog .d{color:#ff8f8f} .tlog .a{color:var(--mint)} .tlog .m{color:var(--blue)}
+.tlog .cur{display:inline-block;width:7px;height:13px;background:var(--mint);vertical-align:-2px;animation:blink 1.1s steps(1) infinite}
+@media (max-width:900px){
+  .cases > .case{padding-top:28px}
+  .case-head .ascii{display:block;font-size:3.4px;line-height:3.4px}
+  .wnav{display:none}
+}
+/* header wave on language switch */
+.nav-r .lang{position:relative;z-index:2}
+header.out .wi{animation:navout .18s ease forwards !important}
+header.wave .wi{animation:navwave .55s cubic-bezier(.2,.7,.2,1) both !important;animation-delay:calc(var(--n) * 70ms) !important}
+@keyframes navout{to{opacity:0;transform:translateX(-6px)}}
+@keyframes navwave{from{opacity:0;transform:translateX(-14px);filter:blur(3px)}to{opacity:1;transform:none;filter:none}}
 
 </style>
 </head>
@@ -646,11 +685,13 @@ body{animation:pagein .7s ease both}
       <h2 class="reveal d1"><span class="en">Things you can open and run</span><span class="ru">Что можно открыть и запустить</span></h2>
       <p class="sub reveal d2 en">Everything is public on GitHub, with a README, green CI and notes on why it is built this way.</p>
       <p class="sub reveal d2 ru">Всё открыто на GitHub: README, зелёный CI и объяснение, почему сделано именно так.</p>
-
-      <article class="case reveal">
+      <div class="workbox reveal d2" id="workbox">
+        <div class="wtabs" role="tablist"><button type="button" class="wtab on" role="tab" data-i="0"><span>01</span>infra-lab</button><button type="button" class="wtab" role="tab" data-i="1"><span>02</span>k3s-gitops</button><button type="button" class="wtab" role="tab" data-i="2"><span>03</span>telegram-relay</button><button type="button" class="wtab" role="tab" data-i="3"><span>04</span>pg-backup-s3</button><button type="button" class="wtab" role="tab" data-i="4"><span>05</span>mikrotik-backup</button><div class="wnav"><button type="button" data-step="-1" aria-label="previous">←</button><button type="button" data-step="1" aria-label="next">→</button></div></div>
+        <div class="cases">
+<article class="case on">
         <div class="case-txt">
-          <h3 class="case-h">infra-lab</h3>
-          <div class="case-tag"># <span class="en">platform / reference repository</span><span class="ru">платформа / эталонный репозиторий</span></div>
+          <div class="case-head"><pre class="ascii" data-icon="cube" aria-hidden="true"></pre><div><h3 class="case-h">infra-lab</h3>
+          <div class="case-tag"># <span class="en">platform / reference repository</span><span class="ru">платформа / эталонный репозиторий</span></div></div></div>
           <p class="case-lead en">One small service taken all the way to production in a single repository: container, pipeline, Kubernetes chart, cloud infrastructure, server baseline and monitoring.</p>
           <p class="case-lead ru">Один небольшой сервис, доведённый до прода в одном репозитории: контейнер, пайплайн, Helm-чарт, облачная инфраструктура, базовая настройка серверов и мониторинг.</p>
           <ul class="dash en">
@@ -682,14 +723,12 @@ body{animation:pagein .7s ease both}
             </div>
             <div class="mchecks"><span>ruff</span><span>pytest</span><span>hadolint</span><span>tf validate</span><span>helm lint</span><span>ansible</span><span>trivy</span><span>push</span></div>
           </div>
-          <pre class="ascii" data-icon="cube" aria-hidden="true"></pre>
         </div>
       </article>
-
-      <article class="case flip reveal">
+<article class="case">
         <div class="case-txt">
-          <h3 class="case-h">k3s-gitops</h3>
-          <div class="case-tag"># <span class="en">kubernetes / gitops</span><span class="ru">kubernetes / gitops</span></div>
+          <div class="case-head"><pre class="ascii" data-icon="graph" aria-hidden="true"></pre><div><h3 class="case-h">k3s-gitops</h3>
+          <div class="case-tag"># <span class="en">kubernetes / gitops</span><span class="ru">kubernetes / gitops</span></div></div></div>
           <p class="case-lead en">A single-node k3s cluster where everything after Argo CD comes from git. Changes go through a commit; anything edited by hand in the cluster is reverted.</p>
           <p class="case-lead ru">Однонодовый k3s, где всё после Argo CD создаётся из git. Изменения идут только через коммит, ручные правки в кластере откатываются.</p>
           <ul class="dash en">
@@ -724,14 +763,12 @@ body{animation:pagein .7s ease both}
               </div>
             </div>
           </div>
-          <pre class="ascii" data-icon="graph" aria-hidden="true"></pre>
         </div>
       </article>
-
-      <article class="case reveal">
+<article class="case">
         <div class="case-txt">
-          <h3 class="case-h long">alertmanager-telegram-relay</h3>
-          <div class="case-tag"># <span class="en">observability / alerting</span><span class="ru">мониторинг / алертинг</span></div>
+          <div class="case-head"><pre class="ascii" data-icon="bell" aria-hidden="true"></pre><div><h3 class="case-h long">alertmanager-telegram-relay</h3>
+          <div class="case-tag"># <span class="en">observability / alerting</span><span class="ru">мониторинг / алертинг</span></div></div></div>
           <p class="case-lead en">A small dependency-free service that turns Alertmanager webhooks into readable Telegram messages: grouped, marked by severity, HTML-escaped and kept under Telegram's length limit.</p>
           <p class="case-lead ru">Небольшой сервис без зависимостей: превращает webhook от Alertmanager в понятные сообщения в Telegram. Группирует алерты, помечает по severity, экранирует HTML и укладывается в лимит длины.</p>
           <ul class="dash en">
@@ -757,34 +794,69 @@ body{animation:pagein .7s ease both}
             <div class="mbar"><i></i><i></i><i></i><span>#alerts · telegram</span><em>sample</em></div>
             <div class="chat"></div>
           </div>
-          <pre class="ascii" data-icon="bell" aria-hidden="true"></pre>
+        </div>
+      </article>
+      <article class="case">
+        <div class="case-txt">
+          <div class="case-head"><pre class="ascii" data-icon="db" aria-hidden="true"></pre><div><h3 class="case-h">pg-backup-s3</h3>
+          <div class="case-tag"># <span class="en">databases / backups</span><span class="ru">базы данных / бэкапы</span></div></div></div>
+          <p class="case-lead en">PostgreSQL backups to S3-compatible storage in one Bash script: dump, compress, verify, upload, prune old copies and report to Prometheus.</p>
+          <p class="case-lead ru">Бэкапы PostgreSQL в S3-совместимое хранилище одним Bash-скриптом: дамп, сжатие, проверка архива, загрузка, удаление старых копий и метрики для Prometheus.</p>
+          <ul class="dash en">
+            <li>If the server was off at night, the systemd timer runs the missed backup on boot (<code>Persistent=true</code>).</li>
+            <li>Two alerts: the last backup failed, or there has been none for 26 hours. A backup that failed silently is worse than no backup.</li>
+          </ul>
+          <ul class="dash ru">
+            <li>Если сервер ночью был выключен, systemd-таймер снимет пропущенный бэкап после включения (<code>Persistent=true</code>).</li>
+            <li>Два алерта: последний бэкап упал или его не было 26 часов. Бэкап, который тихо упал, хуже, чем его отсутствие.</li>
+          </ul>
+          <dl class="kv">
+            <div><dt><span class="en">default retention</span><span class="ru">хранение по умолчанию</span></dt><dd><span class="en">14 days</span><span class="ru">14 дней</span></dd></div>
+            <div><dt><span class="en">metrics exported</span><span class="ru">метрик для Prometheus</span></dt><dd>4</dd></div>
+            <div><dt><span class="en">checked in CI</span><span class="ru">проверка в CI</span></dt><dd>shellcheck</dd></div>
+          </dl>
+          <div class="techs">Bash / PostgreSQL / S3 / systemd / Prometheus / node_exporter</div>
+          <div class="case-btns"><a class="sbtn" href="https://github.com/Sakuratix/pg-backup-s3" target="_blank" rel="noopener">↗ Codebase</a></div>
+        </div>
+        <div class="case-vis">
+          <div class="mock" data-mock="term">
+            <div class="mbar"><i></i><i></i><i></i><span>zsh · db-01</span><em>sample</em></div>
+            <pre class="tlog" data-lines='[["c","$ systemctl start pg-backup@app"],["","dumping app"],["","uploading s3://backups/postgres/app/app-20261111T033012Z.sql.gz"],["","pruning backups older than 14 days"],["d","delete app-20261027T033004Z.sql.gz"],["","done in 41s"],["c","$ cat /var/lib/node_exporter/textfile/pg_backup_app.prom"],["m","pg_backup_success{db=\"app\"} 1"],["m","pg_backup_duration_seconds{db=\"app\"} 41"],["m","pg_backup_size_bytes{db=\"app\"} 52428800"]]'></pre>
+          </div>
         </div>
       </article>
 
-      <div class="more">
-        <a class="mcard reveal d1" href="https://github.com/Sakuratix/pg-backup-s3" target="_blank" rel="noopener">
-          <div class="top"><span>Sakuratix/pg-backup-s3</span><span>↗</span></div>
-          <h3>pg-backup-s3</h3>
-          <p class="en">PostgreSQL backups to S3 with retention, a systemd timer and Prometheus metrics. Alerts when no backup has been taken for 26 hours.</p>
-          <p class="ru">Бэкапы PostgreSQL в S3 с ротацией, systemd-таймером и метриками для Prometheus. Алерт, если бэкап не снимался 26 часов.</p>
-<pre class="snip"><b>$</b> systemctl start pg-backup@app
-dumping app
-uploading s3://backups/postgres/app/…
-pruning backups older than 14 days
-<i>pg_backup_success{db="app"} 1</i></pre>
-          <div class="techs">Bash / PostgreSQL / S3 / systemd / Prometheus</div>
-        </a>
-        <a class="mcard reveal d2" href="https://github.com/Sakuratix/mikrotik-config-backup" target="_blank" rel="noopener">
-          <div class="top"><span>Sakuratix/mikrotik-config-backup</span><span>↗</span></div>
-          <h3>mikrotik-config-backup</h3>
-          <p class="en">Nightly MikroTik config export into git: history per router, secrets excluded, rollback in a minute.</p>
-          <p class="ru">Ночной экспорт конфигов MikroTik в git: история по каждому роутеру, без секретов, откат за минуту.</p>
-<pre class="snip"><b>$</b> git log -p club-msk-03.rsc
-<s>- add action=accept chain=input dst-port=8291</s>
-<u>+ add action=accept chain=input dst-port=8291 src-address=10.0.0.0/8</u>
-<i>config backup 2026-11-11: club-msk-03.rsc</i></pre>
-          <div class="techs">RouterOS / Bash / Git / SSH</div>
-        </a>
+      <article class="case">
+        <div class="case-txt">
+          <div class="case-head"><pre class="ascii" data-icon="net" aria-hidden="true"></pre><div><h3 class="case-h long">mikrotik-config-backup</h3>
+          <div class="case-tag"># <span class="en">networks / config history</span><span class="ru">сети / история конфигов</span></div></div></div>
+          <p class="case-lead en">Nightly MikroTik config export into git: one file per router, a commit only when something changed, secrets excluded.</p>
+          <p class="case-lead ru">Ночной экспорт конфигов MikroTik в git: файл на каждый роутер, коммит только при изменениях, секреты не попадают.</p>
+          <ul class="dash en">
+            <li>RouterOS writes a timestamp into the first line of every export. The script strips it, so only real changes become commits.</li>
+            <li>Exits non-zero if any router does not answer, so cron or systemd notices instead of skipping it silently.</li>
+          </ul>
+          <ul class="dash ru">
+            <li>RouterOS пишет дату в первую строку каждого экспорта. Скрипт её вырезает, поэтому коммитятся только настоящие изменения.</li>
+            <li>Завершается с ошибкой, если какой-то роутер не ответил: cron или systemd это заметят, а не пропустят молча.</li>
+          </ul>
+          <dl class="kv">
+            <div><dt><span class="en">secrets in git</span><span class="ru">секретов в git</span></dt><dd>0</dd></div>
+            <div><dt><span class="en">commits without changes</span><span class="ru">коммитов без изменений</span></dt><dd>0</dd></div>
+            <div><dt><span class="en">rollback</span><span class="ru">откат</span></dt><dd>git show</dd></div>
+          </dl>
+          <div class="techs">RouterOS / Bash / Git / SSH / cron</div>
+          <div class="case-btns"><a class="sbtn" href="https://github.com/Sakuratix/mikrotik-config-backup" target="_blank" rel="noopener">↗ Codebase</a></div>
+        </div>
+        <div class="case-vis">
+          <div class="mock" data-mock="term">
+            <div class="mbar"><i></i><i></i><i></i><span>git log -p club-msk-03.rsc</span><em>sample</em></div>
+            <pre class="tlog" data-lines='[["m","commit 4f1c2ab  config backup 2026-11-11: club-msk-03.rsc"],["",""],["","/ip firewall filter"],["d","- add action=accept chain=input dst-port=8291 protocol=tcp"],["a","+ add action=accept chain=input dst-port=8291 protocol=tcp src-address=10.0.0.0/8"],["",""],["","/interface wireguard peers"],["a","+ add allowed-address=10.20.3.0/24 interface=wg-core"],["",""],["c","$ git show HEAD~1:club-msk-03.rsc > rollback.rsc"]]'></pre>
+          </div>
+        </div>
+      </article>
+
+        </div>
       </div>
     </div>
   </section>
@@ -919,8 +991,12 @@ document.querySelectorAll('[data-set-lang]').forEach(b => b.addEventListener('cl
   const y = scrollY, anchor = [...document.querySelectorAll('section')].find(sec => sec.getBoundingClientRect().bottom > 80);
   const off = anchor ? anchor.getBoundingClientRect().top : 0;
   document.documentElement.classList.add('lang-fade');
+  const hdr = document.getElementById('nav');
+  hdr.classList.remove('wave'); hdr.classList.add('out');
   setTimeout(() => {
     setLang(l);
+    hdr.classList.remove('out'); void hdr.offsetWidth; hdr.classList.add('wave');
+    setTimeout(() => hdr.classList.remove('wave'), 1200);
     if (anchor) scrollTo({top: anchor.offsetTop - off, behavior: 'instant'}); else scrollTo(0, y);
     requestAnimationFrame(() => requestAnimationFrame(() => document.documentElement.classList.remove('lang-fade')));
   }, 220);
@@ -945,6 +1021,9 @@ function lockWidths(){
   probe.remove();
 }
 if (document.fonts && document.fonts.ready) document.fonts.ready.then(lockWidths); else lockWidths();
+[...document.querySelectorAll('.nav ul li'), document.getElementById('pill'), document.getElementById('cvmenu')].forEach((el, i) => { if (el) { el.classList.add('wi'); el.style.setProperty('--n', i); } });
+/* once the intro animation is done, pin the menu items so later animations do not replay it */
+setTimeout(() => document.querySelectorAll('.nav ul li').forEach(li => { li.style.animation = 'none'; li.style.opacity = '1'; li.style.transform = 'none'; }), 1300);
 
 /* ---------- CV menu ---------- */
 const cvmenu = document.getElementById('cvmenu'), cvbtn = document.getElementById('cvbtn');
@@ -1009,10 +1088,24 @@ function drawIcon(ctx, name, W, H){
     ctx.beginPath(); ctx.arc(cx, H*0.17, H*0.04, 0, Math.PI*2); ctx.fill();
     ctx.strokeStyle = '#999'; ctx.lineWidth = H*0.03; ctx.lineCap = 'round';
     [[1,1],[-1,1]].forEach(([sx]) => { ctx.beginPath(); ctx.arc(cx, H*0.42, W*0.3, sx > 0 ? -0.5 : Math.PI - 0.1, sx > 0 ? 0.1 : Math.PI + 0.5); ctx.stroke(); });
+  } else if (name === 'db') {
+    const w = W*0.5, x = cx - w/2, eh = H*0.12;
+    const g = ctx.createLinearGradient(x, 0, x + w, 0); g.addColorStop(0,'#fff'); g.addColorStop(1,'#555');
+    ctx.fillStyle = g; ctx.fillRect(x, H*0.2, w, H*0.6);
+    ctx.beginPath(); ctx.ellipse(cx, H*0.8, w/2, eh, 0, 0, Math.PI*2); ctx.fill();
+    ctx.fillStyle = '#e8e8e8'; ctx.beginPath(); ctx.ellipse(cx, H*0.2, w/2, eh, 0, 0, Math.PI*2); ctx.fill();
+    ctx.strokeStyle = '#000'; ctx.lineWidth = H*0.035;
+    [0.4, 0.6].forEach(k => { ctx.beginPath(); ctx.ellipse(cx, H*k, w/2, eh, 0, 0, Math.PI); ctx.stroke(); });
+  } else if (name === 'net') {
+    const pts = [[cx, cy], [W*0.2, H*0.22], [W*0.8, H*0.22], [W*0.2, H*0.78], [W*0.8, H*0.78]];
+    ctx.strokeStyle = '#888'; ctx.lineWidth = H*0.04;
+    pts.slice(1).forEach(([x,y]) => { ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(x, y); ctx.stroke(); });
+    ctx.beginPath(); ctx.moveTo(pts[1][0], pts[1][1]); ctx.lineTo(pts[2][0], pts[2][1]); ctx.stroke();
+    pts.forEach(([x,y], i) => { ctx.fillStyle = i ? '#cfcfcf' : '#fff'; ctx.beginPath(); ctx.arc(x, y, H*(i ? 0.1 : 0.15), 0, Math.PI*2); ctx.fill(); });
   }
 }
 document.querySelectorAll('pre.ascii').forEach(pre => {
-  const COLS = 64, ROWS = 34, SX = 2, SY = 3; // glyphs are ~1.5x taller than wide
+  const COLS = 48, ROWS = 26, SX = 2, SY = 3; // glyphs are ~1.5x taller than wide
   const c = document.createElement('canvas'); c.width = COLS * SX; c.height = ROWS * SY;
   const ctx = c.getContext('2d');
   drawIcon(ctx, pre.dataset.icon, c.width, c.height);
@@ -1116,6 +1209,44 @@ document.querySelectorAll('[data-mock="tg"]').forEach(m => {
   if (reduce) { MSGS.forEach(msg => { chat.insertAdjacentHTML('beforeend', `<div class="msg${msg.ok?' ok':''}" style="opacity:1;transform:none;animation:none"><div class="who">alert-relay</div>${msg.html}<time>${msg.t}</time></div>`); }); }
   else whileVisible(m, () => { if (!timers.length) run(); }, () => { timers.forEach(clearTimeout); timers = []; });
 });
+
+
+/* ---------- work switcher ---------- */
+const wbox = document.getElementById('workbox');
+if (wbox) {
+  const tabs = [...wbox.querySelectorAll('.wtab')], cases = [...wbox.querySelectorAll('.cases > .case')];
+  let cur = 0;
+  const termTimers = new Map();
+  function runTerm(m){
+    stopTerm(m);
+    const pre = m.querySelector('.tlog'); const lines = JSON.parse(pre.dataset.lines);
+    pre.innerHTML = ''; let i = 0; const ts = [];
+    const step = () => {
+      if (i < lines.length) {
+        const [cls, txt] = lines[i++]; const b = document.createElement('b');
+        if (cls) b.className = cls; b.textContent = txt || ' '; pre.appendChild(b);
+        ts.push(setTimeout(step, cls === 'c' ? 650 : 260));
+      } else { pre.insertAdjacentHTML('beforeend', '<span class="cur"></span>'); ts.push(setTimeout(() => runTerm(m), 5000)); }
+    };
+    if (reduce) { lines.forEach(([cls, txt]) => { const b = document.createElement('b'); if (cls) b.className = cls; b.style.opacity = 1; b.style.animation = 'none'; b.textContent = txt || ' '; pre.appendChild(b); }); return; }
+    ts.push(setTimeout(step, 300)); termTimers.set(m, ts);
+  }
+  function stopTerm(m){ (termTimers.get(m) || []).forEach(clearTimeout); termTimers.delete(m); }
+  function show(i){
+    cur = (i + cases.length) % cases.length;
+    tabs.forEach((t, k) => { t.classList.toggle('on', k === cur); t.setAttribute('aria-selected', k === cur); });
+    cases.forEach((c, k) => c.classList.toggle('on', k === cur));
+    wbox.querySelectorAll('[data-mock="term"]').forEach(stopTerm);
+    cases[cur].querySelectorAll('[data-mock="term"]').forEach(runTerm);
+    tabs[cur].scrollIntoView({block:'nearest', inline:'nearest', behavior: reduce ? 'auto' : 'smooth'});
+  }
+  tabs.forEach((t, k) => t.addEventListener('click', () => show(k)));
+  wbox.querySelectorAll('[data-step]').forEach(b => b.addEventListener('click', () => show(cur + Number(b.dataset.step))));
+  wbox.querySelector('.wtabs').addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight') { show(cur + 1); tabs[cur].focus(); }
+    if (e.key === 'ArrowLeft') { show(cur - 1); tabs[cur].focus(); }
+  });
+}
 
 /* ---------- stack columns ---------- */
 const colsEl = document.getElementById('cols');
