@@ -539,6 +539,7 @@ header.wave .wi{animation:navwave .55s cubic-bezier(.2,.7,.2,1) both !important;
 .g-bar.dev{background:linear-gradient(90deg,var(--mint),var(--blue))}
 .g-bar.infra{background:var(--blue)}
 .g-bar.other{background:#3a3f48;color:var(--fg)}
+.g-bar.edu{background:transparent;color:var(--warn);border:1px dashed rgba(255,207,112,.55)}
 .g-bar:hover{filter:brightness(1.12)}
 .g-bar.sel{box-shadow:0 0 0 2px #0c0d10,0 0 0 4px var(--fg)}
 .g-bar.live::after{content:"";position:absolute;right:6px;top:50%;width:6px;height:6px;margin-top:-3px;border-radius:50%;background:#000;animation:blink 1.2s steps(1) infinite}
@@ -719,8 +720,8 @@ header.wave .wi{animation:navwave .55s cubic-bezier(.2,.7,.2,1) both !important;
     <div class="wrap">
       <div class="kicker reveal">03 / <span class="en">experience</span><span class="ru">опыт</span></div>
       <h2 class="reveal d1"><span class="en">Where I did it</span><span class="ru">Где я это делал</span></h2>
-      <p class="sub reveal d2 en">From restaurant operations through bank incident work to infrastructure and DevOps. Click a bar to open the role.</p>
-      <p class="sub reveal d2 ru">От операционки в ресторане через разбор инцидентов в банке к инфраструктуре и DevOps. Нажми на полосу, чтобы открыть роль.</p>
+      <p class="sub reveal d2 en">From a system administration degree through bank incident work to infrastructure and DevOps. Click a bar to open the role.</p>
+      <p class="sub reveal d2 ru">От диплома по системному администрированию через разбор инцидентов в банке к инфраструктуре и DevOps. Нажми на полосу, чтобы открыть роль.</p>
       <div class="gantt reveal d2" id="gantt">
         <div class="g-axis" id="g-axis"></div>
         <div class="g-rows" id="g-rows"></div>
@@ -1394,7 +1395,7 @@ if (wbox) {
 (function(){
   const g = document.getElementById('gantt'); if (!g) return;
   const L = (en, ru) => `<span class="en">${en}</span><span class="ru">${ru}</span>`;
-  const T0 = 2017.6, T1 = 2027.1, NOW = 2026.86;
+  const T0 = 2019.3, T1 = 2027.1, NOW = 2026.86;
   const pos = y => ((y - T0) / (T1 - T0)) * 100;
   const JOBS = [
     {id:'nixys', cls:'dev', label:'Nixys', from:2024.83, to:NOW, live:true,
@@ -1416,16 +1417,16 @@ if (wbox) {
      items:[L('Incident investigation: rebuilding the chain of events from transactions and logs','Разбор инцидентов: восстановление цепочки событий по операциям и логам'),
             L('SLA-driven work under strict procedures, documentation for partner teams','Работа по SLA и регламентам, документирование для смежных команд')],
      tags:['incidents','SLA','root cause']},
-    {id:'pbo', cls:'other', label:L('Sistema PBO','Система ПБО'), from:2017.78, to:2023.37,
-     title:L('Assistant Manager','Ассистент руководителя'), where:L('Sistema PBO · St. Petersburg','Система ПБО · Санкт-Петербург'), when:L('Oct 2017 · May 2023','окт. 2017 · май 2023'), dur:L('5.5 years','5,5 лет'),
-     items:[L('Grew from team member to assistant manager while studying for my degree','Вырос от сотрудника до ассистента директора параллельно с учёбой'),
-            L('Ran shifts, trained new staff, worked to procedures and checklists','Управление сменой, обучение сотрудников, работа по регламентам и чек-листам')],
-     tags:['operations','people','procedures']},
+    {id:'edu', cls:'edu', label:L('RANEPA','РАНХиГС'), from:2019.67, to:2023.5,
+     title:L('Bachelor of Applied Informatics','Бакалавр, прикладная информатика'), where:L('RANEPA, Moscow · System administration track','РАНХиГС, Москва · профиль «Системное администрирование»'), when:L('2019 · 2023','2019 · 2023'), dur:L('4 years','4 года'),
+     items:[L('Applied informatics with a focus on system administration','Прикладная информатика с уклоном в системное администрирование'),
+            L('Linux, networks, databases and scripting as the core of the program','Linux, сети, базы данных и скрипты как основа программы')],
+     tags:['Linux','networks','SQL','Bash']},
   ];
   const axis = document.getElementById('g-axis'), rows = document.getElementById('g-rows'), card = document.getElementById('g-card');
-  for (let y = 2018; y <= 2026; y++) axis.insertAdjacentHTML('beforeend', `<span class="${y % 2 ? 'odd' : ''}" style="left:${pos(y)}%">${y}</span>`);
+  for (let y = 2020; y <= 2026; y++) axis.insertAdjacentHTML('beforeend', `<span class="${y % 2 ? 'odd' : ''}" style="left:${pos(y)}%">${y}</span>`);
   axis.insertAdjacentHTML('beforeend', `<span class="now" style="left:${pos(NOW)}%">now</span>`);
-  const grid = () => [2018,2019,2020,2021,2022,2023,2024,2025,2026].map(y => `<i class="g-grid" style="left:${pos(y)}%"></i>`).join('') + `<i class="g-nowline" style="left:${pos(NOW)}%"></i>`;
+  const grid = () => [2020,2021,2022,2023,2024,2025,2026].map(y => `<i class="g-grid" style="left:${pos(y)}%"></i>`).join('') + `<i class="g-nowline" style="left:${pos(NOW)}%"></i>`;
   const bars = [];
   JOBS.forEach((j, i) => {
     const row = document.createElement('div'); row.className = 'g-row';
@@ -1434,7 +1435,7 @@ if (wbox) {
     rows.appendChild(row);
   });
   const ms = document.createElement('div'); ms.className = 'g-row';
-  ms.innerHTML = `<div class="g-lab">${L('milestones','вехи')}</div><div class="g-track">${grid()}<i class="g-ms" style="left:${pos(2023.5)}%"><em>${L('Bachelor, RANEPA','Бакалавр, РАНХиГС')}</em></i><i class="g-ms left" style="left:${pos(2026.3)}%"><em>CKA · TF · MTCNA</em></i></div>`;
+  ms.innerHTML = `<div class="g-lab">${L('milestones','вехи')}</div><div class="g-track">${grid()}<i class="g-ms" style="left:${pos(2023.5)}%"><em>${L('Bachelor degree','Диплом бакалавра')}</em></i><i class="g-ms left" style="left:${pos(2026.3)}%"><em>CKA · TF · MTCNA</em></i></div>`;
   rows.appendChild(ms);
   function pick(i){
     const j = JOBS[i]; bars.forEach((b, k) => b.classList.toggle('sel', k === i));

@@ -45,7 +45,6 @@ CV = {
                 "SLA-driven work under strict procedures; documentation accepted by partner teams without rework",
             ]),
         ],
-        "earlier": "Earlier: 2017-2023, restaurant operations (Sistema PBO, St. Petersburg), grew to assistant manager while studying.",
         "projects": [
             ("infra-lab", "service to production: Docker, Helm, Terraform, Ansible, CI with Trivy, Prometheus"),
             ("k3s-gitops", "single-node k3s managed by Argo CD (app of apps), manifests validated with kubeconform"),
@@ -98,7 +97,6 @@ CV = {
                 "Работа по SLA и строгим регламентам; документация, которую смежные команды принимали без доработок",
             ]),
         ],
-        "earlier": "Ранее: 2017-2023, Система ПБО (Санкт-Петербург), вырос до ассистента директора параллельно с учёбой.",
         "projects": [
             ("infra-lab", "сервис от кода до прода: Docker, Helm, Terraform, Ansible, CI с Trivy, Prometheus"),
             ("k3s-gitops", "однонодовый k3s под управлением Argo CD (app of apps), проверка манифестов kubeconform"),
@@ -174,7 +172,7 @@ def render(d: dict) -> str:
 </header>
 <p class="sum" style="margin-top:10pt">{e(d['summary'])}</p>
 <h2>{e(d['h']['skills'])}</h2><table class="sk">{skills}</table>
-<h2>{e(d['h']['exp'])}</h2>{jobs}<p class="earlier">{e(d['earlier'])}</p>
+<h2>{e(d['h']['exp'])}</h2>{jobs}
 <h2>{e(d['h']['proj'])}</h2>{projects}
 <h2>{e(d['h']['edu'])}</h2><div class="edu">{edu}</div>
 </body></html>"""
