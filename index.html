@@ -2002,10 +2002,9 @@ async function movie(){
 
   // the hero: a cube with the site on its front face
   const front = new THREE.CanvasTexture(shot);
-  if ('encoding' in front) front.encoding = THREE.sRGBEncoding;
   const side = sideTexture();
   const mats = [0,1,2,3,5].map(() => new THREE.MeshBasicMaterial({map: side}));
-  const cubeMats = [mats[0], mats[1], mats[2], mats[3], new THREE.MeshBasicMaterial({map: front}), mats[4]];
+  const cubeMats = [mats[0], mats[1], mats[2], mats[3], new THREE.MeshBasicMaterial({map: front, color: new THREE.Color(1.35, 1.35, 1.35)}), mats[4]];
   const hero = new THREE.Group(); S.add(hero);
   const body = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), cubeMats); hero.add(body);
   body.scale.set(fillW, fillH, 0.02);
