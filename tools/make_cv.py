@@ -28,7 +28,7 @@ CV = {
             ("Cloud and code", "Yandex Cloud, Selectel, Proxmox, Bash, Python, Git"),
         ],
         "jobs": [
-            ("DevOps Engineer", "Contract projects for outsourcing teams · remote", "present", [
+            ("DevOps Engineer", "Nixys, DevOps outsourcing · contract · remote", "present", [
                 "GitLab CI pipelines: build, tests, image scanning with Trivy, promotion across dev, stage and prod",
                 "Moved services from docker-compose to Kubernetes: Helm charts, Ingress-NGINX, cert-manager, HPA, probes",
                 "Yandex Cloud infrastructure in Terraform: VPC, Managed Kubernetes, Managed PostgreSQL, remote state",
@@ -81,7 +81,7 @@ CV = {
             ("Облака и код", "Yandex Cloud, Selectel, Proxmox, Bash, Python, Git"),
         ],
         "jobs": [
-            ("DevOps-инженер", "Проектная работа в аутсорс-командах · удалённо", "по н.в.", [
+            ("DevOps-инженер", "Nixys, DevOps-аутсорсинг · контракт · удалённо", "по н.в.", [
                 "CI/CD в GitLab CI: сборка, тесты, сканирование образов Trivy, деплой по окружениям dev, stage, prod",
                 "Перевёл сервисы с docker-compose в Kubernetes: Helm-чарты, Ingress-NGINX, cert-manager, HPA, пробы",
                 "Инфраструктура Yandex Cloud на Terraform: VPC, Managed Kubernetes, Managed PostgreSQL, remote state",
@@ -168,6 +168,7 @@ def render(d: dict) -> str:
     <a href="mailto:sakuratoxs@gmail.com">sakuratoxs@gmail.com</a><br>
     <a href="https://t.me/MountewDew">t.me/MountewDew</a><br>
     <a href="https://github.com/Sakuratix">github.com/Sakuratix</a><br>
+    <a href="https://www.linkedin.com/in/klimentii-matveev-59ab38426/">in/klimentii-matveev</a><br>
     <a href="https://sakuratix.github.io">sakuratix.github.io</a>
   </div>
 </header>
