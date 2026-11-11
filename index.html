@@ -7,6 +7,9 @@
 <meta name="description" content="Klimentiy Matveev, DevOps engineer: Kubernetes, Terraform, CI/CD, monitoring. Remote.">
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#0a0b0d">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%238ef0c6'/%3E%3Cstop offset='1' stop-color='%237aa2ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='14' fill='%230a0b0d'/%3E%3Crect x='2' y='2' width='60' height='60' rx='12' fill='none' stroke='url(%23g)' stroke-width='3'/%3E%3Cpath d='M17 22l11 10-11 10' fill='none' stroke='url(%23g)' stroke-width='6' stroke-linecap='round' stroke-linejoin='round'/%3E%3Crect x='32' y='39' width='16' height='6' rx='3' fill='%238ef0c6'/%3E%3C/svg%3E">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -410,6 +413,32 @@ body.dimcore #gl{opacity:.1}
   .lang button{padding:6px 7px}
   .cvbtn{padding:7px 9px}
   .logo{font-size:12px}
+}
+
+/* smoothness */
+.lang-fade main, .lang-fade header .nav ul, .lang-fade .cvbtn, .lang-fade footer{opacity:0;filter:blur(4px);transform:translateY(4px)}
+main, header .nav ul, .cvbtn, footer{transition:opacity .22s ease, filter .22s ease, transform .22s ease}
+.nav ul a em{display:inline-block;text-align:center}
+.cvbtn{justify-content:space-between}
+.cvbtn > span{display:inline-block}
+.kicker::before{transform:scaleX(0);transform-origin:left;transition:transform .8s cubic-bezier(.2,.7,.2,1) .15s}
+.kicker.in::before{transform:scaleX(1)}
+h2.reveal{clip-path:inset(0 100% 0 0);transform:none;transition:clip-path 1s cubic-bezier(.2,.7,.2,1),opacity .6s ease}
+h2.reveal.in{clip-path:inset(0 -2% -10% 0)}
+.btn,.sbtn,.mcard,.box,.proj,.cert,.fact,.job{will-change:transform}
+.cert{transition:transform .35s cubic-bezier(.2,.7,.2,1),border-color .3s}
+.cert:hover{transform:translateY(-4px);border-color:var(--line2)}
+.fact{transition:background .3s}
+.fact:hover{background:rgba(20,24,28,.95)}
+.job{transition:background .3s}
+.step .n{transition:border-color .3s,color .3s,transform .35s cubic-bezier(.2,.7,.2,1)}
+.step:hover .n{transform:translateY(-3px)}
+body{animation:pagein .7s ease both}
+@keyframes pagein{from{opacity:0}to{opacity:1}}
+@media (prefers-reduced-motion:reduce){
+  h2.reveal{clip-path:none}
+  .kicker::before{transform:none}
+  body{animation:none}
 }
 
 </style>
@@ -883,7 +912,39 @@ function setLang(l){
 }
 let initLang = 'en';
 try { const s = localStorage.getItem('lang'); if (s === 'ru' || s === 'en') initLang = s; } catch(e) {}
-document.querySelectorAll('[data-set-lang]').forEach(b => b.addEventListener('click', () => setLang(b.dataset.setLang)));
+document.querySelectorAll('[data-set-lang]').forEach(b => b.addEventListener('click', () => {
+  const l = b.dataset.setLang;
+  if (l === document.documentElement.dataset.lang) return;
+  if (reduce) { setLang(l); return; }
+  const y = scrollY, anchor = [...document.querySelectorAll('section')].find(sec => sec.getBoundingClientRect().bottom > 80);
+  const off = anchor ? anchor.getBoundingClientRect().top : 0;
+  document.documentElement.classList.add('lang-fade');
+  setTimeout(() => {
+    setLang(l);
+    if (anchor) scrollTo({top: anchor.offsetTop - off, behavior: 'instant'}); else scrollTo(0, y);
+    requestAnimationFrame(() => requestAnimationFrame(() => document.documentElement.classList.remove('lang-fade')));
+  }, 220);
+}));
+/* reserve the width of the longer label so the header never jumps */
+function lockWidths(){
+  const probe = document.createElement('span');
+  probe.style.cssText = 'position:absolute;visibility:hidden;white-space:nowrap;';
+  document.body.appendChild(probe);
+  const fit = (box, parts) => {
+    probe.style.font = getComputedStyle(box).font;
+    probe.style.letterSpacing = getComputedStyle(box).letterSpacing;
+    const w = Math.max(...parts.map(t => { probe.textContent = t; return probe.getBoundingClientRect().width; }));
+    box.style.minWidth = Math.ceil(w) + 'px';
+  };
+  document.querySelectorAll('.nav ul a em').forEach(em => fit(em, [...em.querySelectorAll('i')].map(i => i.textContent)));
+  const cv = document.querySelector('.cvbtn');
+  const lab = document.createElement('span'); lab.className = 'cvlab';
+  [...cv.querySelectorAll(':scope > .en, :scope > .ru')].forEach(x => lab.appendChild(x));
+  cv.insertBefore(lab, cv.firstChild);
+  fit(lab, [...lab.children].map(x => x.textContent));
+  probe.remove();
+}
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(lockWidths); else lockWidths();
 
 /* ---------- CV menu ---------- */
 const cvmenu = document.getElementById('cvmenu'), cvbtn = document.getElementById('cvbtn');
