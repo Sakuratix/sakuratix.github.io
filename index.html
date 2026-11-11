@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Климентий Матвеев — DevOps-инженер</title>
+<meta name="description" content="Климентий Матвеев — DevOps-инженер: Kubernetes, Terraform, CI/CD, мониторинг. Москва / удалённо.">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0a0b0d">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0b0d; --bg2:#101216; --line:#1d2026; --line2:#2a2e36;
+  --fg:#ececef; --muted:#8b909a; --dim:#5b606a;
+  --mint:#8ef0c6; --blue:#7aa2ff; --warn:#ffcf70;
+  --mono:"Geist Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --sans:"Geist",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  --maxw:1120px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--mint);color:#000}
+
+#gl{position:fixed;inset:0;width:100vw;height:100vh;z-index:0;pointer-events:none}
+.grain{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.vignette{position:fixed;inset:0;z-index:1;pointer-events:none;background:radial-gradient(120% 90% at 70% 40%,transparent 40%,rgba(0,0,0,.55) 100%)}
+
+main,header,footer{position:relative;z-index:2}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+
+/* progress + nav */
+.progress{position:fixed;top:0;left:0;height:2px;width:0;background:linear-gradient(90deg,var(--mint),var(--blue));z-index:20}
+header.nav{position:fixed;top:0;left:0;right:0;z-index:10;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);background:rgba(10,11,13,.6);border-bottom:1px solid transparent;transition:border-color .3s}
+header.nav.scrolled{border-bottom-color:var(--line)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
+.logo{font-family:var(--mono);font-size:14px;color:var(--muted)}
+.logo b{color:var(--fg);font-weight:500}
+.logo .cur{display:inline-block;width:8px;height:15px;background:var(--mint);vertical-align:-2px;margin-left:2px;animation:blink 1.1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.nav ul{display:flex;gap:26px;list-style:none;font-family:var(--mono);font-size:13px}
+.nav ul a{color:var(--muted);transition:color .2s}
+.nav ul a:hover{color:var(--fg)}
+.nav ul a span{color:var(--dim)}
+
+/* hero */
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;padding-top:60px}
+.hero .wrap{width:100%}
+.status{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:13px;color:var(--muted);border:1px solid var(--line2);border-radius:99px;padding:6px 14px 6px 12px;background:rgba(16,18,22,.6)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--mint);box-shadow:0 0 0 0 rgba(142,240,198,.6);animation:pulse 2s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(142,240,198,.5)}70%{box-shadow:0 0 0 10px rgba(142,240,198,0)}100%{box-shadow:0 0 0 0 rgba(142,240,198,0)}}
+h1{font-size:clamp(44px,7.4vw,96px);line-height:.98;letter-spacing:-.045em;font-weight:600;margin:26px 0 22px;max-width:11ch}
+h1 .grad{background:linear-gradient(100deg,var(--mint),var(--blue) 70%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{font-size:clamp(17px,1.6vw,20px);color:var(--muted);max-width:520px}
+.lead b{color:var(--fg);font-weight:500}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}
+.btn{font-family:var(--mono);font-size:14px;display:inline-flex;align-items:center;gap:10px;padding:12px 18px;border-radius:10px;border:1px solid var(--line2);background:rgba(16,18,22,.7);color:var(--fg);transition:transform .2s,border-color .2s,background .2s;cursor:pointer}
+.btn:hover{transform:translateY(-2px);border-color:var(--mint)}
+.btn.primary{background:var(--fg);color:#000;border-color:var(--fg)}
+.btn.primary:hover{background:var(--mint);border-color:var(--mint)}
+.btn svg{width:16px;height:16px}
+
+.term{margin-top:46px;max-width:520px;border:1px solid var(--line2);border-radius:12px;background:rgba(12,13,16,.82);font-family:var(--mono);font-size:13px;overflow:hidden;box-shadow:0 30px 80px -30px rgba(0,0,0,.8)}
+.term .bar{display:flex;gap:7px;padding:10px 12px;border-bottom:1px solid var(--line)}
+.term .bar i{width:10px;height:10px;border-radius:50%;background:#2b2f37}
+.term .bar em{margin-left:auto;font-style:normal;color:var(--dim);font-size:11px}
+.term pre{padding:14px 16px;min-height:178px;white-space:pre-wrap;color:var(--muted);font-family:inherit;line-height:1.65}
+.term .p{color:var(--mint)} .term .c{color:var(--fg)} .term .ok{color:var(--mint)} .term .b{color:var(--blue)}
+.scrollhint{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);font-family:var(--mono);font-size:11px;color:var(--dim);letter-spacing:.2em;text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:8px}
+.scrollhint::after{content:"";width:1px;height:38px;background:linear-gradient(var(--dim),transparent);animation:drip 2s infinite}
+@keyframes drip{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* sections */
+section{padding:110px 0}
+.kicker{font-family:var(--mono);font-size:13px;color:var(--mint);margin-bottom:18px;display:flex;align-items:center;gap:10px}
+.kicker::before{content:"";width:22px;height:1px;background:var(--mint)}
+h2{font-size:clamp(32px,4.4vw,56px);line-height:1.04;letter-spacing:-.035em;font-weight:600;max-width:16ch}
+.sub{color:var(--muted);max-width:560px;margin-top:18px}
+
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+.reveal.d1{transition-delay:.08s}.reveal.d2{transition-delay:.16s}.reveal.d3{transition-delay:.24s}.reveal.d4{transition-delay:.32s}.reveal.d5{transition-delay:.4s}
+
+/* about grid */
+.facts{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-top:56px;max-width:880px}
+.fact{background:rgba(12,13,16,.88);padding:22px}
+.fact .k{font-family:var(--mono);font-size:12px;color:var(--dim);text-transform:uppercase;letter-spacing:.08em}
+.fact .v{font-size:22px;font-weight:500;margin-top:6px;letter-spacing:-.02em}
+.fact .v small{display:block;font-size:13px;color:var(--muted);font-weight:400;letter-spacing:0;margin-top:2px}
+
+/* pipeline */
+.pipe{margin-top:60px;position:relative;display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
+.pipe::before{content:"";position:absolute;top:21px;left:22px;right:22px;height:1px;background:var(--line2)}
+.pipe .runner{position:absolute;top:18px;left:22px;width:7px;height:7px;border-radius:50%;background:var(--mint);box-shadow:0 0 14px var(--mint),0 0 30px var(--mint);animation:run 6s cubic-bezier(.6,0,.4,1) infinite}
+@keyframes run{0%{left:22px;opacity:0}5%{opacity:1}90%{opacity:1}100%{left:calc(100% - 28px);opacity:0}}
+.step{position:relative}
+.step .n{width:43px;height:43px;border-radius:12px;border:1px solid var(--line2);background:var(--bg2);display:grid;place-items:center;font-family:var(--mono);font-size:13px;color:var(--muted);position:relative;z-index:1;transition:border-color .3s,color .3s}
+.step:hover .n{border-color:var(--mint);color:var(--mint)}
+.step h3{font-size:16px;font-weight:500;margin-top:18px;letter-spacing:-.01em}
+.step p{font-size:14px;color:var(--muted);margin-top:6px;line-height:1.5}
+.step code{font-family:var(--mono);font-size:12px;color:var(--blue)}
+
+/* experience */
+.xp{margin-top:56px;border-top:1px solid var(--line);max-width:900px}
+.job{display:grid;grid-template-columns:200px 1fr;gap:30px;padding:34px 0;border-bottom:1px solid var(--line)}
+.job .when{font-family:var(--mono);font-size:13px;color:var(--dim);padding-top:4px}
+.job h3{font-size:22px;font-weight:500;letter-spacing:-.02em}
+.job .where{color:var(--muted);font-size:15px;margin-top:2px}
+.job ul{list-style:none;margin-top:16px;display:grid;gap:8px}
+.job li{color:var(--muted);font-size:15px;padding-left:20px;position:relative}
+.job li::before{content:"›";position:absolute;left:2px;color:var(--mint);font-family:var(--mono)}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px}
+.tag{font-family:var(--mono);font-size:12px;color:var(--muted);border:1px solid var(--line2);border-radius:6px;padding:3px 8px;background:rgba(16,18,22,.6)}
+
+/* stack */
+.stack{margin-top:56px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:980px}
+.box{border:1px solid var(--line);border-radius:14px;background:rgba(12,13,16,.85);padding:22px 22px 24px;font-family:var(--mono);font-size:14px;transition:border-color .3s,transform .3s}
+.box:hover{border-color:var(--line2);transform:translateY(-3px)}
+.box .cmd{color:var(--dim);font-size:12px;margin-bottom:14px}
+.box .cmd b{color:var(--mint);font-weight:400}
+.box ul{list-style:none;display:grid;gap:5px;color:var(--fg)}
+.box li span{color:var(--dim)}
+
+/* certs */
+.certs{margin-top:56px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:980px}
+.cert{position:relative;border:1px solid var(--line);border-radius:16px;padding:26px;background:linear-gradient(160deg,rgba(142,240,198,.06),rgba(12,13,16,.9) 50%);overflow:hidden}
+.cert .badge{font-family:var(--mono);font-size:34px;font-weight:500;letter-spacing:-.03em;color:var(--fg)}
+.cert p{color:var(--muted);font-size:14px;margin-top:8px}
+.cert .yr{position:absolute;top:22px;right:22px;font-family:var(--mono);font-size:12px;color:var(--mint)}
+
+/* projects */
+.projects{margin-top:56px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;max-width:980px}
+.proj{min-width:0;border:1px solid var(--line);border-radius:16px;padding:28px;background:rgba(12,13,16,.88);display:flex;flex-direction:column;gap:14px;transition:border-color .3s}
+.proj:hover{border-color:var(--mint)}
+.proj .top{display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:13px;color:var(--dim)}
+.proj h3{font-size:24px;font-weight:500;letter-spacing:-.02em}
+.proj p{color:var(--muted);font-size:15px}
+.tree{font-family:var(--mono);font-size:12.5px;color:var(--muted);line-height:1.55;white-space:pre;overflow-x:auto;padding:14px;border-radius:10px;background:#07080a;border:1px solid var(--line)}
+.tree b{color:var(--blue);font-weight:400}
+
+/* contact */
+.contact{padding:160px 0 120px}
+.contact h2{font-size:clamp(40px,7vw,92px);max-width:none}
+.mail{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin-top:40px}
+.mail .addr{font-family:var(--mono);font-size:clamp(18px,2.4vw,28px);color:var(--fg);border-bottom:1px dashed var(--line2);padding-bottom:4px}
+.links{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+footer{border-top:1px solid var(--line);padding:28px 0;font-family:var(--mono);font-size:12px;color:var(--dim)}
+footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+
+/* easter egg */
+.fakecur{position:fixed;left:0;top:0;width:22px;height:22px;z-index:100;pointer-events:none;display:none;will-change:transform}
+body.eaten, body.eaten *{cursor:none !important}
+.hint{position:fixed;z-index:50;pointer-events:none;font-family:var(--mono);font-size:11px;color:var(--mint);background:rgba(7,8,10,.85);border:1px solid rgba(142,240,198,.35);border-radius:6px;padding:4px 8px;opacity:0;transform:translate(16px,16px);transition:opacity .2s;white-space:nowrap}
+.hint.on{opacity:1}
+.toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,20px);z-index:60;font-family:var(--mono);font-size:13px;color:var(--fg);background:rgba(12,13,16,.95);border:1px solid var(--line2);border-radius:10px;padding:12px 16px;opacity:0;transition:all .4s cubic-bezier(.2,.7,.2,1);pointer-events:none;box-shadow:0 20px 60px -20px #000}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+.toast b{color:var(--mint);font-weight:400}
+.toast i{color:var(--dim);font-style:normal}
+.coretext{position:fixed;z-index:50;pointer-events:none;font-family:var(--mono);font-size:12px;color:var(--mint);opacity:0;transform:translate(-50%,-50%);transition:opacity .25s;text-shadow:0 0 12px rgba(142,240,198,.6)}
+.coretext.on{opacity:1}
+
+@media (max-width:900px){
+  .nav ul{display:none}
+  .facts{grid-template-columns:1fr 1fr}
+  .pipe{grid-template-columns:1fr 1fr;row-gap:34px}
+  .pipe::before,.pipe .runner{display:none}
+  .job{grid-template-columns:1fr;gap:8px}
+  .stack,.certs{grid-template-columns:1fr 1fr}
+  .projects{grid-template-columns:minmax(0,1fr)}
+  .tree{font-size:11px}
+  #gl{opacity:.45}
+  section{padding:100px 0}
+}
+@media (max-width:560px){
+  .wrap{padding:0 20px}
+  .stack,.certs,.pipe{grid-template-columns:1fr}
+  .facts{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  .reveal{opacity:1;transform:none;transition:none}
+  .pipe .runner,.dot,.scrollhint::after{animation:none}
+}
+</style>
+</head>
+<body>
+<canvas id="gl" aria-hidden="true"></canvas>
+<div class="vignette"></div>
+<div class="grain"></div>
+<div class="progress" id="progress"></div>
+
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a href="#top" class="logo"><b>klim</b>@devops:~$<span class="cur"></span></a>
+    <ul>
+      <li><a href="#about"><span>01</span> обо мне</a></li>
+      <li><a href="#pipeline"><span>02</span> подход</a></li>
+      <li><a href="#experience"><span>03</span> опыт</a></li>
+      <li><a href="#stack"><span>04</span> стек</a></li>
+      <li><a href="#contact"><span>05</span> связь</a></li>
+    </ul>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <div class="status reveal"><span class="dot"></span>открыт к предложениям · Москва / удалённо</div>
+      <h1 class="reveal d1">Климентий Матвеев. <span class="grad">DevOps.</span></h1>
+      <p class="lead reveal d2">Собираю пайплайны, поднимаю Kubernetes и описываю инфраструктуру кодом — так, чтобы релиз был <b>скучным</b>, а алерт приходил раньше, чем жалоба клиента.</p>
+      <div class="cta reveal d3">
+        <a class="btn primary" href="#contact">Написать мне
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a class="btn" href="https://github.com/Sakuratix" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn" href="https://t.me/MountewDew" target="_blank" rel="noopener">Telegram</a>
+      </div>
+      <div class="term reveal d4">
+        <div class="bar"><i></i><i></i><i></i><em>zsh — 80×24</em></div>
+        <pre id="term"></pre>
+      </div>
+    </div>
+    <div class="scrollhint">scroll</div>
+  </section>
+
+  <section id="about">
+    <div class="wrap">
+      <div class="kicker reveal">01 / обо мне</div>
+      <h2 class="reveal d1">От сетевого кабеля до Helm-чарта.</h2>
+      <p class="sub reveal d2">Начинал с железа и сетей компьютерных клубов, дошёл до CI/CD, Kubernetes и Terraform на проектах аутсорс-команд. Поэтому одинаково спокойно смотрю и в <code>tcpdump</code>, и в Grafana. Профильное образование — РАНХиГС, «Системное администрирование». Английский C1.</p>
+      <div class="facts">
+        <div class="fact reveal d1"><div class="k">опыт</div><div class="v">3+ года<small>эксплуатация и DevOps</small></div></div>
+        <div class="fact reveal d2"><div class="k">сертификаты</div><div class="v">CKA · TF<small>+ MTCNA</small></div></div>
+        <div class="fact reveal d3"><div class="k">английский</div><div class="v">C1<small>доки, issues, переписка</small></div></div>
+        <div class="fact reveal d4"><div class="k">формат</div><div class="v">Remote<small>или гибрид, Москва</small></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="pipeline">
+    <div class="wrap">
+      <div class="kicker reveal">02 / подход</div>
+      <h2 class="reveal d1">Как код попадает в прод.</h2>
+      <p class="sub reveal d2">Каждый коммит проходит один и тот же путь. Ручных шагов в нём — ноль, кроме кнопки «в прод».</p>
+      <div class="pipe">
+        <div class="runner"></div>
+        <div class="step reveal d1"><div class="n">01</div><h3>Commit</h3><p>Ветка, MR, ревью. Pre-commit хуки и линтеры.</p></div>
+        <div class="step reveal d2"><div class="n">02</div><h3>Build</h3><p>Многоступенчатый Dockerfile, кэш слоёв. <code>gitlab-ci</code></p></div>
+        <div class="step reveal d3"><div class="n">03</div><h3>Test & scan</h3><p>Тесты, <code>trivy</code>, <code>hadolint</code>, <code>tflint</code>.</p></div>
+        <div class="step reveal d4"><div class="n">04</div><h3>Release</h3><p>Образ с тегом коммита в registry, Helm-чарт с версией.</p></div>
+        <div class="step reveal d5"><div class="n">05</div><h3>Deploy</h3><p>Helm / Argo CD в dev → stage → prod. Rollback одной командой.</p></div>
+        <div class="step reveal d5"><div class="n">06</div><h3>Observe</h3><p>Prometheus, Grafana, Loki. Алерты в Telegram.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience">
+    <div class="wrap">
+      <div class="kicker reveal">03 / опыт</div>
+      <h2 class="reveal d1">Где я это делал.</h2>
+      <div class="xp">
+        <div class="job reveal">
+          <div class="when">проекты · по н.в.</div>
+          <div>
+            <h3>DevOps-инженер</h3>
+            <div class="where">Проектная работа в аутсорс-командах · удалённо</div>
+            <ul>
+              <li>CI/CD в GitLab CI: сборка, тесты, сканирование образов, деплой по окружениям</li>
+              <li>Перевёл сервисы с docker-compose в Kubernetes: Helm-чарты, Ingress, cert-manager, HPA</li>
+              <li>Инфраструктура Yandex Cloud на Terraform с remote state и модулями</li>
+              <li>Мониторинг kube-prometheus-stack + Loki, алерты в Telegram</li>
+            </ul>
+            <div class="tags"><span class="tag">Kubernetes</span><span class="tag">Helm</span><span class="tag">Terraform</span><span class="tag">GitLab CI</span><span class="tag">Ansible</span><span class="tag">Prometheus</span><span class="tag">Vault</span></div>
+          </div>
+        </div>
+        <div class="job reveal">
+          <div class="when">10.2024 — н.в.</div>
+          <div>
+            <h3>Инженер инфраструктуры</h3>
+            <div class="where">LANGAME SOFTWARE · Москва</div>
+            <ul>
+              <li>Linux-серверы и хранилища TrueNAS (ZFS, снапшоты, репликация) на площадках клиентов</li>
+              <li>Сети на MikroTik: VLAN, firewall, VPN между площадками</li>
+              <li>Мониторинг в Zabbix, автоматизация диагностики на Bash</li>
+            </ul>
+            <div class="tags"><span class="tag">Linux</span><span class="tag">TrueNAS</span><span class="tag">MikroTik</span><span class="tag">Zabbix</span><span class="tag">Bash</span></div>
+          </div>
+        </div>
+        <div class="job reveal">
+          <div class="when">05.2023 — 10.2024</div>
+          <div>
+            <h3>Специалист бэк-офиса, антифрод</h3>
+            <div class="where">Т-Банк · Москва</div>
+            <ul>
+              <li>Разбор инцидентов: восстановление цепочки событий по операциям и логам</li>
+              <li>Работа по SLA и регламентам, документирование для смежных команд</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="stack">
+    <div class="wrap">
+      <div class="kicker reveal">04 / стек</div>
+      <h2 class="reveal d1">$ ls ~/stack</h2>
+      <div class="stack">
+        <div class="box reveal d1"><div class="cmd"><b>$</b> ls containers/</div><ul><li>docker <span>/ compose</span></li><li>kubernetes <span>(CKA)</span></li><li>helm</li><li>ingress-nginx</li><li>argo-cd</li></ul></div>
+        <div class="box reveal d2"><div class="cmd"><b>$</b> ls iac/</div><ul><li>terraform <span>(cert.)</span></li><li>ansible</li><li>gitlab-ci</li><li>github-actions</li><li>vault <span>/ sops</span></li></ul></div>
+        <div class="box reveal d3"><div class="cmd"><b>$</b> ls observability/</div><ul><li>prometheus</li><li>grafana</li><li>alertmanager</li><li>loki</li><li>zabbix</li></ul></div>
+        <div class="box reveal d1"><div class="cmd"><b>$</b> ls os-net/</div><ul><li>linux <span>ubuntu · debian</span></li><li>nginx</li><li>mikrotik <span>(MTCNA)</span></li><li>wireguard</li><li>tcp/ip · dns · vlan</li></ul></div>
+        <div class="box reveal d2"><div class="cmd"><b>$</b> ls data/</div><ul><li>postgresql</li><li>mysql</li><li>redis</li><li>kafka</li><li>truenas <span>/ zfs</span></li></ul></div>
+        <div class="box reveal d3"><div class="cmd"><b>$</b> ls cloud/ code/</div><ul><li>yandex cloud</li><li>selectel</li><li>proxmox</li><li>bash</li><li>python</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="certs">
+    <div class="wrap">
+      <div class="kicker reveal">сертификаты</div>
+      <h2 class="reveal d1">Подтверждено экзаменами.</h2>
+      <div class="certs">
+        <div class="cert reveal d1"><span class="yr">2026</span><div class="badge">CKA</div><p>Certified Kubernetes Administrator · Linux Foundation</p></div>
+        <div class="cert reveal d2"><span class="yr">2026</span><div class="badge">Terraform</div><p>HashiCorp Certified: Terraform Associate</p></div>
+        <div class="cert reveal d3"><span class="yr">2026</span><div class="badge">MTCNA</div><p>MikroTik Certified Network Associate</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="wrap">
+      <div class="kicker reveal">open source</div>
+      <h2 class="reveal d1">Что можно потрогать.</h2>
+      <div class="projects">
+        <a class="proj reveal d1" href="https://github.com/Sakuratix/infra-lab" target="_blank" rel="noopener">
+          <div class="top"><span>Sakuratix/infra-lab</span><span>↗</span></div>
+          <h3>infra-lab</h3>
+          <p>Путь сервиса от кода до прода в одном репозитории: Docker, Helm, Terraform, Ansible, CI и мониторинг.</p>
+<div class="tree"><b>infra-lab/</b>
+├── app/            <span># Python-сервис + /metrics</span>
+├── helm/app/       <span># чарт: probes, HPA, ingress</span>
+├── terraform/      <span># Yandex Cloud: VPC, k8s, PG</span>
+├── ansible/        <span># харденинг + node_exporter</span>
+├── monitoring/     <span># prometheus · grafana</span>
+└── .github/workflows/</div>
+        </a>
+        <a class="proj reveal d2" href="https://github.com/Sakuratix" target="_blank" rel="noopener">
+          <div class="top"><span>этот сайт</span><span>↗</span></div>
+          <h3>Портфолио</h3>
+          <p>Один HTML-файл без сборщика, WebGL на three.js. Деплой в GitHub Pages через GitHub Actions на каждый пуш в main.</p>
+<div class="tree"><b>on:</b> push → main
+<b>jobs:</b>
+  deploy:
+    - actions/checkout
+    - actions/upload-pages-artifact
+    - actions/deploy-pages   <span># ✓ 14s</span></div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="wrap">
+      <div class="kicker reveal">05 / связь</div>
+      <h2 class="reveal d1">Давайте <span class="grad" style="background:linear-gradient(100deg,var(--mint),var(--blue));-webkit-background-clip:text;background-clip:text;color:transparent">поговорим.</span></h2>
+      <p class="sub reveal d2">Ищу команду, где можно забрать CI/CD, Kubernetes и мониторинг и довести их до уровня «работает само». Отвечаю в течение дня.</p>
+      <div class="mail reveal d3">
+        <span class="addr" id="addr">klimot.matot@mail.ru</span>
+        <button class="btn" id="copy" type="button">скопировать</button>
+      </div>
+      <div class="links reveal d4">
+        <a class="btn" href="https://t.me/MountewDew" target="_blank" rel="noopener">Telegram · @MountewDew</a>
+        <a class="btn" href="https://github.com/Sakuratix" target="_blank" rel="noopener">GitHub · Sakuratix</a>
+        <span class="btn" style="cursor:default">+7 (993) 926-83-03</span>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap"><span>© 2026 Климентий Матвеев</span><span id="egg-note">uptime: 100% · подсказка: нажми на облако точек</span></div>
+</footer>
+
+<svg class="fakecur" id="fakecur" viewBox="0 0 22 22"><path d="M3 2 L3 18 L7.2 14.2 L10 20.5 L12.8 19.3 L10.1 13.2 L16 13.2 Z" fill="#fff" stroke="#000" stroke-width="1.2" stroke-linejoin="round"/></svg>
+<div class="hint" id="hint">kubectl exec -it cursor</div>
+<div class="coretext" id="coretext">scheduling cursor…</div>
+<div class="toast" id="toast"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+"use strict";
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------- nav, progress, reveal ---------- */
+const nav = document.getElementById('nav'), bar = document.getElementById('progress');
+function onScroll(){
+  const h = document.documentElement.scrollHeight - innerHeight;
+  bar.style.width = (h>0 ? scrollY/h*100 : 0) + '%';
+  nav.classList.toggle('scrolled', scrollY > 10);
+}
+addEventListener('scroll', onScroll, {passive:true}); onScroll();
+const io = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} }), {threshold:.15, rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+/* ---------- typed terminal ---------- */
+const term = document.getElementById('term');
+const script = [
+  ['cmd','whoami'],
+  ['out','<span class="c">klimentiy</span> — devops engineer, moscow'],
+  ['cmd','kubectl get nodes'],
+  ['out','NAME        STATUS   ROLES    AGE\nk8s-cp-01   <span class="ok">Ready</span>    control  412d\nk8s-wk-01   <span class="ok">Ready</span>    worker   412d'],
+  ['cmd','terraform plan | tail -1'],
+  ['out','<span class="b">No changes.</span> Infrastructure matches the configuration.'],
+];
+async function typeTerm(){
+  if(reduce){ term.innerHTML = script.map(([t,s]) => t==='cmd' ? '<span class="p">$</span> <span class="c">'+s+'</span>' : s).join('\n'); return; }
+  let html = '';
+  for(const [t,s] of script){
+    if(t==='cmd'){
+      html += (html?'\n':'') + '<span class="p">$</span> <span class="c">';
+      for(const ch of s){ html += ch; term.innerHTML = html + '</span>▍'; await sleep(38 + Math.random()*50); }
+      html += '</span>'; term.innerHTML = html; await sleep(260);
+    } else { html += '\n' + s; term.innerHTML = html; await sleep(650); }
+  }
+  term.innerHTML = html + '\n<span class="p">$</span> ▍';
+}
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+setTimeout(typeTerm, 700);
+
+/* ---------- copy ---------- */
+const copyBtn = document.getElementById('copy');
+copyBtn.addEventListener('click', async () => {
+  const txt = document.getElementById('addr').textContent;
+  try { await navigator.clipboard.writeText(txt); copyBtn.textContent = 'скопировано ✓'; }
+  catch(e){ const r = document.createRange(); r.selectNodeContents(document.getElementById('addr')); const s = getSelection(); s.removeAllRanges(); s.addRange(r); copyBtn.textContent = 'выделено — ⌘/Ctrl+C'; }
+  setTimeout(() => copyBtn.textContent = 'скопировать', 2200);
+});
+
+/* ---------- WebGL particle core ---------- */
+if(typeof THREE === 'undefined'){ document.getElementById('gl').style.display='none'; return; }
+const canvas = document.getElementById('gl');
+let renderer;
+try { renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:true}); }
+catch(e){ canvas.style.display='none'; return; }
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(40, 1, .1, 100);
+camera.position.set(0, 0, 9);
+
+const N = innerWidth < 700 ? 3200 : 5200;
+const R = 1.7;
+const rnd = Math.random;
+
+function sphere(){ const a = new Float32Array(N*3); const g = Math.PI*(3-Math.sqrt(5));
+  for(let i=0;i<N;i++){ const y = 1 - (i/(N-1))*2, r = Math.sqrt(1-y*y), t = g*i, j = 1 + (rnd()-.5)*.04;
+    a[i*3]=Math.cos(t)*r*R*j; a[i*3+1]=y*R*j; a[i*3+2]=Math.sin(t)*r*R*j; } return a; }
+function torus(){ const a = new Float32Array(N*3), RR = 1.45, r = .5;
+  for(let i=0;i<N;i++){ const u = rnd()*Math.PI*2, v = rnd()*Math.PI*2;
+    a[i*3]=(RR + r*Math.cos(v))*Math.cos(u); a[i*3+1]=(RR + r*Math.cos(v))*Math.sin(u); a[i*3+2]=r*Math.sin(v); } return a; }
+function lattice(){ const a = new Float32Array(N*3), s = 1.25, G = 6;
+  for(let i=0;i<N;i++){ const f = (rnd()*6)|0; let u = rnd()*2-1, v = rnd()*2-1;
+    if(rnd()<.5) u = Math.round((u+1)/2*G)/G*2-1; else v = Math.round((v+1)/2*G)/G*2-1;
+    let x,y,z; const w = f%2 ? 1 : -1;
+    if(f<2){x=w;y=u;z=v}else if(f<4){x=u;y=w;z=v}else{x=u;y=v;z=w}
+    a[i*3]=x*s; a[i*3+1]=y*s; a[i*3+2]=z*s; } return a; }
+function cluster(){ const a = new Float32Array(N*3); const nodes = [[0,0,0]];
+  for(let k=0;k<6;k++){ const t = k/6*Math.PI*2; nodes.push([Math.cos(t)*1.75, Math.sin(t)*1.75, (k%2?.45:-.45)]); }
+  for(let i=0;i<N;i++){ const q = rnd();
+    if(q < .78){ const n = nodes[(rnd()*nodes.length)|0], rr = n===nodes[0] ? .62 : .38;
+      const th = rnd()*Math.PI*2, ph = Math.acos(2*rnd()-1);
+      a[i*3]=n[0]+rr*Math.sin(ph)*Math.cos(th); a[i*3+1]=n[1]+rr*Math.sin(ph)*Math.sin(th); a[i*3+2]=n[2]+rr*Math.cos(ph);
+    } else { const n = nodes[1+((rnd()*6)|0)], t = rnd();
+      a[i*3]=n[0]*t+(rnd()-.5)*.03; a[i*3+1]=n[1]*t+(rnd()-.5)*.03; a[i*3+2]=n[2]*t+(rnd()-.5)*.03; } }
+  return a; }
+function helix(){ const a = new Float32Array(N*3), L = 4.6;
+  for(let i=0;i<N;i++){ const t = rnd(), ang = t*Math.PI*6, strand = rnd()<.5 ? 0 : Math.PI, x = (t-.5)*L;
+    if(rnd()<.82){ a[i*3]=x; a[i*3+1]=Math.cos(ang+strand)*.85; a[i*3+2]=Math.sin(ang+strand)*.85; }
+    else { const k = Math.round(t*36)/36, ak = k*Math.PI*6, m = rnd()*2-1;
+      a[i*3]=(k-.5)*L; a[i*3+1]=Math.cos(ak)*.85*m; a[i*3+2]=Math.sin(ak)*.85*m; }
+    a[i*3]+= (rnd()-.5)*.03; a[i*3+1]+=(rnd()-.5)*.03; } return a; }
+
+const shapes = [sphere(), torus(), lattice(), cluster(), helix()];
+const pos = new Float32Array(N*3), rand = new Float32Array(N), col = new Float32Array(N*3);
+const cA = new THREE.Color('#8ef0c6'), cB = new THREE.Color('#7aa2ff'), cW = new THREE.Color('#ffffff');
+for(let i=0;i<N;i++){ rand[i] = rnd(); const c = rnd()<.06 ? cW : cA.clone().lerp(cB, rnd());
+  col[i*3]=c.r; col[i*3+1]=c.g; col[i*3+2]=c.b; }
+pos.set(shapes[0]);
+const geo = new THREE.BufferGeometry();
+geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+geo.setAttribute('aRand', new THREE.BufferAttribute(rand, 1));
+geo.setAttribute('aColor', new THREE.BufferAttribute(col, 3));
+const mat = new THREE.ShaderMaterial({
+  transparent:true, depthWrite:false, blending:THREE.AdditiveBlending,
+  uniforms:{ uTime:{value:0}, uSize:{value:38}, uPR:{value:renderer.getPixelRatio()}, uGlow:{value:0} },
+  vertexShader:`
+    attribute float aRand; attribute vec3 aColor;
+    uniform float uTime, uSize, uPR, uGlow;
+    varying vec3 vColor; varying float vA;
+    void main(){
+      vec3 p = position;
+      p += .025*vec3(sin(uTime*1.3+aRand*40.), cos(uTime*1.1+aRand*30.), sin(uTime*.9+aRand*20.));
+      vec4 mv = modelViewMatrix*vec4(p,1.);
+      gl_Position = projectionMatrix*mv;
+      gl_PointSize = uSize*uPR*(.45+aRand*.9)*(1.+uGlow*.8)/-mv.z;
+      vColor = mix(aColor, vec3(1.), uGlow*.5);
+      vA = (1. - smoothstep(6., 14., -mv.z))*(.55+.45*sin(uTime*2.+aRand*60.)*.5+.25);
+    }`,
+  fragmentShader:`
+    varying vec3 vColor; varying float vA;
+    void main(){
+      float d = length(gl_PointCoord-.5);
+      float a = 1. - smoothstep(0., .5, d);
+      gl_FragColor = vec4(vColor, a*a*vA);
+    }`
+});
+const points = new THREE.Points(geo, mat);
+const group = new THREE.Group(); group.add(points); scene.add(group);
+
+/* orbit ring */
+const ringGeo = new THREE.BufferGeometry(); const RN = 700, rp = new Float32Array(RN*3);
+for(let i=0;i<RN;i++){ const t = i/RN*Math.PI*2, r = 2.75 + (rnd()-.5)*.06; rp[i*3]=Math.cos(t)*r; rp[i*3+1]=(rnd()-.5)*.04; rp[i*3+2]=Math.sin(t)*r; }
+ringGeo.setAttribute('position', new THREE.BufferAttribute(rp,3));
+const ring = new THREE.Points(ringGeo, new THREE.PointsMaterial({color:0x5b606a, size:.018, transparent:true, opacity:.7}));
+ring.rotation.x = 1.25; group.add(ring);
+
+let W, H, baseX = 0, baseY = 0;
+function resize(){ W = innerWidth; H = innerHeight; renderer.setSize(W, H, false); camera.aspect = W/H; camera.updateProjectionMatrix();
+  baseX = W > 900 ? 2.15 : 0; baseY = W > 900 ? 0 : .2; mat.uniforms.uSize.value = W < 700 ? 30 : 38; }
+addEventListener('resize', resize); resize();
+
+let mx = 0, my = 0, smx = 0, smy = 0, morph = 0, suck = 0, spin = 0, t0 = performance.now();
+let realX = innerWidth/2, realY = innerHeight/2;
+addEventListener('pointermove', e => { mx = e.clientX/W*2-1; my = e.clientY/H*2-1; realX = e.clientX; realY = e.clientY; checkNear(e); }, {passive:true});
+
+function ease(t){ return t<.5 ? 4*t*t*t : 1-Math.pow(-2*t+2,3)/2; }
+const S = shapes.length;
+function frame(now){
+  const time = (now - t0)/1000;
+  const h = document.documentElement.scrollHeight - innerHeight;
+  const target = (h>0 ? Math.min(1, scrollY/h) : 0) * (S-1);
+  morph += (target - morph) * (reduce ? 1 : .06);
+  const i0 = Math.min(S-2, Math.floor(morph)), f = ease(Math.min(1, Math.max(0, morph - i0)));
+  const A = shapes[i0], B = shapes[i0+1];
+  const k = 1 - .82*Math.max(0, suck), ex = 1 + Math.max(0, -suck)*1.1;
+  for(let i=0;i<N;i++){
+    const j = i*3;
+    let x = A[j] + (B[j]-A[j])*f, y = A[j+1] + (B[j+1]-A[j+1])*f, z = A[j+2] + (B[j+2]-A[j+2])*f;
+    if(suck !== 0){
+      const sw = suck * (2 + rand[i]*5);
+      const c = Math.cos(sw), s = Math.sin(sw);
+      const nx = x*c - z*s, nz = x*s + z*c; x = nx; z = nz;
+      const m = suck > 0 ? k * (1 - rand[i]*.25*suck) : ex * (.8 + rand[i]*.4);
+      x *= m; y *= m; z *= m;
+    }
+    pos[j]=x; pos[j+1]=y; pos[j+2]=z;
+  }
+  geo.attributes.position.needsUpdate = true;
+  smx += (mx - smx)*.04; smy += (my - smy)*.04;
+  spin += reduce ? 0 : .0016 + Math.max(0,suck)*.05;
+  group.rotation.y = spin + morph*1.2 + smx*.35;
+  group.rotation.x = .25 + morph*.35 + smy*.25;
+  group.position.x = baseX + smx*.15; group.position.y = baseY - smy*.1;
+  ring.rotation.z = time*.05;
+  mat.uniforms.uTime.value = time;
+  renderer.render(scene, camera);
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+
+/* ---------- easter egg: the core eats your cursor ---------- */
+const fake = document.getElementById('fakecur'), hint = document.getElementById('hint'),
+      toast = document.getElementById('toast'), coretext = document.getElementById('coretext');
+let busy = false, restarts = 0;
+function coreScreen(){ const v = new THREE.Vector3(); group.getWorldPosition(v); v.project(camera);
+  return { x:(v.x+1)/2*W, y:(1-v.y)/2*H, r: Math.min(W,H) * (W>900 ? .2 : .26) }; }
+function isUI(el){ return !!(el && el.closest && el.closest('a,button,input,textarea,.btn,.term,.box,.proj,.cert,.fact,.job,nav')); }
+function checkNear(e){
+  if(busy) return;
+  const c = coreScreen(), d = Math.hypot(e.clientX-c.x, e.clientY-c.y);
+  const near = d < c.r && !isUI(e.target);
+  hint.classList.toggle('on', near);
+  hint.style.left = e.clientX+'px'; hint.style.top = e.clientY+'px';
+  document.body.style.cursor = near ? 'pointer' : '';
+}
+addEventListener('click', e => {
+  if(busy || isUI(e.target) || getSelection().toString()) return;
+  const c = coreScreen(); if(Math.hypot(e.clientX-c.x, e.clientY-c.y) > c.r) return;
+  eat(e.clientX, e.clientY);
+});
+function placeFake(x, y, s, r){ fake.style.transform = `translate(${x-3}px,${y-2}px) rotate(${r}deg) scale(${s})`; }
+function anim(dur, fn){ return new Promise(res => { const st = performance.now();
+  (function step(n){ const t = Math.min(1, (n-st)/dur); fn(t); if(t<1) requestAnimationFrame(step); else res(); })(st); }); }
+async function eat(sx, sy){
+  busy = true; hint.classList.remove('on'); document.body.style.cursor = '';
+  document.body.classList.add('eaten'); fake.style.display = 'block';
+  const c0 = coreScreen();
+  const a0 = Math.atan2(sy - c0.y, sx - c0.x), d0 = Math.hypot(sx - c0.x, sy - c0.y);
+  // 1 — spiral in
+  await anim(1100, t => {
+    const c = coreScreen(), e = t*t*(3-2*t), ang = a0 + e*Math.PI*3.2, d = d0*(1-e);
+    placeFake(c.x + Math.cos(ang)*d, c.y + Math.sin(ang)*d, 1 - e*.85, e*540);
+    suck = e; mat.uniforms.uGlow.value = e*.6;
+  });
+  fake.style.display = 'none';
+  // 2 — digest
+  let c = coreScreen(); coretext.style.left = c.x+'px'; coretext.style.top = (c.y + c.r*.85)+'px';
+  coretext.textContent = 'scheduling cursor…'; coretext.classList.add('on');
+  await anim(500, t => { suck = 1 + Math.sin(t*Math.PI*6)*.06; mat.uniforms.uGlow.value = .6 + t*.4; });
+  coretext.textContent = 'pod/cursor-' + Math.random().toString(16).slice(2,7) + ' · CrashLoopBackOff';
+  await anim(450, t => { suck = 1 + Math.sin(t*Math.PI*10)*.08; });
+  coretext.classList.remove('on');
+  // 3 — spit out to where the real mouse is now
+  fake.style.display = 'block';
+  await anim(850, t => {
+    const c = coreScreen(), tx = realX, ty = realY;
+    const e = 1 - Math.pow(1-t, 3), over = Math.sin(t*Math.PI)*60;
+    const nx = -(ty - c.y), ny = (tx - c.x), nl = Math.hypot(nx, ny) || 1;
+    placeFake(c.x + (tx-c.x)*e + nx/nl*over, c.y + (ty-c.y)*e + ny/nl*over, .15 + e*.85, (1-e)*-720);
+    suck = t < .25 ? 1 - t/.25*1.8 : -.8*(1 - (t-.25)/.75);
+    mat.uniforms.uGlow.value = 1 - t;
+  });
+  suck = 0; mat.uniforms.uGlow.value = 0;
+  fake.style.display = 'none'; document.body.classList.remove('eaten');
+  restarts++;
+  toast.innerHTML = '<b>✓</b> cursor redeployed <i>· restarts: ' + restarts + (restarts > 2 ? ' · может, хватит?' : '') + '</i>';
+  toast.classList.add('on'); setTimeout(() => toast.classList.remove('on'), 2600);
+  busy = false;
+}
+})();
+</script>
+</body>
+</html>
