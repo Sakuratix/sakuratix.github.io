@@ -14,7 +14,7 @@ CV = {
         "role": "DevOps Engineer",
         "meta": "Moscow, Russia · remote only · English C1",
         "summary": (
-            "DevOps engineer with 3+ years in infrastructure operations and automation: from Linux servers, "
+            "DevOps engineer with 2+ years in infrastructure operations and automation: from Linux servers, "
             "MikroTik networks and Zabbix to CI/CD, Kubernetes, Terraform and Prometheus. I build pipelines that "
             "scan and ship images without manual steps, move services to Kubernetes without downtime and keep "
             "infrastructure in code. Certified Kubernetes Administrator (CKA), Terraform Associate, MTCNA."
@@ -24,11 +24,11 @@ CV = {
             ("Containers", "Kubernetes (CKA), Docker, Helm, Argo CD, k3s, Ingress-NGINX, cert-manager"),
             ("Delivery and IaC", "GitLab CI, GitHub Actions, Terraform (Associate), Ansible, Trivy, Vault, SOPS"),
             ("Observability", "Prometheus, Grafana, Alertmanager, Loki, Zabbix"),
-            ("Systems and data", "Linux, systemd, Nginx, MikroTik (MTCNA), WireGuard, PostgreSQL, Redis, Kafka, TrueNAS/ZFS"),
+            ("Systems and data", "Linux, systemd, Nginx, MikroTik (MTCNA), VPN (WireGuard, OpenVPN, IPsec), PostgreSQL, Redis, Kafka, TrueNAS/ZFS"),
             ("Cloud and code", "Yandex Cloud, Selectel, Proxmox, Bash, Python, Git"),
         ],
         "jobs": [
-            ("DevOps Engineer", "Nixys, DevOps outsourcing · contract · remote", "present", [
+            ("DevOps Engineer", "Nixys, DevOps outsourcing · contract · remote", "2024 - present", [
                 "GitLab CI pipelines: build, tests, image scanning with Trivy, promotion across dev, stage and prod",
                 "Moved services from docker-compose to Kubernetes: Helm charts, Ingress-NGINX, cert-manager, HPA, probes",
                 "Yandex Cloud infrastructure in Terraform: VPC, Managed Kubernetes, Managed PostgreSQL, remote state",
@@ -67,7 +67,7 @@ CV = {
         "role": "DevOps-инженер",
         "meta": "Москва · только удалённо · английский C1",
         "summary": (
-            "DevOps-инженер, 3+ года в эксплуатации и автоматизации инфраструктуры: от Linux-серверов, сетей "
+            "DevOps-инженер, 2+ года в эксплуатации и автоматизации инфраструктуры: от Linux-серверов, сетей "
             "MikroTik и Zabbix до CI/CD, Kubernetes, Terraform и Prometheus. Строю пайплайны, которые проверяют и "
             "выкатывают образы без ручных шагов, переношу сервисы в Kubernetes без простоя и описываю "
             "инфраструктуру кодом. Сертификаты CKA, Terraform Associate, MTCNA."
@@ -77,11 +77,11 @@ CV = {
             ("Контейнеры", "Kubernetes (CKA), Docker, Helm, Argo CD, k3s, Ingress-NGINX, cert-manager"),
             ("Доставка и IaC", "GitLab CI, GitHub Actions, Terraform (Associate), Ansible, Trivy, Vault, SOPS"),
             ("Мониторинг", "Prometheus, Grafana, Alertmanager, Loki, Zabbix"),
-            ("Системы и данные", "Linux, systemd, Nginx, MikroTik (MTCNA), WireGuard, PostgreSQL, Redis, Kafka, TrueNAS/ZFS"),
+            ("Системы и данные", "Linux, systemd, Nginx, MikroTik (MTCNA), VPN (WireGuard, OpenVPN, IPsec), PostgreSQL, Redis, Kafka, TrueNAS/ZFS"),
             ("Облака и код", "Yandex Cloud, Selectel, Proxmox, Bash, Python, Git"),
         ],
         "jobs": [
-            ("DevOps-инженер", "Nixys, DevOps-аутсорсинг · контракт · удалённо", "по н.в.", [
+            ("DevOps-инженер", "Nixys, DevOps-аутсорсинг · контракт · удалённо", "2024 - н.в.", [
                 "CI/CD в GitLab CI: сборка, тесты, сканирование образов Trivy, деплой по окружениям dev, stage, prod",
                 "Перевёл сервисы с docker-compose в Kubernetes: Helm-чарты, Ingress-NGINX, cert-manager, HPA, пробы",
                 "Инфраструктура Yandex Cloud на Terraform: VPC, Managed Kubernetes, Managed PostgreSQL, remote state",
