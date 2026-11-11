@@ -480,6 +480,96 @@ header.wave .wi{animation:navwave .55s cubic-bezier(.2,.7,.2,1) both !important;
 @keyframes navout{to{opacity:0;transform:translateX(-6px)}}
 @keyframes navwave{from{opacity:0;transform:translateX(-14px);filter:blur(3px)}to{opacity:1;transform:none;filter:none}}
 
+/* pipeline simulator */
+.psim{margin-top:40px;border:1px solid var(--line2);border-radius:16px;background:rgba(12,13,16,.92);overflow:hidden;max-width:1000px}
+.ps-top{display:flex;flex-wrap:wrap;align-items:center;gap:12px;padding:14px 18px;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:12.5px;color:var(--muted)}
+.ps-commit{display:inline-flex;align-items:center;gap:8px;min-width:0}
+.ps-commit i{width:10px;height:10px;border-radius:50%;border:2px solid var(--blue)}
+.ps-commit b{color:var(--blue);font-weight:500}
+.ps-status{padding:3px 9px;border-radius:99px;border:1px solid var(--line2);color:var(--dim);font-size:11.5px;transition:all .3s}
+.ps-status.running{color:var(--warn);border-color:rgba(255,207,112,.4)}
+.ps-status.passed{color:var(--mint);border-color:rgba(142,240,198,.45);background:rgba(142,240,198,.06)}
+.ps-status.failed{color:#ff8f8f;border-color:rgba(255,143,143,.45);background:rgba(255,143,143,.06)}
+.ps-time{color:var(--dim);margin-left:auto}
+.ps-btn{all:unset;cursor:pointer;font-family:var(--mono);font-size:12.5px;padding:7px 12px;border:1px solid var(--line2);border-radius:8px;color:var(--fg);transition:all .2s}
+.ps-btn:hover{border-color:var(--mint);color:var(--mint)}
+.ps-btn.warn:hover,.ps-btn.warn.armed{border-color:#ff8f8f;color:#ff8f8f;background:rgba(255,143,143,.06)}
+.ps-btn[disabled]{opacity:.4;pointer-events:none}
+.ps-stages{position:relative;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;padding:22px 18px 18px}
+.ps-line{position:absolute;left:40px;right:40px;top:44px;height:2px;background:var(--line2);border-radius:2px;overflow:hidden}
+.ps-line i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--mint),var(--blue));transition:width .5s ease}
+.ps-line.failed i{background:#ff8f8f}
+.stg{all:unset;cursor:pointer;position:relative;z-index:1;display:flex;flex-direction:column;align-items:flex-start;gap:8px;padding:0 4px;min-width:0}
+.stg .dot{width:44px;height:44px;border-radius:12px;border:1px solid var(--line2);background:#0f1217;display:grid;place-items:center;font-family:var(--mono);font-size:13px;color:var(--dim);transition:all .3s}
+.stg b{font-weight:500;font-size:14.5px;color:var(--fg)}
+.stg small{font-family:var(--mono);font-size:11px;color:var(--dim);min-height:14px}
+.stg:hover .dot{border-color:var(--muted);transform:translateY(-2px)}
+.stg.sel .dot{box-shadow:0 0 0 3px rgba(122,162,255,.18);border-color:var(--blue)}
+.stg.running .dot{border-color:var(--warn);color:var(--warn);animation:pulse2 1s ease-in-out infinite}
+.stg.passed .dot{border-color:rgba(142,240,198,.6);color:#000;background:var(--mint)}
+.stg.failed .dot{border-color:#ff8f8f;color:#000;background:#ff8f8f}
+.stg.skipped .dot{border-style:dashed;opacity:.5}
+.stg.waiting .dot{border-color:var(--blue);color:var(--blue)}
+@keyframes pulse2{50%{box-shadow:0 0 0 6px rgba(255,207,112,.12)}}
+.ps-bottom{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);border-top:1px solid var(--line)}
+.ps-log{margin:0;min-height:210px;max-height:210px;overflow:hidden;padding:14px 18px;font-family:var(--mono);font-size:12px;line-height:1.7;color:var(--muted);background:#08090b;white-space:pre-wrap;word-break:break-all;display:flex;flex-direction:column;justify-content:flex-end}
+.ps-log b{font-weight:400;display:block;animation:msgin .25s ease forwards;opacity:0}
+.ps-log .c{color:var(--fg)} .ps-log .ok{color:var(--mint)} .ps-log .err{color:#ff8f8f} .ps-log .h{color:var(--blue)} .ps-log .w{color:var(--warn)}
+.ps-detail{padding:16px 20px;border-left:1px solid var(--line);min-height:210px}
+.ps-detail h4{font-size:17px;font-weight:500;letter-spacing:-.01em}
+.ps-detail p{font-size:14px;color:var(--muted);margin-top:6px;line-height:1.55}
+.ps-detail .tags{margin-top:12px}
+.ps-detail .meta{font-family:var(--mono);font-size:11.5px;color:var(--dim);margin-top:10px}
+
+/* experience gantt */
+.gantt{margin-top:40px;max-width:1000px;border:1px solid var(--line);border-radius:16px;background:rgba(12,13,16,.9);padding:18px 18px 10px}
+.g-axis{position:relative;height:22px;margin-left:170px;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:11px;color:var(--dim)}
+.g-axis span{position:absolute;top:0;transform:translateX(-50%)}
+.g-axis .now{color:var(--mint)}
+.g-rows{position:relative}
+.g-row{display:grid;grid-template-columns:170px 1fr;align-items:center;min-height:46px;border-bottom:1px dashed rgba(255,255,255,.04)}
+.g-row:last-child{border-bottom:0}
+.g-lab{font-family:var(--mono);font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-right:12px}
+.g-track{position:relative;height:46px}
+.g-grid{position:absolute;top:0;bottom:0;width:1px;background:rgba(255,255,255,.035)}
+.g-nowline{position:absolute;top:-22px;bottom:0;width:1px;background:linear-gradient(var(--mint),transparent);opacity:.6}
+.g-bar{all:unset;cursor:pointer;position:absolute;top:11px;height:24px;border-radius:7px;display:flex;align-items:center;padding:0 10px;font-family:var(--mono);font-size:11.5px;color:#000;white-space:nowrap;overflow:hidden;transform-origin:left;transform:scaleX(0);transition:transform 1s cubic-bezier(.2,.7,.2,1),box-shadow .25s,filter .25s;box-sizing:border-box}
+.gantt.in .g-bar{transform:scaleX(1)}
+.g-bar.dev{background:linear-gradient(90deg,var(--mint),var(--blue))}
+.g-bar.infra{background:var(--blue)}
+.g-bar.other{background:#3a3f48;color:var(--fg)}
+.g-bar:hover{filter:brightness(1.12)}
+.g-bar.sel{box-shadow:0 0 0 2px #0c0d10,0 0 0 4px var(--fg)}
+.g-bar.live::after{content:"";position:absolute;right:6px;top:50%;width:6px;height:6px;margin-top:-3px;border-radius:50%;background:#000;animation:blink 1.2s steps(1) infinite}
+.g-ms{position:absolute;top:15px;width:14px;height:14px;transform:translateX(-50%) rotate(45deg) scale(0);background:var(--warn);border-radius:3px;transition:transform .5s cubic-bezier(.2,.7,.2,1) 1s;cursor:default}
+.gantt.in .g-ms{transform:translateX(-50%) rotate(45deg) scale(1)}
+.g-ms.left em{transform:rotate(-45deg) translate(calc(-100% - 6px),-6px)}
+.g-ms em{position:absolute;left:50%;top:-2px;transform:rotate(-45deg) translate(14px,-6px);font-style:normal;font-family:var(--mono);font-size:10.5px;color:var(--warn);white-space:nowrap}
+.g-card{margin-top:16px;max-width:1000px;border:1px solid var(--line);border-radius:16px;background:rgba(12,13,16,.9);padding:22px 24px;display:grid;grid-template-columns:200px 1fr;gap:24px}
+.g-card .gc-when{font-family:var(--mono);font-size:12.5px;color:var(--dim);line-height:1.8}
+.g-card .gc-when b{display:block;font-size:22px;color:var(--fg);font-weight:500;font-family:var(--sans);letter-spacing:-.02em}
+.g-card h3{font-size:22px;font-weight:500;letter-spacing:-.02em}
+.g-card .where{color:var(--muted);font-size:15px;margin-top:2px}
+.g-card ul{list-style:none;margin-top:14px;display:grid;gap:8px}
+.g-card li{color:var(--muted);font-size:15px;padding-left:20px;position:relative}
+.g-card li::before{content:"›";position:absolute;left:2px;color:var(--mint);font-family:var(--mono)}
+.g-card .anim{animation:cardin .45s cubic-bezier(.2,.7,.2,1)}
+@keyframes cardin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media (max-width:900px){
+  .ps-stages{grid-template-columns:repeat(3,minmax(0,1fr));row-gap:18px}
+  .ps-line{display:none}
+  .ps-bottom{grid-template-columns:minmax(0,1fr)}
+  .ps-detail{border-left:0;border-top:1px solid var(--line)}
+  .g-axis{margin-left:92px}
+  .g-row{grid-template-columns:92px 1fr}
+  .g-lab{font-size:10.5px}
+  .g-bar{font-size:0;padding:0}
+  .g-ms em{display:none}
+  .g-axis span.odd{display:none}
+  .g-axis span{font-size:10px}
+  .g-card{grid-template-columns:1fr;gap:10px}
+}
+
 </style>
 </head>
 <body>
@@ -603,16 +693,23 @@ header.wave .wi{animation:navwave .55s cubic-bezier(.2,.7,.2,1) both !important;
     <div class="wrap">
       <div class="kicker reveal">02 / <span class="en">approach</span><span class="ru">подход</span></div>
       <h2 class="reveal d1"><span class="en">How code reaches production</span><span class="ru">Как код попадает в прод</span></h2>
-      <p class="sub reveal d2 en">Every commit takes the same path. There are no manual steps in it except the button that ships to prod.</p>
-      <p class="sub reveal d2 ru">Каждый коммит проходит один и тот же путь. Ручных шагов в нём нет, кроме кнопки «в прод».</p>
-      <div class="pipe">
-        <div class="runner"></div>
-        <div class="step reveal d1"><div class="n">01</div><h3>Commit</h3><p class="en">Branch, MR, review. Pre-commit hooks and linters.</p><p class="ru">Ветка, MR, ревью. Pre-commit хуки и линтеры.</p></div>
-        <div class="step reveal d2"><div class="n">02</div><h3>Build</h3><p class="en">Multi-stage Dockerfile, layer cache. <code>gitlab-ci</code></p><p class="ru">Многоступенчатый Dockerfile, кэш слоёв. <code>gitlab-ci</code></p></div>
-        <div class="step reveal d3"><div class="n">03</div><h3>Test &amp; scan</h3><p class="en">Tests, <code>trivy</code>, <code>hadolint</code>, <code>kubeconform</code>.</p><p class="ru">Тесты, <code>trivy</code>, <code>hadolint</code>, <code>kubeconform</code>.</p></div>
-        <div class="step reveal d4"><div class="n">04</div><h3>Release</h3><p class="en">Image tagged with the commit, versioned Helm chart.</p><p class="ru">Образ с тегом коммита в registry, Helm-чарт с версией.</p></div>
-        <div class="step reveal d5"><div class="n">05</div><h3>Deploy</h3><p class="en">Argo CD to dev, stage, prod. One-command rollback.</p><p class="ru">Argo CD в dev, stage, prod. Откат одной командой.</p></div>
-        <div class="step reveal d5"><div class="n">06</div><h3>Observe</h3><p class="en">Prometheus, Grafana, Loki. Alerts to Telegram.</p><p class="ru">Prometheus, Grafana, Loki. Алерты в Telegram.</p></div>
+      <p class="sub reveal d2 en">Every commit takes the same path, with no manual steps except the button that ships to prod. Run it, click any stage, or try to break it.</p>
+      <p class="sub reveal d2 ru">Каждый коммит проходит один и тот же путь, без ручных шагов, кроме кнопки «в прод». Запусти его, открой любой этап или попробуй сломать.</p>
+      <div class="psim reveal d2" id="psim">
+        <div class="ps-top">
+          <span class="ps-commit"><i></i><b id="ps-sha">a3f9c1e</b> <span id="ps-msg">feat: rate limit on /api</span></span>
+          <span class="ps-status" id="ps-status">idle</span>
+          <span class="ps-time" id="ps-time">00:00</span>
+          <button type="button" class="ps-btn" id="ps-run">▶ <span class="en">Run pipeline</span><span class="ru">Запустить</span></button>
+          <button type="button" class="ps-btn warn" id="ps-break">⚡ <span class="en">Break it</span><span class="ru">Сломать</span></button>
+        </div>
+        <div class="ps-stages" id="ps-stages">
+          <div class="ps-line"><i id="ps-fill"></i></div>
+        </div>
+        <div class="ps-bottom">
+          <pre class="ps-log" id="ps-log"></pre>
+          <div class="ps-detail" id="ps-detail"></div>
+        </div>
       </div>
     </div>
   </section>
@@ -621,61 +718,13 @@ header.wave .wi{animation:navwave .55s cubic-bezier(.2,.7,.2,1) both !important;
     <div class="wrap">
       <div class="kicker reveal">03 / <span class="en">experience</span><span class="ru">опыт</span></div>
       <h2 class="reveal d1"><span class="en">Where I did it</span><span class="ru">Где я это делал</span></h2>
-      <div class="xp">
-        <div class="job reveal">
-          <div class="when"><span class="en">2024 · present</span><span class="ru">с 2024</span></div>
-          <div>
-            <h3><span class="en">DevOps Engineer</span><span class="ru">DevOps-инженер</span></h3>
-            <div class="where">Nixys · <span class="en">DevOps outsourcing, contract · remote</span><span class="ru">DevOps-аутсорсинг, контракт · удалённо</span></div>
-            <ul class="en">
-              <li>GitLab CI pipelines: build, tests, image scanning, promotion across environments</li>
-              <li>Moved services from docker-compose to Kubernetes: Helm charts, Ingress, cert-manager, HPA</li>
-              <li>Yandex Cloud infrastructure in Terraform with remote state and modules</li>
-              <li>Monitoring with kube-prometheus-stack and Loki, alerts to Telegram</li>
-            </ul>
-            <ul class="ru">
-              <li>CI/CD в GitLab CI: сборка, тесты, сканирование образов, деплой по окружениям</li>
-              <li>Перевёл сервисы с docker-compose в Kubernetes: Helm-чарты, Ingress, cert-manager, HPA</li>
-              <li>Инфраструктура Yandex Cloud на Terraform с remote state и модулями</li>
-              <li>Мониторинг kube-prometheus-stack и Loki, алерты в Telegram</li>
-            </ul>
-            <div class="tags"><span class="tag">Kubernetes</span><span class="tag">Helm</span><span class="tag">Terraform</span><span class="tag">GitLab CI</span><span class="tag">Ansible</span><span class="tag">Prometheus</span><span class="tag">Vault</span></div>
-          </div>
-        </div>
-        <div class="job reveal">
-          <div class="when"><span class="en">10.2024 · present</span><span class="ru">с 10.2024</span></div>
-          <div>
-            <h3><span class="en">Infrastructure Engineer</span><span class="ru">Инженер инфраструктуры</span></h3>
-            <div class="where">LANGAME SOFTWARE · <span class="en">Moscow</span><span class="ru">Москва</span></div>
-            <ul class="en">
-              <li>Linux servers and TrueNAS storage (ZFS, snapshots, replication) across client venues</li>
-              <li>MikroTik networking: VLAN, firewall, site-to-site VPN</li>
-              <li>Zabbix monitoring, Bash automation for diagnostics</li>
-            </ul>
-            <ul class="ru">
-              <li>Linux-серверы и хранилища TrueNAS (ZFS, снапшоты, репликация) на площадках клиентов</li>
-              <li>Сети на MikroTik: VLAN, firewall, VPN между площадками</li>
-              <li>Мониторинг в Zabbix, автоматизация диагностики на Bash</li>
-            </ul>
-            <div class="tags"><span class="tag">Linux</span><span class="tag">TrueNAS</span><span class="tag">MikroTik</span><span class="tag">Zabbix</span><span class="tag">Bash</span></div>
-          </div>
-        </div>
-        <div class="job reveal">
-          <div class="when">05.2023 - 10.2024</div>
-          <div>
-            <h3><span class="en">Back-office Specialist, Anti-fraud</span><span class="ru">Специалист бэк-офиса, антифрод</span></h3>
-            <div class="where">T-Bank · <span class="en">Moscow</span><span class="ru">Москва</span></div>
-            <ul class="en">
-              <li>Incident investigation: rebuilding the chain of events from transactions and logs</li>
-              <li>SLA-driven work under strict procedures, documentation for partner teams</li>
-            </ul>
-            <ul class="ru">
-              <li>Разбор инцидентов: восстановление цепочки событий по операциям и логам</li>
-              <li>Работа по SLA и регламентам, документирование для смежных команд</li>
-            </ul>
-          </div>
-        </div>
+      <p class="sub reveal d2 en">From restaurant operations through bank incident work to infrastructure and DevOps. Click a bar to open the role.</p>
+      <p class="sub reveal d2 ru">От операционки в ресторане через разбор инцидентов в банке к инфраструктуре и DevOps. Нажми на полосу, чтобы открыть роль.</p>
+      <div class="gantt reveal d2" id="gantt">
+        <div class="g-axis" id="g-axis"></div>
+        <div class="g-rows" id="g-rows"></div>
       </div>
+      <div class="g-card" id="g-card"></div>
     </div>
   </section>
 
@@ -1247,6 +1296,152 @@ if (wbox) {
     if (e.key === 'ArrowLeft') { show(cur - 1); tabs[cur].focus(); }
   });
 }
+
+/* ---------- pipeline simulator ---------- */
+(function(){
+  const root = document.getElementById('psim'); if (!root) return;
+  const L = (en, ru) => `<span class="en">${en}</span><span class="ru">${ru}</span>`;
+  const STAGES = [
+    {k:'commit', name:'Commit', secs:4,
+     d:L('Branch, merge request, review. Pre-commit hooks catch formatting, broken YAML and leaked secrets before anything runs.','Ветка, MR, ревью. Pre-commit хуки ловят форматирование, битый YAML и утёкшие секреты ещё до запуска пайплайна.'),
+     tags:['git','pre-commit','gitleaks'],
+     log:[['c','$ git push origin feature/rate-limit'],['','remote: merge request !142 opened'],['ok','pre-commit: ruff ✓ yamllint ✓ gitleaks ✓']]},
+    {k:'build', name:'Build', secs:38,
+     d:L('Multi-stage Dockerfile with the tests inside it, layer cache from the registry. An image that fails its tests never exists.','Многоступенчатый Dockerfile с тестами внутри и кэшем слоёв. Образ, не прошедший тесты, просто не появится.'),
+     tags:['docker buildx','gitlab-ci','cache'],
+     log:[['c','$ docker buildx build --cache-from type=registry .'],['','#7 [test 3/4] RUN pytest -q'],['ok','#7 4 passed in 0.6s'],['','#9 exporting layers 0.8s']]},
+    {k:'scan', name:'Test & scan', secs:52,
+     d:L('Trivy blocks HIGH and CRITICAL vulnerabilities, hadolint checks the Dockerfile, kubeconform validates the rendered manifests.','Trivy блокирует уязвимости HIGH и CRITICAL, hadolint проверяет Dockerfile, kubeconform валидирует отрендеренные манифесты.'),
+     tags:['trivy','hadolint','kubeconform'],
+     log:[['c','$ trivy image app:a3f9c1e --severity HIGH,CRITICAL'],['ok','Total: 0 (HIGH: 0, CRITICAL: 0)'],['c','$ kubeconform -strict rendered/'],['ok','Summary: 7 resources found - Valid: 7, Invalid: 0']],
+     fail:[['c','$ trivy image app:a3f9c1e --severity HIGH,CRITICAL'],['err','Total: 2 (HIGH: 2, CRITICAL: 0)'],['err','libssl3   HIGH   fixed version available'],['err','openssl   HIGH   fixed version available'],['err','✗ job failed: image not pushed, prod untouched']]},
+    {k:'release', name:'Release', secs:12,
+     d:L('The image is tagged with the commit SHA and pushed; the Helm chart gets a version. Every deploy can be traced back to a commit.','Образ получает тег коммита и уходит в registry, Helm-чарт получает версию. Любой деплой можно отследить до коммита.'),
+     tags:['ghcr','helm package','semver'],
+     log:[['c','$ docker push ghcr.io/sakuratix/app:a3f9c1e'],['','a3f9c1e: digest sha256:9e1c… size 41 MB'],['ok','chart app-0.4.2.tgz published']]},
+    {k:'deploy', name:'Deploy', secs:64,
+     d:L('Argo CD syncs stage automatically; prod waits for one manual approval. Rolling update without downtime, rollback is one command.','Argo CD синхронизирует stage автоматически, prod ждёт одно ручное подтверждение. Обновление без простоя, откат одной командой.'),
+     tags:['argo cd','helm','rolling update'],
+     log:[['c','$ argocd app sync app-stage'],['ok','stage: 2/2 pods ready, 0 restarts'],['w','prod: waiting for approval…'],['ok','prod: approved, 3/3 pods ready']]},
+    {k:'observe', name:'Observe', secs:30,
+     d:L('After the release the dashboards and SLO alerts decide whether it stays. Alerts go to Telegram before users notice.','После релиза дашборды и SLO-алерты решают, остаётся ли он. Алерты приходят в Telegram раньше, чем заметят пользователи.'),
+     tags:['prometheus','grafana','alertmanager'],
+     log:[['h','p95 84 ms · errors 0.2% · SLO 99.9% ok'],['ok','alerts firing: 0']]},
+  ];
+  const wrap = document.getElementById('ps-stages'), log = document.getElementById('ps-log'), det = document.getElementById('ps-detail');
+  const fill = document.getElementById('ps-fill'), line = fill.parentElement, stat = document.getElementById('ps-status'), tm = document.getElementById('ps-time');
+  const runB = document.getElementById('ps-run'), brkB = document.getElementById('ps-break'), sha = document.getElementById('ps-sha');
+  const els = STAGES.map((st, i) => {
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'stg';
+    b.innerHTML = `<span class="dot">0${i+1}</span><b>${st.name}</b><small></small>`;
+    b.addEventListener('click', () => select(i)); wrap.appendChild(b); return b;
+  });
+  let sel = 0, timers = [], armed = false, running = false, simT = 0;
+  function select(i){
+    sel = i; els.forEach((e, k) => e.classList.toggle('sel', k === i));
+    const st = STAGES[i];
+    det.innerHTML = `<div class="anim"><h4>0${i+1} · ${st.name}</h4><p>${st.d}</p><div class="tags">${st.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div><div class="meta">~${st.secs}s</div></div>`;
+  }
+  const fmt = s => `${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;
+  function out(cls, txt){ const b = document.createElement('b'); if (cls) b.className = cls; b.textContent = txt; log.appendChild(b); while (log.children.length > 9) log.firstChild.remove(); }
+  function setStat(s, label){ stat.className = 'ps-status ' + s; stat.textContent = label; }
+  function reset(){
+    timers.forEach(clearTimeout); timers = []; log.innerHTML = ''; simT = 0; tm.textContent = '00:00';
+    els.forEach(e => { e.className = 'stg' + (e === els[sel] ? ' sel' : ''); e.querySelector('small').textContent = ''; });
+    fill.style.width = '0'; line.classList.remove('failed');
+  }
+  const at = (ms, fn) => timers.push(setTimeout(fn, ms));
+  function run(){
+    reset(); running = true; runB.disabled = true; brkB.disabled = true;
+    sha.textContent = Math.random().toString(16).slice(2, 9);
+    setStat('running', 'running');
+    const fails = armed; let t = 200;
+    for (let i = 0; i < STAGES.length; i++) {
+      const st = STAGES[i], lines = (fails && st.fail) ? st.fail : st.log, idx = i;
+      at(t, () => { els[idx].classList.add('running'); select(idx); out('h', `── ${st.name.toLowerCase()} ──`); });
+      lines.forEach((ln, j) => at(t + 300 + j * 360, () => {
+        out(ln[0], ln[1].replace('a3f9c1e', sha.textContent));
+        if (st.k === 'deploy' && ln[0] === 'w') els[idx].classList.add('waiting');
+      }));
+      t += 300 + lines.length * 360 + 250;
+      if (fails && st.fail) {
+        at(t, () => {
+          els[idx].classList.remove('running'); els[idx].classList.add('failed'); els[idx].querySelector('small').textContent = 'failed';
+          for (let k = idx + 1; k < els.length; k++) { els[k].classList.add('skipped'); els[k].querySelector('small').textContent = 'skipped'; }
+          line.classList.add('failed'); fill.style.width = `${(idx / (STAGES.length - 1)) * 100}%`;
+          setStat('failed', 'failed'); out('w', 'fix: apt-get upgrade in the image → push again');
+          running = false; runB.disabled = false; brkB.disabled = false; armed = false; brkB.classList.remove('armed');
+        });
+        return;
+      }
+      at(t, () => {
+        simT += st.secs; tm.textContent = fmt(simT);
+        els[idx].classList.remove('running','waiting'); els[idx].classList.add('passed'); els[idx].querySelector('small').textContent = st.secs + 's';
+        fill.style.width = `${(idx / (STAGES.length - 1)) * 100}%`;
+      });
+    }
+    at(t + 100, () => { setStat('passed', 'passed'); out('ok', `✓ pipeline passed in ${fmt(simT)}`); running = false; runB.disabled = false; brkB.disabled = false; });
+  }
+  runB.addEventListener('click', run);
+  brkB.addEventListener('click', () => { if (running) return; armed = true; brkB.classList.add('armed'); run(); });
+  select(0); setStat('', 'idle');
+  let started = false;
+  new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting && !started) { started = true; if (!reduce) setTimeout(run, 500); } }), {threshold:.35}).observe(root);
+})();
+
+/* ---------- experience gantt ---------- */
+(function(){
+  const g = document.getElementById('gantt'); if (!g) return;
+  const L = (en, ru) => `<span class="en">${en}</span><span class="ru">${ru}</span>`;
+  const T0 = 2017.6, T1 = 2027.1, NOW = 2026.86;
+  const pos = y => ((y - T0) / (T1 - T0)) * 100;
+  const JOBS = [
+    {id:'nixys', cls:'dev', label:'Nixys', from:2024.83, to:NOW, live:true,
+     title:L('DevOps Engineer','DevOps-инженер'), where:L('Nixys · DevOps outsourcing, contract · remote','Nixys · DevOps-аутсорсинг, контракт · удалённо'), when:L('2024 · present','с 2024'), dur:L('2 years','2 года'),
+     items:[L('GitLab CI pipelines: build, tests, image scanning, promotion across environments','CI/CD в GitLab CI: сборка, тесты, сканирование образов, деплой по окружениям'),
+            L('Moved services from docker-compose to Kubernetes: Helm charts, Ingress, cert-manager, HPA','Перевёл сервисы с docker-compose в Kubernetes: Helm-чарты, Ingress, cert-manager, HPA'),
+            L('Yandex Cloud infrastructure in Terraform with remote state and modules','Инфраструктура Yandex Cloud на Terraform с remote state и модулями'),
+            L('Monitoring with kube-prometheus-stack and Loki, alerts to Telegram','Мониторинг kube-prometheus-stack и Loki, алерты в Telegram')],
+     tags:['Kubernetes','Helm','Terraform','GitLab CI','Ansible','Prometheus','Vault']},
+    {id:'langame', cls:'infra', label:'LANGAME', from:2024.75, to:NOW, live:true,
+     title:L('Infrastructure Engineer','Инженер инфраструктуры'), where:L('LANGAME SOFTWARE · Moscow','LANGAME SOFTWARE · Москва'), when:L('Oct 2024 · present','с октября 2024'), dur:L('2 years','2 года'),
+     items:[L('Linux servers and TrueNAS storage (ZFS, snapshots, replication) across client venues','Linux-серверы и хранилища TrueNAS (ZFS, снапшоты, репликация) на площадках клиентов'),
+            L('MikroTik networking: VLAN, firewall, site-to-site VPN','Сети на MikroTik: VLAN, firewall, VPN между площадками'),
+            L('Zabbix monitoring, Bash automation for diagnostics','Мониторинг в Zabbix, автоматизация диагностики на Bash'),
+            L('Grew from first-line support to owning infrastructure on my own','Вырос с первой линии поддержки до самостоятельного ведения инфраструктуры')],
+     tags:['Linux','TrueNAS','MikroTik','Zabbix','Bash']},
+    {id:'tbank', cls:'other', label:'T-Bank', from:2023.37, to:2024.78,
+     title:L('Back-office Specialist, Anti-fraud','Специалист бэк-офиса, антифрод'), where:L('T-Bank · Moscow','Т-Банк · Москва'), when:L('May 2023 · Oct 2024','май 2023 · окт. 2024'), dur:L('1.5 years','1,5 года'),
+     items:[L('Incident investigation: rebuilding the chain of events from transactions and logs','Разбор инцидентов: восстановление цепочки событий по операциям и логам'),
+            L('SLA-driven work under strict procedures, documentation for partner teams','Работа по SLA и регламентам, документирование для смежных команд')],
+     tags:['incidents','SLA','root cause']},
+    {id:'pbo', cls:'other', label:L('Sistema PBO','Система ПБО'), from:2017.78, to:2023.37,
+     title:L('Assistant Manager','Ассистент руководителя'), where:L('Sistema PBO · St. Petersburg','Система ПБО · Санкт-Петербург'), when:L('Oct 2017 · May 2023','окт. 2017 · май 2023'), dur:L('5.5 years','5,5 лет'),
+     items:[L('Grew from team member to assistant manager while studying for my degree','Вырос от сотрудника до ассистента директора параллельно с учёбой'),
+            L('Ran shifts, trained new staff, worked to procedures and checklists','Управление сменой, обучение сотрудников, работа по регламентам и чек-листам')],
+     tags:['operations','people','procedures']},
+  ];
+  const axis = document.getElementById('g-axis'), rows = document.getElementById('g-rows'), card = document.getElementById('g-card');
+  for (let y = 2018; y <= 2026; y++) axis.insertAdjacentHTML('beforeend', `<span class="${y % 2 ? 'odd' : ''}" style="left:${pos(y)}%">${y}</span>`);
+  axis.insertAdjacentHTML('beforeend', `<span class="now" style="left:${pos(NOW)}%">now</span>`);
+  const grid = () => [2018,2019,2020,2021,2022,2023,2024,2025,2026].map(y => `<i class="g-grid" style="left:${pos(y)}%"></i>`).join('') + `<i class="g-nowline" style="left:${pos(NOW)}%"></i>`;
+  const bars = [];
+  JOBS.forEach((j, i) => {
+    const row = document.createElement('div'); row.className = 'g-row';
+    row.innerHTML = `<div class="g-lab">${j.label}</div><div class="g-track">${grid()}<button type="button" class="g-bar ${j.cls}${j.live ? ' live' : ''}" style="left:${pos(j.from)}%;width:${pos(j.to) - pos(j.from)}%;transition-delay:${i * 120}ms">${j.label}</button></div>`;
+    const b = row.querySelector('.g-bar'); b.addEventListener('click', () => pick(i)); bars.push(b);
+    rows.appendChild(row);
+  });
+  const ms = document.createElement('div'); ms.className = 'g-row';
+  ms.innerHTML = `<div class="g-lab">${L('milestones','вехи')}</div><div class="g-track">${grid()}<i class="g-ms" style="left:${pos(2023.5)}%"><em>${L('Bachelor, RANEPA','Бакалавр, РАНХиГС')}</em></i><i class="g-ms left" style="left:${pos(2026.3)}%"><em>CKA · TF · MTCNA</em></i></div>`;
+  rows.appendChild(ms);
+  function pick(i){
+    const j = JOBS[i]; bars.forEach((b, k) => b.classList.toggle('sel', k === i));
+    card.innerHTML = `<div class="gc-when anim"><b>${j.dur}</b>${j.when}</div><div class="anim"><h3>${j.title}</h3><div class="where">${j.where}</div><ul>${j.items.map(x => `<li>${x}</li>`).join('')}</ul><div class="tags">${j.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div></div>`;
+  }
+  pick(0);
+  new IntersectionObserver((es, o) => es.forEach(e => { if (e.isIntersecting) { g.classList.add('in'); o.disconnect(); } }), {threshold:.3}).observe(g);
+})();
 
 /* ---------- stack columns ---------- */
 const colsEl = document.getElementById('cols');
