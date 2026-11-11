@@ -1976,7 +1976,9 @@ async function safeMovie(){
     document.documentElement.classList.remove('movie-on'); moviePlaying = false;
   }
 }
-if (location.hash === '#movie' && !reduce) setTimeout(() => { busy = true; safeMovie().then(() => { busy = false; }); }, 1200);
+function hashMovie(){ if (location.hash !== '#movie' || reduce || busy) return; busy = true; safeMovie().then(() => { busy = false; history.replaceState(null, '', location.pathname + location.search); }); }
+if (location.hash === '#movie') setTimeout(hashMovie, 1200);
+addEventListener('hashchange', hashMovie);
 async function movie(){
   if (moviePlaying) return; moviePlaying = true;
   const ru = document.documentElement.dataset.lang === 'ru';
