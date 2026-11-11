@@ -2391,7 +2391,7 @@ async function movie(){
     if (t > T.pop) {
       once('world', () => { world.visible = true; S.background = skies[0]; setTitle(''); blink(90); });
       const c = ease(ph(t, T.pop, T.run));
-      yaw = 0.25 + 0.8 * c; lean = 0.2 * c;
+      yaw = 0.25 + 0.6 * c; lean = 0.2 * c;
       if (t < T.run) { mover.position.y = -0.12 * Math.sin(c * Math.PI); expression(0.03, 0, 0.28, 1); }
     }
     // 4) run along the bridge, feet land on the step sounds
