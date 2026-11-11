@@ -1847,6 +1847,8 @@ function bounceOut(){
 /* ---------- synthesized sound: no audio files, all WebAudio ---------- */
 const SFX = (() => {
   let ac = null, master = null, nbuf = null;
+  const live = new Set(), timers = new Set(), bufs = {}, loading = {};
+  const track = n => { live.add(n); n.onended = () => live.delete(n); return n; };
   function ctx(){
     if (!ac) {
       const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return null;
@@ -1866,17 +1868,44 @@ const SFX = (() => {
     const f = a.createBiquadFilter(); f.type = type; f.Q.value = q || 1;
     f.frequency.setValueAtTime(f0, t); f.frequency.exponentialRampToValueAtTime(f1, t + dur);
     const g = a.createGain(); g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(gain, t + 0.02); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
-    src.connect(f); f.connect(g); g.connect(master); src.start(t); src.stop(t + dur + 0.05);
+    track(src); src.connect(f); f.connect(g); g.connect(master); src.start(t); src.stop(t + dur + 0.05);
   }
   function tone(t, dur, type, f0, f1, gain){
     const a = ctx(); if (!a) return;
     const o = a.createOscillator(); o.type = type;
     o.frequency.setValueAtTime(f0, t); o.frequency.exponentialRampToValueAtTime(Math.max(1, f1), t + dur);
     const g = a.createGain(); g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(gain, t + 0.01); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
-    o.connect(g); g.connect(master); o.start(t); o.stop(t + dur + 0.05);
+    track(o); o.connect(g); g.connect(master); o.start(t); o.stop(t + dur + 0.05);
   }
   const now = () => { const a = ctx(); return a ? a.currentTime : 0; };
+  // sample playback: files from /sfx, decoded once, cached
+  function load(name, url){
+    const a = ctx(); if (!a) return Promise.resolve(null);
+    if (bufs[name]) return Promise.resolve(bufs[name]);
+    return loading[name] || (loading[name] = fetch(url).then(r => { if (!r.ok) throw 0; return r.arrayBuffer(); })
+      .then(b => new Promise((ok, no) => a.decodeAudioData(b, ok, no))).then(b => (bufs[name] = b)).catch(() => null));
+  }
+  function play(name, o){
+    o = o || {}; const a = ctx(), b = bufs[name]; if (!a || !b) return null;
+    const t = a.currentTime + (o.delay || 0), off = o.offset || 0, dur = o.dur || (b.duration - off);
+    const src = track(a.createBufferSource()); src.buffer = b; if (o.rate) src.playbackRate.value = o.rate;
+    const g = a.createGain(), v = o.gain == null ? 1 : o.gain, fi = o.fadeIn || 0.005, fo = Math.min(o.fadeOut || 0.08, dur / 2);
+    g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(v, t + fi);
+    g.gain.setValueAtTime(v, t + dur - fo); g.gain.linearRampToValueAtTime(0, t + dur);
+    src.connect(g); g.connect(master); src.start(t, off, dur + 0.02);
+    return src;
+  }
+  function later(ms, fn){ const id = setTimeout(() => { timers.delete(id); fn(); }, ms); timers.add(id); }
+  function stopAll(fade){
+    timers.forEach(clearTimeout); timers.clear();
+    if (!ac) return; fade = fade == null ? 0.35 : fade;
+    const t = ac.currentTime, g = master.gain;
+    g.cancelScheduledValues(t); g.setValueAtTime(g.value, t); g.linearRampToValueAtTime(0, t + fade);
+    const nodes = [...live]; live.clear();
+    setTimeout(() => { nodes.forEach(n => { try { n.stop(); } catch (e) {} }); g.cancelScheduledValues(ac.currentTime); g.setValueAtTime(0.8, ac.currentTime); }, fade * 1000 + 40);
+  }
   return {
+    load, play, later, stopAll, has: n => !!bufs[n],
     unlock(){ ctx(); },
     thud(v){ const t = now(); tone(t, 0.25, 'sine', 140, 38, 0.9 * v); noise(t, 0.08, 'lowpass', 2500, 300, 0.4 * v); },
     boom(v){ const t = now(); tone(t, 0.6, 'sine', 90, 28, v); noise(t, 0.5, 'lowpass', 1800, 60, 0.6 * v); },
@@ -1890,7 +1919,7 @@ const SFX = (() => {
       for (let i = 0; i < 1024; i++) { const x = i / 512 - 1; curve[i] = Math.tanh(x * 3); } sh.curve = curve;
       const g = a.createGain(); g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.5, t + 0.08); g.gain.exponentialRampToValueAtTime(0.0001, t + d);
       lp.connect(sh); sh.connect(g); g.connect(master);
-      [55, 55.6, 110, 82.4, 41.2].forEach(f => { const o = a.createOscillator(); o.type = 'sawtooth'; o.frequency.value = f; o.connect(lp); o.start(t); o.stop(t + d + 0.1); });
+      [55, 55.6, 110, 82.4, 41.2].forEach(f => { const o = track(a.createOscillator()); o.type = 'sawtooth'; o.frequency.value = f; o.connect(lp); o.start(t); o.stop(t + d + 0.1); });
     },
     drums(bars, step){
       const t0 = now(); step = step || 0.3;
@@ -2118,7 +2147,7 @@ async function movie(){
     }
     if (t > T.splash) {
       once('splash', () => {
-        SFX.splash(); setTimeout(() => SFX.hit(), 350);
+        SFX.splash(); SFX.later(350, () => SFX.hit());
         splashP.visible = true; splashP.position.copy(hero.position); splashP.position.y = -8.8;
         hero.visible = false; shakeAmt = 0.35;
         setTitle(ru ? 'deploy завершён ✓' : 'deployed ✓');
@@ -2151,6 +2180,7 @@ async function movie(){
   }
   function finish(){
     if (done) return; done = true; cancelAnimationFrame(raf);
+    SFX.stopAll(0.4);
     removeEventListener('keydown', onKey);
     wrap.classList.add('out');
     document.documentElement.classList.remove('movie-on');
