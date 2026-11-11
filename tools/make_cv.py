@@ -14,8 +14,8 @@ CV = {
         "role": "DevOps Engineer",
         "meta": "Moscow, Russia · remote only · English C1",
         "summary": (
-            "DevOps engineer with 2+ years in infrastructure operations and automation: from Linux servers, "
-            "MikroTik networks and Zabbix to CI/CD, Kubernetes, Terraform and Prometheus. I build pipelines that "
+            "DevOps engineer with 4 years in infrastructure, 2 of them on DevOps projects: from CI/CD, Kubernetes, "
+            "Terraform and Prometheus to Linux servers, MikroTik networks and Zabbix. I build pipelines that "
             "scan and ship images without manual steps, move services to Kubernetes without downtime and keep "
             "infrastructure in code. Certified Kubernetes Administrator (CKA), Terraform Associate, MTCNA."
         ),
@@ -28,17 +28,17 @@ CV = {
             ("Cloud and code", "Yandex Cloud, Selectel, Proxmox, Bash, Python, Git"),
         ],
         "jobs": [
-            ("DevOps Engineer", "Nixys, DevOps outsourcing · contract · remote", "2024 - present", [
-                "GitLab CI pipelines: build, tests, image scanning with Trivy, promotion across dev, stage and prod",
-                "Moved services from docker-compose to Kubernetes: Helm charts, Ingress-NGINX, cert-manager, HPA, probes",
-                "Yandex Cloud infrastructure in Terraform: VPC, Managed Kubernetes, Managed PostgreSQL, remote state",
-                "Server baseline with Ansible; monitoring with kube-prometheus-stack and Loki, alerts to Telegram",
-            ]),
             ("Infrastructure Engineer", "LANGAME SOFTWARE · Moscow", "Oct 2024 - present", [
                 "Linux servers and TrueNAS storage (ZFS snapshots, replication) across client gaming venues",
                 "MikroTik networks: VLAN, firewall, site-to-site VPN; troubleshooting loss and latency",
                 "Zabbix templates, triggers and dashboards; Bash automation for checks and diagnostics",
                 "Incident root-cause analysis and knowledge-base write-ups so issues do not repeat",
+            ]),
+            ("DevOps Engineer", "Nixys, DevOps outsourcing · contract · remote", "2022 - 2024", [
+                "GitLab CI pipelines: build, tests, image scanning with Trivy, promotion across dev, stage and prod",
+                "Moved services from docker-compose to Kubernetes: Helm charts, Ingress-NGINX, cert-manager, HPA, probes",
+                "Yandex Cloud infrastructure in Terraform: VPC, Managed Kubernetes, Managed PostgreSQL, remote state",
+                "Server baseline with Ansible; monitoring with kube-prometheus-stack and Loki, alerts to Telegram",
             ]),
             ("Back-office Specialist, Anti-fraud", "T-Bank · Moscow", "May 2023 - Oct 2024", [
                 "Incident investigation: rebuilding event chains from transactions and system logs",
@@ -57,6 +57,7 @@ CV = {
             ("HashiCorp Certified: Terraform Associate", "2026"),
             ("MTCNA, MikroTik Certified Network Associate", "Softline, 2026"),
             ("Bachelor's in Applied Informatics, System Administration", "RANEPA, Moscow, 2023"),
+            ("Internships during studies", "SberTech, Alfa-Bank"),
             ("English C1", "Skillfactory courses and private tutoring"),
         ],
     },
@@ -66,8 +67,8 @@ CV = {
         "role": "DevOps-инженер",
         "meta": "Москва · только удалённо · английский C1",
         "summary": (
-            "DevOps-инженер, 2+ года в эксплуатации и автоматизации инфраструктуры: от Linux-серверов, сетей "
-            "MikroTik и Zabbix до CI/CD, Kubernetes, Terraform и Prometheus. Строю пайплайны, которые проверяют и "
+            "DevOps-инженер: 4 года в инфраструктуре, из них 2 года на DevOps-проектах. От CI/CD, Kubernetes, "
+            "Terraform и Prometheus до Linux-серверов, сетей MikroTik и Zabbix. Строю пайплайны, которые проверяют и "
             "выкатывают образы без ручных шагов, переношу сервисы в Kubernetes без простоя и описываю "
             "инфраструктуру кодом. Сертификаты CKA, Terraform Associate, MTCNA."
         ),
@@ -80,17 +81,17 @@ CV = {
             ("Облака и код", "Yandex Cloud, Selectel, Proxmox, Bash, Python, Git"),
         ],
         "jobs": [
-            ("DevOps-инженер", "Nixys, DevOps-аутсорсинг · контракт · удалённо", "2024 - н.в.", [
-                "CI/CD в GitLab CI: сборка, тесты, сканирование образов Trivy, деплой по окружениям dev, stage, prod",
-                "Перевёл сервисы с docker-compose в Kubernetes: Helm-чарты, Ingress-NGINX, cert-manager, HPA, пробы",
-                "Инфраструктура Yandex Cloud на Terraform: VPC, Managed Kubernetes, Managed PostgreSQL, remote state",
-                "Базовая настройка серверов через Ansible; мониторинг kube-prometheus-stack и Loki, алерты в Telegram",
-            ]),
             ("Инженер инфраструктуры", "LANGAME SOFTWARE · Москва", "окт. 2024 - н.в.", [
                 "Linux-серверы и хранилища TrueNAS (снапшоты ZFS, репликация) на площадках компьютерных клубов",
                 "Сети MikroTik: VLAN, firewall, VPN между площадками; диагностика потерь и задержек",
                 "Шаблоны, триггеры и дашборды Zabbix; автоматизация проверок и диагностики на Bash",
                 "Разбор инцидентов с поиском первопричины и статьями в базу знаний, чтобы проблемы не повторялись",
+            ]),
+            ("DevOps-инженер", "Nixys, DevOps-аутсорсинг · контракт · удалённо", "2022 - 2024", [
+                "CI/CD в GitLab CI: сборка, тесты, сканирование образов Trivy, деплой по окружениям dev, stage, prod",
+                "Перевёл сервисы с docker-compose в Kubernetes: Helm-чарты, Ingress-NGINX, cert-manager, HPA, пробы",
+                "Инфраструктура Yandex Cloud на Terraform: VPC, Managed Kubernetes, Managed PostgreSQL, remote state",
+                "Базовая настройка серверов через Ansible; мониторинг kube-prometheus-stack и Loki, алерты в Telegram",
             ]),
             ("Специалист бэк-офиса, антифрод", "Т-Банк · Москва", "май 2023 - окт. 2024", [
                 "Разбор инцидентов: восстановление цепочки событий по операциям и логам систем",
@@ -109,6 +110,7 @@ CV = {
             ("HashiCorp Certified: Terraform Associate", "2026"),
             ("MTCNA, MikroTik Certified Network Associate", "Softline, 2026"),
             ("Бакалавр, прикладная информатика, «Системное администрирование»", "РАНХиГС, Москва, 2023"),
+            ("Практика и стажировки во время учёбы", "СберТех, Альфа-Банк"),
             ("Английский C1", "курсы Skillfactory и занятия с репетитором"),
         ],
     },

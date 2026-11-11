@@ -642,12 +642,12 @@ header.wave .wi{animation:navwave .55s cubic-bezier(.2,.7,.2,1) both !important;
     <div class="wrap">
       <div class="kicker reveal">01 / <span class="en">about</span><span class="ru">обо мне</span></div>
       <h2 class="reveal d1"><span class="en">From network cables to Helm charts</span><span class="ru">От сетевого кабеля до Helm-чарта</span></h2>
-      <p class="sub reveal d2 en">I started with hardware and networks for a chain of gaming venues: servers, storage, MikroTik and Zabbix. Then I moved into DevOps as a contract engineer at Nixys, a DevOps outsourcing company: CI/CD, Kubernetes, Terraform, monitoring. That is why I am equally at home in <code>tcpdump</code> and in Grafana.</p>
-      <p class="sub reveal d2 ru">Начинал с железа и сетей компьютерных клубов: серверы, хранилища, MikroTik и Zabbix. Потом ушёл в DevOps: контрактным инженером в Nixys, компании DevOps-аутсорсинга: CI/CD, Kubernetes, Terraform, мониторинг. Поэтому одинаково спокойно смотрю и в <code>tcpdump</code>, и в Grafana.</p>
-      <p class="sub reveal d2 en">Degree in system administration from RANEPA. English C1: Skillfactory courses and private tutoring; I read docs and issue trackers without a translator.</p>
-      <p class="sub reveal d2 ru">Профильное образование: РАНХиГС, «Системное администрирование». Английский C1: курсы Skillfactory и занятия с репетитором, читаю документацию и issue-трекеры без переводчика.</p>
+      <p class="sub reveal d2 en">I started in DevOps in my final year at university, as a contract engineer at Nixys, a DevOps outsourcing company: CI/CD, Kubernetes, Terraform, monitoring. Since 2024 I run the infrastructure of a network of gaming venues at LANGAME: servers, ZFS storage, MikroTik and Zabbix. That is why I am equally at home in <code>tcpdump</code> and in Grafana.</p>
+      <p class="sub reveal d2 ru">В DevOps пришёл на последнем курсе: контрактным инженером в Nixys, компании DevOps-аутсорсинга. CI/CD, Kubernetes, Terraform, мониторинг. С 2024 веду инфраструктуру сети компьютерных клубов в LANGAME: серверы, хранилища на ZFS, MikroTik и Zabbix. Поэтому одинаково спокойно смотрю и в <code>tcpdump</code>, и в Grafana.</p>
+      <p class="sub reveal d2 en">Degree in system administration from RANEPA, with internships at SberTech and Alfa-Bank during my studies. English C1: Skillfactory courses and private tutoring; I read docs and issue trackers without a translator.</p>
+      <p class="sub reveal d2 ru">Профильное образование: РАНХиГС, «Системное администрирование», во время учёбы практика и стажировки в СберТехе и Альфа-Банке. Английский C1: курсы Skillfactory и занятия с репетитором, читаю документацию и issue-трекеры без переводчика.</p>
       <div class="facts">
-        <div class="fact reveal d1"><div class="k"><span class="en">experience</span><span class="ru">опыт</span></div><div class="v"><span class="en">2+ years</span><span class="ru">2+ года</span><small><span class="en">operations and DevOps</span><span class="ru">эксплуатация и DevOps</span></small></div></div>
+        <div class="fact reveal d1"><div class="k"><span class="en">experience</span><span class="ru">опыт</span></div><div class="v"><span class="en">4 years</span><span class="ru">4 года</span><small><span class="en">2 of them in DevOps</span><span class="ru">из них 2 в DevOps</span></small></div></div>
         <div class="fact reveal d2"><div class="k"><span class="en">certified</span><span class="ru">сертификаты</span></div><div class="v">CKA · TF<small>+ MTCNA</small></div></div>
         <div class="fact reveal d3"><div class="k"><span class="en">english</span><span class="ru">английский</span></div><div class="v">C1<small><span class="en">courses + tutoring</span><span class="ru">курсы + репетитор</span></small></div></div>
         <div class="fact reveal d4"><div class="k"><span class="en">format</span><span class="ru">формат</span></div><div class="v">Remote<small><span class="en">remote only, UTC+3</span><span class="ru">только удалённо, МСК</span></small></div></div>
@@ -1398,13 +1398,6 @@ if (wbox) {
   const T0 = 2019.3, T1 = 2027.1, NOW = 2026.86;
   const pos = y => ((y - T0) / (T1 - T0)) * 100;
   const JOBS = [
-    {id:'nixys', cls:'dev', label:'Nixys', from:2024.83, to:NOW, live:true,
-     title:L('DevOps Engineer','DevOps-инженер'), where:L('Nixys · DevOps outsourcing, contract · remote','Nixys · DevOps-аутсорсинг, контракт · удалённо'), when:L('2024 · present','с 2024'), dur:L('2 years','2 года'),
-     items:[L('GitLab CI pipelines: build, tests, image scanning, promotion across environments','CI/CD в GitLab CI: сборка, тесты, сканирование образов, деплой по окружениям'),
-            L('Moved services from docker-compose to Kubernetes: Helm charts, Ingress, cert-manager, HPA','Перевёл сервисы с docker-compose в Kubernetes: Helm-чарты, Ingress, cert-manager, HPA'),
-            L('Yandex Cloud infrastructure in Terraform with remote state and modules','Инфраструктура Yandex Cloud на Terraform с remote state и модулями'),
-            L('Monitoring with kube-prometheus-stack and Loki, alerts to Telegram','Мониторинг kube-prometheus-stack и Loki, алерты в Telegram')],
-     tags:['Kubernetes','Helm','Terraform','GitLab CI','Ansible','Prometheus','Vault']},
     {id:'langame', cls:'infra', label:'LANGAME', from:2024.75, to:NOW, live:true,
      title:L('Infrastructure Engineer','Инженер инфраструктуры'), where:L('LANGAME SOFTWARE · Moscow','LANGAME SOFTWARE · Москва'), when:L('Oct 2024 · present','с октября 2024'), dur:L('2 years','2 года'),
      items:[L('Linux servers and TrueNAS storage (ZFS, snapshots, replication) across client venues','Linux-серверы и хранилища TrueNAS (ZFS, снапшоты, репликация) на площадках клиентов'),
@@ -1412,6 +1405,13 @@ if (wbox) {
             L('Zabbix monitoring, Bash automation for diagnostics','Мониторинг в Zabbix, автоматизация диагностики на Bash'),
             L('Grew from first-line support to owning infrastructure on my own','Вырос с первой линии поддержки до самостоятельного ведения инфраструктуры')],
      tags:['Linux','TrueNAS','MikroTik','Zabbix','Bash']},
+    {id:'nixys', cls:'dev', label:'Nixys', from:2022.3, to:2024.75,
+     title:L('DevOps Engineer','DevOps-инженер'), where:L('Nixys · DevOps outsourcing, contract · remote','Nixys · DevOps-аутсорсинг, контракт · удалённо'), when:L('2022 · 2024','2022 · 2024'), dur:L('2 years','2 года'),
+     items:[L('GitLab CI pipelines: build, tests, image scanning, promotion across environments','CI/CD в GitLab CI: сборка, тесты, сканирование образов, деплой по окружениям'),
+            L('Moved services from docker-compose to Kubernetes: Helm charts, Ingress, cert-manager, HPA','Перевёл сервисы с docker-compose в Kubernetes: Helm-чарты, Ingress, cert-manager, HPA'),
+            L('Yandex Cloud infrastructure in Terraform with remote state and modules','Инфраструктура Yandex Cloud на Terraform с remote state и модулями'),
+            L('Monitoring with kube-prometheus-stack and Loki, alerts to Telegram','Мониторинг kube-prometheus-stack и Loki, алерты в Telegram')],
+     tags:['Kubernetes','Helm','Terraform','GitLab CI','Ansible','Prometheus','Vault']},
     {id:'tbank', cls:'other', label:'T-Bank', from:2023.37, to:2024.78,
      title:L('Back-office Specialist, Anti-fraud','Специалист бэк-офиса, антифрод'), where:L('T-Bank · Moscow','Т-Банк · Москва'), when:L('May 2023 · Oct 2024','май 2023 · окт. 2024'), dur:L('1.5 years','1,5 года'),
      items:[L('Incident investigation: rebuilding the chain of events from transactions and logs','Разбор инцидентов: восстановление цепочки событий по операциям и логам'),
@@ -1420,8 +1420,9 @@ if (wbox) {
     {id:'edu', cls:'edu', label:L('RANEPA','РАНХиГС'), from:2019.67, to:2023.5,
      title:L('Bachelor of Applied Informatics','Бакалавр, прикладная информатика'), where:L('RANEPA, Moscow · System administration track','РАНХиГС, Москва · профиль «Системное администрирование»'), when:L('2019 · 2023','2019 · 2023'), dur:L('4 years','4 года'),
      items:[L('Applied informatics with a focus on system administration','Прикладная информатика с уклоном в системное администрирование'),
-            L('Linux, networks, databases and scripting as the core of the program','Linux, сети, базы данных и скрипты как основа программы')],
-     tags:['Linux','networks','SQL','Bash']},
+            L('Linux, networks, databases and scripting as the core of the program','Linux, сети, базы данных и скрипты как основа программы'),
+            L('Internships and practice during studies: SberTech, Alfa-Bank','Практика и стажировки во время учёбы: СберТех, Альфа-Банк')],
+     tags:['Linux','networks','SQL','Bash','SberTech','Alfa-Bank']},
   ];
   const axis = document.getElementById('g-axis'), rows = document.getElementById('g-rows'), card = document.getElementById('g-card');
   for (let y = 2020; y <= 2026; y++) axis.insertAdjacentHTML('beforeend', `<span class="${y % 2 ? 'odd' : ''}" style="left:${pos(y)}%">${y}</span>`);
@@ -1441,7 +1442,7 @@ if (wbox) {
     const j = JOBS[i]; bars.forEach((b, k) => b.classList.toggle('sel', k === i));
     card.innerHTML = `<div class="gc-when anim"><b>${j.dur}</b>${j.when}</div><div class="anim"><h3>${j.title}</h3><div class="where">${j.where}</div><ul>${j.items.map(x => `<li>${x}</li>`).join('')}</ul><div class="tags">${j.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div></div>`;
   }
-  pick(0);
+  pick(1);
   new IntersectionObserver((es, o) => es.forEach(e => { if (e.isIntersecting) { g.classList.add('in'); o.disconnect(); } }), {threshold:.3}).observe(g);
 })();
 
