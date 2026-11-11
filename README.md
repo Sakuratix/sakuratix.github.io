@@ -9,7 +9,7 @@
 | Где | Как |
 | --- | --- |
 | **sakuratox.ru** (основной) | Yandex Object Storage + Cloud DNS + сертификат Let's Encrypt из Certificate Manager. Инфраструктура в `deploy/main.tf`, загрузка через `.github/workflows/deploy-yc.yml`. Работает из России без сюрпризов. |
-| **sakuratix.github.io** (зеркало) | GitHub Pages через `.github/workflows/pages.yml`. |
+| **sakuratix.github.io** (зеркало) | GitHub Pages из ветки `main`, без сборки (`.nojekyll`). |
 
 ### Первый запуск
 
