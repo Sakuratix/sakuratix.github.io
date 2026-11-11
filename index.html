@@ -1926,6 +1926,7 @@ async function snapshot(){
     const shot = window.html2canvas(document.body, {
       x: scrollX, y: scrollY, width: innerWidth, height: innerHeight, scale: Math.min(1, 1100 / innerWidth),
       backgroundColor: '#0a0b0d', logging: false, useCORS: true,
+      onclone: doc => { const st = doc.createElement('style'); st.textContent = '*,*::before,*::after{animation-delay:-60s!important;animation-play-state:paused!important;transition:none!important}'; doc.head.appendChild(st); },
       ignoreElements: el => el.id === 'gl' || (el.classList && (el.classList.contains('grain') || el.classList.contains('vignette') || el.classList.contains('toast')))
     });
     return await Promise.race([shot, new Promise((_, no) => setTimeout(() => no(new Error('slow')), 3000))]);
