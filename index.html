@@ -2066,10 +2066,10 @@ function codeRiver(atlas, N){
   g.index = base.index; g.setAttribute('position', base.attributes.position); g.setAttribute('uv', base.attributes.uv);
   const off = new Float32Array(N * 3), par = new Float32Array(N * 4), rnd = new Float32Array(N * 2);
   for (let i = 0; i < N; i++) {
-    off[i * 3] = -95 + Math.random() * 215; off[i * 3 + 1] = -9 - Math.pow(Math.random(), 1.7) * 8; off[i * 3 + 2] = -110 + Math.random() * 144;
-    const upright = Math.random() < .35;
-    par[i * 4] = Math.random() * 64 | 0; par[i * 4 + 1] = .7 + Math.random() * 1.3; par[i * 4 + 2] = 3.5 + Math.random() * 6;
-    par[i * 4 + 3] = upright ? -.4 + Math.random() * .5 : -Math.PI / 2 + (Math.random() - .5) * .24;
+    off[i * 3] = -95 + Math.random() * 215; off[i * 3 + 1] = -8.6 - Math.pow(Math.random(), 1.5) * 8.4; off[i * 3 + 2] = -110 + Math.random() * 144;
+    const upright = Math.random() < .45;
+    par[i * 4] = Math.random() * 64 | 0; par[i * 4 + 1] = 1.1 + Math.pow(Math.random(), 2.) * 2.6; par[i * 4 + 2] = 3.5 + Math.random() * 6;
+    par[i * 4 + 3] = upright ? -.55 + Math.random() * .7 : -Math.PI / 2 + (Math.random() - .5) * .24;
     rnd[i * 2] = Math.random(); rnd[i * 2 + 1] = Math.random();
   }
   g.setAttribute('aOff', new THREE.InstancedBufferAttribute(off, 3));
@@ -2092,7 +2092,7 @@ function codeRiver(atlas, N){
         w.x += sin(uTime * .3 + aRnd.x * 40.) * 1.5;
         w += p;
         float k = smoothstep(-17., -9., aOff.y);
-        w.y += (sin(w.x * .22 + uTime * 1.4) * .32 + cos(w.z * .31 + uTime * 1.1) * .28) * k;
+        w.y += (sin(w.x * .11 + uTime * 1.1) * .75 + sin(w.x * .27 - w.z * .19 + uTime * 1.7) * .4 + cos(w.z * .23 + uTime * 1.3) * .5) * k;
         float ts = uTime - uSplash.z;
         if (ts > 0.) {
           float d = distance(w.xz, uSplash.xy);
@@ -2101,7 +2101,7 @@ function codeRiver(atlas, N){
         vec4 mv = viewMatrix * vec4(w, 1.);
         gl_Position = projectionMatrix * mv;
         vUv = vec2(uv.x, (aPar.x + uv.y) / 64.);
-        vFade = (.18 + .82 * k) * exp(mv.z * .0105) * smoothstep(-110., -96., w.z) * (1. - smoothstep(26., 34., w.z))
+        vFade = (.14 + .86 * k * k) * exp(mv.z * .0105) * smoothstep(-110., -96., w.z) * (1. - smoothstep(26., 34., w.z))
               * smoothstep(0., .03, uv.x) * (1. - smoothstep(.97, 1., uv.x));
         vColor = mix(vec3(.07, .40, 1.), vec3(.28, .92, 1.), aRnd.y);
         if (aRnd.x > .94) vColor = vec3(.85, 1., 1.);
@@ -2112,13 +2112,45 @@ function codeRiver(atlas, N){
   });
   const mesh = new THREE.Mesh(g, m); mesh.frustumCulled = false; return mesh;
 }
+// loose characters drifting just above the surface
+function codeMist(atlas, n, px){
+  const g = new THREE.BufferGeometry(), pos = new Float32Array(n * 3), gl = new Float32Array(n * 3);
+  for (let i = 0; i < n; i++) {
+    pos[i * 3] = -70 + Math.random() * 170; pos[i * 3 + 1] = -8.8 + Math.pow(Math.random(), 2.2) * 3.6; pos[i * 3 + 2] = -90 + Math.random() * 120;
+    gl[i * 3] = Math.random() * 16 | 0; gl[i * 3 + 1] = .3 + Math.random() * .55; gl[i * 3 + 2] = Math.random();
+  }
+  g.setAttribute('position', new THREE.BufferAttribute(pos, 3)); g.setAttribute('aG', new THREE.BufferAttribute(gl, 3));
+  const m = new THREE.ShaderMaterial({
+    uniforms: {uTime: {value: 0}, uPx: {value: px}, uMap: {value: atlas}},
+    transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
+    vertexShader: `
+      uniform float uTime, uPx; attribute vec3 aG; varying float vG; varying float vA;
+      void main(){
+        vec3 p = position;
+        p.z = mod(p.z + uTime * (4. + aG.z * 5.) + 90., 120.) - 90.;
+        p.y += sin(uTime * (1. + aG.z) + aG.z * 30.) * .5 + sin(p.x * .11 + uTime * 1.1) * .6;
+        vec4 mv = viewMatrix * vec4(p, 1.); gl_Position = projectionMatrix * mv;
+        gl_PointSize = aG.y * uPx / -mv.z; vG = aG.x;
+        vA = .55 * exp(mv.z * .012) * smoothstep(-90., -78., p.z) * (1. - smoothstep(22., 30., p.z));
+      }`,
+    fragmentShader: `
+      uniform sampler2D uMap; varying float vG; varying float vA;
+      void main(){
+        vec2 c = vec2(mod(vG, 4.), floor(vG / 4.));
+        vec2 uv = vec2((c.x + gl_PointCoord.x) / 4., 1. - (c.y + gl_PointCoord.y) / 4.);
+        float a = texture2D(uMap, uv).a; if (a < .05) discard;
+        gl_FragColor = vec4(mix(vec3(.15, .6, 1.), vec3(.6, 1., 1.), fract(vG * .37)), a * vA);
+      }`
+  });
+  const pts = new THREE.Points(g, m); pts.frustumCulled = false; return pts;
+}
 // splash: code characters thrown into the air
 function glyphBurst(atlas, n, px){
   const g = new THREE.BufferGeometry(), vel = new Float32Array(n * 3), gl = new Float32Array(n * 2);
   for (let i = 0; i < n; i++) {
-    const a = Math.random() * Math.PI * 2, r = 1 + Math.random() * 9;
-    vel[i * 3] = Math.cos(a) * r; vel[i * 3 + 1] = 6 + Math.random() * 17; vel[i * 3 + 2] = Math.sin(a) * r * .8 + 2;
-    gl[i * 2] = Math.random() * 16 | 0; gl[i * 2 + 1] = .45 + Math.random() * .8;
+    const a = Math.random() * Math.PI * 2, r = 1 + Math.random() * 11;
+    vel[i * 3] = Math.cos(a) * r; vel[i * 3 + 1] = 7 + Math.random() * 20; vel[i * 3 + 2] = Math.sin(a) * r * .8 + 2;
+    gl[i * 2] = Math.random() * 16 | 0; gl[i * 2 + 1] = .5 + Math.random() * 1.2;
   }
   g.setAttribute('position', new THREE.BufferAttribute(new Float32Array(n * 3), 3));
   g.setAttribute('aVel', new THREE.BufferAttribute(vel, 3)); g.setAttribute('aG', new THREE.BufferAttribute(gl, 2));
@@ -2190,7 +2222,7 @@ async function movie(){
 
   /* ---- the hero: the site folded into a cube, with a face and limbs ---- */
   const front = new THREE.CanvasTexture(shot); front.encoding = SRGB; front.anisotropy = aniso;
-  const caseMat = new THREE.MeshStandardMaterial({color: col(0x12161c), roughness: .42, metalness: .25, emissive: new THREE.Color(0xffffff), emissiveMap: sideTexture(), emissiveIntensity: .7});
+  const caseMat = new THREE.MeshStandardMaterial({color: col(0x2a323e), roughness: .4, metalness: .2, emissive: new THREE.Color(0xffffff), emissiveMap: sideTexture(), emissiveIntensity: 1});
   const limbMat = new THREE.MeshStandardMaterial({color: col(0x8ef0c6), roughness: .5});
   const gloveMat = new THREE.MeshStandardMaterial({color: col(0xf4f6fa), roughness: .6});
   const shoeMat = new THREE.MeshStandardMaterial({color: col(0x7aa2ff), roughness: .45});
@@ -2272,33 +2304,35 @@ async function movie(){
     [-2, 2].forEach(z => { const r = mk(new THREE.BoxGeometry(len, .07, .07), mint, false); r.position.set(0, .95, z); const r2 = mk(new THREE.BoxGeometry(len, .05, .05), steel, false); r2.position.set(0, .5, z); g.add(r, r2); });
     (parent || world).add(g); return g;
   }
-  deckPiece(-82, GAP0); deckPiece(GAP1, 110);
+  deckPiece(-96, GAP0); deckPiece(GAP1, 124);
   const slabs = [];
   for (let i = 0; i < 7; i++) slabs.push({g: deckPiece(GAP0 + i * 2, GAP0 + i * 2 + 2), at: 0, vy: 0, rx: (Math.random() - .5) * 2.4, rz: (Math.random() - .5) * 1.6, order: 6 - i});
-  [-38, 6, 50, 94].forEach(x => {
+  [-52, -8, 36.6, 80].forEach(x => {
     [-2.6, 2.6].forEach(z => { const c = mk(new THREE.BoxGeometry(.9, 30, .9), steel, false); c.position.set(x, -2.5, z); world.add(c);
       const lamp = mk(new THREE.SphereGeometry(.22, 12, 10), new THREE.MeshBasicMaterial({color: col(0xff4030)}), false); lamp.position.set(x, 12.75, z); world.add(lamp); });
     [11.2, 5, -3.6].forEach(y => { const b = mk(new THREE.BoxGeometry(.7, .7, 5.2), steel, false); b.position.set(x, y, 0); world.add(b); });
   });
-  const cableY = x => { const s = Math.floor((x + 82) / 44), u = (x - (-82 + s * 44 + 22)) / 22; return .5 + 11.6 * u * u; };
+  const cableY = x => { const s = Math.floor((x + 96) / 44), u = (x - (-96 + s * 44 + 22)) / 22; return .5 + 11.6 * u * u; };
   const cableMat = new THREE.MeshStandardMaterial({color: col(0x596274), roughness: .5, metalness: .5}), hang = [];
   [-2.6, 2.6].forEach(z => {
-    const pts = []; for (let x = -82; x <= 110; x += 2) pts.push(new THREE.Vector3(x, cableY(x), z));
-    world.add(mk(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts), 220, .09, 6), cableMat, false));
-    for (let x = -80; x <= 108; x += 2) { const y = cableY(x); if (y > 11.3 || (x > GAP0 - .5 && x < GAP1 + .5)) continue; hang.push(x, y, z, x, DECK_Y + .95, z); }
+    const pts = []; for (let x = -96; x <= 124; x += 2) pts.push(new THREE.Vector3(x, cableY(x), z));
+    world.add(mk(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts), 260, .09, 6), cableMat, false));
+    for (let x = -94; x <= 122; x += 2) { const y = cableY(x); if (y > 11.3 || (x > GAP0 - .5 && x < GAP1 + .5)) continue; hang.push(x, y, z, x, DECK_Y + .95, z); }
   });
   const hangG = new THREE.BufferGeometry(); hangG.setAttribute('position', new THREE.Float32BufferAttribute(hang, 3));
   world.add(new THREE.LineSegments(hangG, new THREE.LineBasicMaterial({color: col(0x66708a)})));
 
   const cityMat = new THREE.MeshBasicMaterial({map: (() => { const t = windowsTexture(); t.encoding = SRGB; return t; })()});
-  for (let i = 0; i < 56; i++) { const w = 6 + Math.random() * 12, h = 9 + Math.random() * 30, b = mk(new THREE.BoxGeometry(w, h, 8), cityMat, false); b.position.set(-200 + i * 8 + Math.random() * 4, -17 + h / 2, -150 - Math.random() * 25); world.add(b); }
+  for (let i = 0; i < 56; i++) { const w = 6 + Math.random() * 12, h = 7 + Math.random() * 19, b = mk(new THREE.BoxGeometry(w, h, 8), cityMat, false); b.position.set(-200 + i * 8 + Math.random() * 4, -17 + h / 2, -150 - Math.random() * 25); world.add(b); }
 
   const bedTex = codeTexture(); bedTex.encoding = SRGB; bedTex.anisotropy = aniso; bedTex.repeat.set(16, 10);
   const bed = mk(new THREE.PlaneGeometry(900, 560), new THREE.MeshBasicMaterial({map: bedTex, color: col(0x9fb4d0)}), false);
   bed.rotation.x = -Math.PI / 2; bed.position.set(0, -17.5, -130); world.add(bed);
   const atlas = codeAtlas(); atlas.anisotropy = aniso;
-  const river = codeRiver(atlas, innerWidth < 800 ? 1800 : 3400); world.add(river);
-  const glyphs = glyphBurst(glyphAtlas(), 700, cvs.height / (2 * Math.tan(THREE.MathUtils.degToRad(22.5)))); world.add(glyphs);
+  const river = codeRiver(atlas, innerWidth < 800 ? 1700 : 3200); world.add(river);
+  const gAtlas = glyphAtlas(), PX = cvs.height / (2 * Math.tan(THREE.MathUtils.degToRad(22.5)));
+  const glyphs = glyphBurst(gAtlas, 1100, PX); world.add(glyphs);
+  const mist = codeMist(gAtlas, innerWidth < 800 ? 700 : 1500, PX); world.add(mist);
 
   const SUN = new THREE.Vector3(60, 14, -190), sunC0 = col(0xffb347), sunC1 = new THREE.Color(1, 1, 1);
   const sun = mk(new THREE.SphereGeometry(16, 40, 28), new THREE.MeshBasicMaterial({color: sunC0.clone(), fog: false, transparent: true}), false); sun.position.copy(SUN); world.add(sun);
@@ -2329,7 +2363,7 @@ async function movie(){
 
   function frame(now){
     const t = now - t0, dt = Math.min(0.05, Math.max(0.001, (now - prev) / 1000)); prev = now;
-    river.material.uniforms.uTime.value = t / 1000;
+    river.material.uniforms.uTime.value = mist.material.uniforms.uTime.value = t / 1000;
     bedTex.offset.y += dt * 0.09;
 
     // 1) the page folds into a cube
@@ -2407,7 +2441,7 @@ async function movie(){
       once('splash', () => {
         SFX.cue('splash', () => { SFX.splash(); SFX.later(350, () => SFX.hit()); }, {gain: 1});
         glyphs.visible = true; glyphs.material.uniforms.uOrigin.value.set(mover.position.x, -9, 0);
-        river.material.uniforms.uSplash.value.set(mover.position.x, 0, t / 1000, 2.2);
+        river.material.uniforms.uSplash.value.set(mover.position.x, 0, t / 1000, 3.2);
         shakeAmt = 0.5; blink(70); setTitle(ru ? 'deploy завершён ✓' : 'deployed ✓');
       });
       splashAge += dt; glyphs.material.uniforms.uT.value = splashAge;
@@ -2420,8 +2454,8 @@ async function movie(){
     if (t < T.pop) { cam.position.set(0, 0, D); cam.lookAt(0, 0, 0); }
     else {
       const my = Math.max(-9.5, mover.position.y);
-      if (t < T.jump) { want.set(mover.position.x - 4.5, 3.6, t > T.boom ? 27 : 24.5); wantLook.set(mover.position.x + 3.5, t > T.boom ? -0.8 : -1.4, 0); }
-      else { want.set(mover.position.x - 1.5, 1.4 + my * 0.4, 26); wantLook.set(mover.position.x + 1, my * 0.8 - 1, 0); }
+      if (t < T.jump) { want.set(mover.position.x - 4, 3.2, t > T.boom ? 22.5 : 19.5); wantLook.set(mover.position.x + 3, t > T.boom ? -0.6 : -1.2, 0); }
+      else { want.set(mover.position.x - 1.5, 1.4 + my * 0.45, 21); wantLook.set(mover.position.x + 1, my * 0.85 - 0.6, 0); }
       const a = 1 - Math.exp(-dt * (t < T.run ? 3.4 : 5));
       camPos.lerp(want, a); camLook.lerp(wantLook, a);
       cam.position.copy(camPos); cam.lookAt(camLook);
