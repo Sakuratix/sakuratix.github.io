@@ -40,7 +40,7 @@ CV = {
                 "Yandex Cloud infrastructure in Terraform: VPC, Managed Kubernetes, Managed PostgreSQL, remote state",
                 "Server baseline with Ansible; monitoring with kube-prometheus-stack and Loki, alerts to Telegram",
             ]),
-            ("Back-office Specialist, Anti-fraud", "T-Bank · Moscow", "May 2023 - Oct 2024", [
+            ("Back-office Specialist, Anti-fraud", "T-Bank · Moscow", "2020 - 2021", [
                 "Incident investigation: rebuilding event chains from transactions and system logs",
                 "SLA-driven work under strict procedures; documentation accepted by partner teams without rework",
             ]),
@@ -93,7 +93,7 @@ CV = {
                 "Инфраструктура Yandex Cloud на Terraform: VPC, Managed Kubernetes, Managed PostgreSQL, remote state",
                 "Базовая настройка серверов через Ansible; мониторинг kube-prometheus-stack и Loki, алерты в Telegram",
             ]),
-            ("Специалист бэк-офиса, антифрод", "Т-Банк · Москва", "май 2023 - окт. 2024", [
+            ("Специалист бэк-офиса, антифрод", "Т-Банк · Москва", "2020 - 2021", [
                 "Разбор инцидентов: восстановление цепочки событий по операциям и логам систем",
                 "Работа по SLA и строгим регламентам; документация, которую смежные команды принимали без доработок",
             ]),
