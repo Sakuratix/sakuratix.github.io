@@ -1456,6 +1456,11 @@ if (wbox) {
             L('Zabbix monitoring, Bash automation for diagnostics','Мониторинг в Zabbix, автоматизация диагностики на Bash'),
             L('Grew from first-line support to owning infrastructure on my own','Вырос с первой линии поддержки до самостоятельного ведения инфраструктуры')],
      tags:['Linux','TrueNAS','MikroTik','Zabbix','Bash']},
+    {id:'tbank', cls:'other', label:'T-Bank', from:2023.37, to:2024.78,
+     title:L('Back-office Specialist, Anti-fraud','Специалист бэк-офиса, антифрод'), where:L('T-Bank · Moscow','Т-Банк · Москва'), when:L('May 2023 · Oct 2024','май 2023 · окт. 2024'), dur:L('1.5 years','1,5 года'),
+     items:[L('Incident investigation: rebuilding the chain of events from transactions and logs','Разбор инцидентов: восстановление цепочки событий по операциям и логам'),
+            L('SLA-driven work under strict procedures, documentation for partner teams','Работа по SLA и регламентам, документирование для смежных команд')],
+     tags:['incidents','SLA','root cause']},
     {id:'nixys', cls:'dev', label:'Nixys', from:2022.3, to:2024.75,
      title:L('DevOps Engineer','DevOps-инженер'), where:L('Nixys · DevOps outsourcing, contract · remote','Nixys · DevOps-аутсорсинг, контракт · удалённо'), when:L('2022 · 2024','2022 · 2024'), dur:L('2 years','2 года'),
      items:[L('GitLab CI pipelines: build, tests, image scanning, promotion across environments','CI/CD в GitLab CI: сборка, тесты, сканирование образов, деплой по окружениям'),
@@ -1463,11 +1468,10 @@ if (wbox) {
             L('Yandex Cloud infrastructure in Terraform with remote state and modules','Инфраструктура Yandex Cloud на Terraform с remote state и модулями'),
             L('Monitoring with kube-prometheus-stack and Loki, alerts to Telegram','Мониторинг kube-prometheus-stack и Loki, алерты в Telegram')],
      tags:['Kubernetes','Helm','Terraform','GitLab CI','Ansible','Prometheus','Vault']},
-    {id:'tbank', cls:'other', label:'T-Bank', from:2023.37, to:2024.78,
-     title:L('Back-office Specialist, Anti-fraud','Специалист бэк-офиса, антифрод'), where:L('T-Bank · Moscow','Т-Банк · Москва'), when:L('May 2023 · Oct 2024','май 2023 · окт. 2024'), dur:L('1.5 years','1,5 года'),
-     items:[L('Incident investigation: rebuilding the chain of events from transactions and logs','Разбор инцидентов: восстановление цепочки событий по операциям и логам'),
-            L('SLA-driven work under strict procedures, documentation for partner teams','Работа по SLA и регламентам, документирование для смежных команд')],
-     tags:['incidents','SLA','root cause']},
+    {id:'intern', cls:'edu', label:L('Internships','Стажировки'), barLabel:L('SberTech · Alfa-Bank','СберТех · Альфа-Банк'), from:2019.67, to:2023.5,
+     title:L('Internships and practice','Стажировки и практика'), where:L('SberTech · Alfa-Bank','СберТех · Альфа-Банк'), when:L('during studies','во время учёбы'), dur:L('2019 · 2023','2019 · 2023'),
+     items:[L('Intern positions and university practice at SberTech and Alfa-Bank, in parallel with the degree at RANEPA','Стажёрские позиции и учебная практика в СберТехе и Альфа-Банке параллельно с учёбой в РАНХиГС')],
+     tags:['SberTech','Alfa-Bank']},
     {id:'edu', cls:'edu', label:L('RANEPA','РАНХиГС'), from:2019.67, to:2023.5,
      title:L('Bachelor of Applied Informatics','Бакалавр, прикладная информатика'), where:L('RANEPA, Moscow · System administration track','РАНХиГС, Москва · профиль «Системное администрирование»'), when:L('2019 · 2023','2019 · 2023'), dur:L('4 years','4 года'),
      items:[L('Applied informatics with a focus on system administration','Прикладная информатика с уклоном в системное администрирование'),
@@ -1482,7 +1486,7 @@ if (wbox) {
   const bars = [];
   JOBS.forEach((j, i) => {
     const row = document.createElement('div'); row.className = 'g-row';
-    row.innerHTML = `<div class="g-lab">${j.label}</div><div class="g-track">${grid()}<button type="button" class="g-bar ${j.cls}${j.live ? ' live' : ''}" style="left:${pos(j.from)}%;width:${pos(j.to) - pos(j.from)}%;transition-delay:${i * 120}ms">${j.label}</button></div>`;
+    row.innerHTML = `<div class="g-lab">${j.label}</div><div class="g-track">${grid()}<button type="button" class="g-bar ${j.cls}${j.live ? ' live' : ''}" style="left:${pos(j.from)}%;width:${pos(j.to) - pos(j.from)}%;transition-delay:${i * 120}ms">${j.barLabel || j.label}</button></div>`;
     const b = row.querySelector('.g-bar'); b.addEventListener('click', () => pick(i)); bars.push(b);
     rows.appendChild(row);
   });
@@ -1493,7 +1497,7 @@ if (wbox) {
     const j = JOBS[i]; bars.forEach((b, k) => b.classList.toggle('sel', k === i));
     card.innerHTML = `<div class="gc-when anim"><b>${j.dur}</b>${j.when}</div><div class="anim"><h3>${j.title}</h3><div class="where">${j.where}</div><ul>${j.items.map(x => `<li>${x}</li>`).join('')}</ul><div class="tags">${j.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div></div>`;
   }
-  pick(1);
+  pick(JOBS.findIndex(j => j.id === 'nixys'));
   new IntersectionObserver((es, o) => es.forEach(e => { if (e.isIntersecting) { g.classList.add('in'); o.disconnect(); } }), {threshold:.3}).observe(g);
 })();
 
