@@ -65,7 +65,7 @@ header.nav.scrolled{border-bottom-color:var(--line)}
 .status{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:13px;color:var(--muted);border:1px solid var(--line2);border-radius:99px;padding:6px 14px 6px 12px;background:rgba(16,18,22,.6)}
 .dot{width:8px;height:8px;border-radius:50%;background:var(--mint);box-shadow:0 0 0 0 rgba(142,240,198,.6);animation:pulse 2s infinite}
 @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(142,240,198,.5)}70%{box-shadow:0 0 0 10px rgba(142,240,198,0)}100%{box-shadow:0 0 0 0 rgba(142,240,198,0)}}
-h1{font-size:clamp(44px,7.4vw,96px);line-height:.98;letter-spacing:-.045em;font-weight:600;margin:26px 0 22px;max-width:11ch}
+h1{font-size:clamp(40px,6.4vw,84px);line-height:1;letter-spacing:-.045em;font-weight:600;margin:26px 0 22px;max-width:12ch}
 h1 .grad{background:linear-gradient(100deg,var(--mint),var(--blue) 70%);-webkit-background-clip:text;background-clip:text;color:transparent}
 .lead{font-size:clamp(17px,1.6vw,20px);color:var(--muted);max-width:520px}
 .lead b{color:var(--fg);font-weight:500}
@@ -170,6 +170,40 @@ h2{font-size:clamp(32px,4.4vw,56px);line-height:1.04;letter-spacing:-.035em;font
 .tool:hover{background:rgba(20,24,28,.95)}
 .tool:hover b{color:var(--mint)}
 .grad2{background:linear-gradient(100deg,var(--mint),var(--blue));-webkit-background-clip:text;background-clip:text;color:transparent}
+/* skills */
+.skills{margin-top:48px;display:grid;grid-template-columns:240px 1fr;gap:16px;max-width:820px}
+.sk-tabs{display:flex;flex-direction:column;gap:4px}
+.sk-tab{all:unset;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 14px;border-radius:10px;border:1px solid transparent;font-family:var(--mono);font-size:13px;color:var(--muted);transition:color .25s,background .25s,border-color .25s,transform .25s}
+.sk-tab b{font-weight:400;font-size:11px;color:var(--dim);transition:color .25s}
+.sk-tab:hover{color:var(--fg);transform:translateX(3px)}
+.sk-tab.on{color:var(--fg);background:rgba(142,240,198,.07);border-color:rgba(142,240,198,.22)}
+.sk-tab.on b{color:var(--mint)}
+.sk-tab:focus-visible{outline:1px solid var(--mint)}
+.sk-panel{position:relative;border:1px solid var(--line);border-radius:16px;background:rgba(12,13,16,.9);padding:26px 26px 30px;min-height:300px;overflow:hidden}
+.sk-panel::before{content:"";position:absolute;inset:-1px;border-radius:16px;padding:1px;background:linear-gradient(130deg,rgba(142,240,198,.5),transparent 35%,transparent 65%,rgba(122,162,255,.45));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none;opacity:.7}
+.sk-head{display:flex;justify-content:space-between;font-family:var(--mono);font-size:12px;color:var(--dim)}
+.sk-cmd::before{content:"$ ";color:var(--mint)}
+.sk-title{line-height:1.2;font-size:26px;font-weight:500;letter-spacing:-.02em;margin-top:16px}
+.sk-desc{color:var(--muted);font-size:15px;margin-top:6px;max-width:460px}
+.sk-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.chip{font-family:var(--mono);font-size:13px;color:var(--fg);padding:8px 12px;border-radius:9px;border:1px solid var(--line2);background:rgba(20,22,27,.9);display:inline-flex;align-items:center;gap:8px;opacity:0;transform:translateY(10px) scale(.96);filter:blur(4px);animation:chipin .5s cubic-bezier(.2,.7,.2,1) forwards;transition:border-color .2s,box-shadow .2s,transform .2s}
+.chip:hover{border-color:var(--mint);box-shadow:0 0 0 3px rgba(142,240,198,.08),0 8px 24px -10px rgba(142,240,198,.4)}
+.chip i{width:6px;height:6px;border-radius:50%;background:var(--blue)}
+.chip.cert i{background:var(--mint);box-shadow:0 0 8px var(--mint)}
+.chip em{font-style:normal;font-size:10.5px;color:var(--mint);border:1px solid rgba(142,240,198,.35);border-radius:5px;padding:1px 5px}
+@keyframes chipin{to{opacity:1;transform:none;filter:none}}
+.sk-progress{position:absolute;left:0;right:0;bottom:0;height:2px;background:transparent}
+.sk-progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--mint),var(--blue))}
+.sk-progress i.run{animation:skprog 5s linear forwards}
+@keyframes skprog{to{width:100%}}
+.marquee{margin-top:40px;max-width:820px;display:grid;gap:10px;-webkit-mask:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);mask:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);overflow:hidden}
+.mq-row{overflow:hidden}
+.mq-track{display:flex;gap:10px;width:max-content;animation:mq 50s linear infinite}
+.mq-row.rev .mq-track{animation-direction:reverse;animation-duration:60s}
+.marquee:hover .mq-track{animation-play-state:paused}
+.mq-track span{font-family:var(--mono);font-size:12.5px;color:var(--dim);padding:6px 12px;border:1px solid var(--line);border-radius:99px;white-space:nowrap;transition:color .2s,border-color .2s}
+.mq-track span:hover{color:var(--fg);border-color:var(--line2)}
+@keyframes mq{to{transform:translateX(-50%)}}
 /* contact */
 .contact{padding:160px 0 120px}
 .contact h2{font-size:clamp(40px,7vw,92px);max-width:none}
@@ -200,6 +234,10 @@ body.eaten, body.eaten *{cursor:none !important}
   .stack,.certs{grid-template-columns:1fr 1fr}
   .projects{grid-template-columns:minmax(0,1fr)}
   .two,.tools{grid-template-columns:1fr}
+  .skills{grid-template-columns:1fr}
+  .sk-tabs{flex-direction:row;overflow-x:auto;padding-bottom:4px}
+  .sk-tab{white-space:nowrap}
+  .sk-tab b{display:none}
   .tree{font-size:11px}
   #gl{opacity:.45}
   section{padding:100px 0}
@@ -211,7 +249,8 @@ body.eaten, body.eaten *{cursor:none !important}
 }
 @media (prefers-reduced-motion:reduce){
   .reveal{opacity:1;transform:none;transition:none}
-  .pipe .runner,.dot,.scrollhint::after{animation:none}
+  .pipe .runner,.dot,.scrollhint::after,.mq-track{animation:none}
+  .chip{animation:none;opacity:1;transform:none;filter:none}
 }
 </style>
 </head>
@@ -240,8 +279,8 @@ body.eaten, body.eaten *{cursor:none !important}
   <section class="hero">
     <div class="wrap">
       <div class="status reveal"><span class="dot"></span>открыт к предложениям · только удалённо</div>
-      <h1 class="reveal d1">Делаю релизы <span class="grad">скучными</span></h1>
-      <p class="lead reveal d2">Привет, я Климентий, <b>DevOps-инженер</b> из Москвы. Собираю пайплайны, поднимаю Kubernetes и описываю инфраструктуру кодом, чтобы алерт приходил раньше, чем жалоба клиента.</p>
+      <h1 class="reveal d1">Инфраструктура, которая <span class="grad">работает сама</span></h1>
+      <p class="lead reveal d2">Климентий Матвеев, <b>DevOps-инженер</b>. Настраиваю CI/CD, Kubernetes и мониторинг, описываю инфраструктуру кодом. Релизы выходят без ручной работы, а о сбоях команда узнаёт раньше пользователей.</p>
       <div class="cta reveal d3">
         <a class="btn primary" href="#contact">Написать мне
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
@@ -406,14 +445,20 @@ body.eaten, body.eaten *{cursor:none !important}
   <section id="stack">
     <div class="wrap">
       <div class="kicker reveal">05 / стек</div>
-      <h2 class="reveal d1">$ ls ~/stack</h2>
-      <div class="stack">
-        <div class="box reveal d1"><div class="cmd"><b>$</b> ls containers/</div><ul><li>docker <span>/ compose</span></li><li>kubernetes <span>(CKA)</span></li><li>helm</li><li>ingress-nginx</li><li>argo-cd</li></ul></div>
-        <div class="box reveal d2"><div class="cmd"><b>$</b> ls iac/</div><ul><li>terraform <span>(cert.)</span></li><li>ansible</li><li>gitlab-ci</li><li>github-actions</li><li>vault <span>/ sops</span></li></ul></div>
-        <div class="box reveal d3"><div class="cmd"><b>$</b> ls observability/</div><ul><li>prometheus</li><li>grafana</li><li>alertmanager</li><li>loki</li><li>zabbix</li></ul></div>
-        <div class="box reveal d1"><div class="cmd"><b>$</b> ls os-net/</div><ul><li>linux <span>ubuntu · debian</span></li><li>nginx</li><li>mikrotik <span>(MTCNA)</span></li><li>wireguard</li><li>tcp/ip · dns · vlan</li></ul></div>
-        <div class="box reveal d2"><div class="cmd"><b>$</b> ls data/</div><ul><li>postgresql</li><li>mysql</li><li>redis</li><li>kafka</li><li>truenas <span>/ zfs</span></li></ul></div>
-        <div class="box reveal d3"><div class="cmd"><b>$</b> ls cloud/ code/</div><ul><li>yandex cloud</li><li>selectel</li><li>proxmox</li><li>bash</li><li>python</li></ul></div>
+      <h2 class="reveal d1">Навыки и инструменты</h2>
+      <div class="skills reveal d2" id="skills">
+        <div class="sk-tabs" role="tablist"></div>
+        <div class="sk-panel">
+          <div class="sk-head"><span class="sk-cmd"></span><span class="sk-count"></span></div>
+          <h3 class="sk-title"></h3>
+          <p class="sk-desc"></p>
+          <div class="sk-chips"></div>
+          <div class="sk-progress"><i></i></div>
+        </div>
+      </div>
+      <div class="marquee reveal d3" aria-hidden="true">
+        <div class="mq-row"><div class="mq-track" id="mq1"></div></div>
+        <div class="mq-row rev"><div class="mq-track" id="mq2"></div></div>
       </div>
 
       <h3 class="mini reveal" style="margin-top:72px">Малоизвестное, но полезное: ставлю почти в каждый проект</h3>
@@ -511,6 +556,61 @@ navLinks.forEach(a => {
   a.addEventListener('mouseleave', () => { hoverLink = null; movePill(activeLink); });
 });
 addEventListener('scroll', spy, {passive:true}); addEventListener('resize', spy); setTimeout(spy, 700);
+
+/* ---------- skills ---------- */
+const SKILLS = [
+  {id:'containers', name:'Контейнеры', title:'Контейнеры и оркестрация', desc:'Упаковываю сервисы в образы и запускаю их в Kubernetes с пробами, автоскейлингом и обновлением без простоя.',
+   items:[['Kubernetes','CKA'],['Docker'],['Docker Compose'],['Helm'],['Argo CD'],['k3s'],['Ingress-NGINX'],['cert-manager']]},
+  {id:'cicd', name:'CI/CD', title:'Доставка кода', desc:'Пайплайны, где каждый коммит проходит линтеры, тесты и сканирование, а в прод уходит одной кнопкой.',
+   items:[['GitLab CI'],['GitHub Actions'],['Trivy'],['hadolint'],['GHCR / Harbor'],['pre-commit'],['Git']]},
+  {id:'iac', name:'IaC', title:'Инфраструктура как код', desc:'Облако, серверы и секреты описаны в git: любое изменение проходит ревью и воспроизводится с нуля.',
+   items:[['Terraform','Associate'],['Ansible'],['Vault'],['SOPS'],['tflint'],['terraform-docs']]},
+  {id:'obs', name:'Мониторинг', title:'Наблюдаемость', desc:'Метрики, логи и алерты, которые читают, а не мьютят: RED-дашборды и уведомления в Telegram.',
+   items:[['Prometheus'],['Grafana'],['Alertmanager'],['Loki'],['Zabbix'],['node_exporter']]},
+  {id:'net', name:'Linux и сети', title:'Linux и сети', desc:'База, на которой всё стоит: от systemd и firewall до VLAN и VPN между площадками.',
+   items:[['Linux'],['Ubuntu / Debian'],['systemd'],['Nginx'],['MikroTik','MTCNA'],['WireGuard'],['nftables'],['TCP/IP · DNS · VLAN']]},
+  {id:'data', name:'Данные', title:'Базы и хранилища', desc:'Эксплуатация баз и хранилищ: бэкапы, проверка восстановления, репликация.',
+   items:[['PostgreSQL'],['MySQL'],['Redis'],['Kafka'],['TrueNAS / ZFS'],['S3']]},
+  {id:'cloud', name:'Облака и код', title:'Облака и скрипты', desc:'Облака и виртуализация, а всё, что делается дважды, превращается в скрипт.',
+   items:[['Yandex Cloud'],['Selectel'],['Proxmox'],['Bash'],['Python']]},
+];
+const skRoot = document.getElementById('skills');
+if(skRoot){
+  const tabsEl = skRoot.querySelector('.sk-tabs'), chipsEl = skRoot.querySelector('.sk-chips'),
+        titleEl = skRoot.querySelector('.sk-title'), descEl = skRoot.querySelector('.sk-desc'),
+        cmdEl = skRoot.querySelector('.sk-cmd'), countEl = skRoot.querySelector('.sk-count'),
+        prog = skRoot.querySelector('.sk-progress i');
+  let cur = 0, auto = !reduce, timer = null, visible = false;
+  SKILLS.forEach((c, i) => {
+    const b = document.createElement('button');
+    b.className = 'sk-tab'; b.type = 'button'; b.setAttribute('role','tab');
+    b.innerHTML = `<span>${c.name}</span><b>${String(c.items.length).padStart(2,'0')}</b>`;
+    b.addEventListener('click', () => { auto = false; show(i); });
+    tabsEl.appendChild(b);
+  });
+  function show(i){
+    cur = i; const c = SKILLS[i];
+    [...tabsEl.children].forEach((t, k) => { t.classList.toggle('on', k === i); t.setAttribute('aria-selected', k === i); });
+    cmdEl.textContent = `ls ~/stack/${c.id}/`; countEl.textContent = `${c.items.length} items`;
+    titleEl.textContent = c.title; descEl.textContent = c.desc;
+    chipsEl.innerHTML = c.items.map(([n, cert], k) =>
+      `<span class="chip${cert ? ' cert' : ''}" style="animation-delay:${k * 55}ms"><i></i>${n}${cert ? `<em>${cert}</em>` : ''}</span>`).join('');
+    prog.classList.remove('run'); void prog.offsetWidth;
+    clearTimeout(timer);
+    if(auto && visible){ prog.classList.add('run'); timer = setTimeout(() => show((cur + 1) % SKILLS.length), 5000); }
+    else prog.style.width = auto ? '0' : '100%';
+  }
+  new IntersectionObserver(es => es.forEach(e => {
+    visible = e.isIntersecting;
+    if(visible && auto) show(cur); else { clearTimeout(timer); prog.classList.remove('run'); }
+  }), {threshold:.4}).observe(skRoot);
+  show(0);
+  const all = SKILLS.flatMap(c => c.items.map(x => x[0]));
+  const half = Math.ceil(all.length / 2);
+  const fill = (el, list) => { const html = list.map(n => `<span>${n}</span>`).join(''); el.innerHTML = html + html; };
+  fill(document.getElementById('mq1'), all.slice(0, half));
+  fill(document.getElementById('mq2'), all.slice(half));
+}
 
 /* ---------- typed terminal ---------- */
 const term = document.getElementById('term');
