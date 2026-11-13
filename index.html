@@ -1309,15 +1309,15 @@ function drawIcon(ctx, name, W, H){
     ctx.fillStyle = '#ccc'; ctx.font = 'bold ' + Math.round(H*0.32) + 'px monospace'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
     ctx.fillText('?', x, y + H*0.01);
   } else if (name === 'pipe') {
-    const ys = H*0.5, n = 4, gap = W*0.2, x0 = cx - gap*1.5;
-    ctx.strokeStyle = '#777'; ctx.lineWidth = H*0.05;
-    ctx.beginPath(); ctx.moveTo(x0, ys); ctx.lineTo(x0 + gap*3, ys); ctx.stroke();
-    for (let k = 0; k < n; k++) {
-      ctx.fillStyle = k === n - 1 ? '#fff' : ['#bbb','#999','#ddd'][k];
-      ctx.beginPath(); ctx.arc(x0 + gap*k, ys, H*(k === n - 1 ? 0.16 : 0.12), 0, Math.PI*2); ctx.fill();
-    }
-    ctx.strokeStyle = '#000'; ctx.lineWidth = H*0.045; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
-    const cxk = x0 + gap*3; ctx.beginPath(); ctx.moveTo(cxk - H*0.07, ys); ctx.lineTo(cxk - H*0.015, ys + H*0.06); ctx.lineTo(cxk + H*0.08, ys - H*0.06); ctx.stroke();
+    const ys = cy, gap = W*0.3, x0 = cx - gap, sz = H*0.36;
+    ctx.strokeStyle = '#8a8a8a'; ctx.lineWidth = H*0.07;
+    ctx.beginPath(); ctx.moveTo(x0, ys); ctx.lineTo(x0 + gap*2, ys); ctx.stroke();
+    ['#9a9a9a', '#cfcfcf', '#fff'].forEach((c, k) => {
+      ctx.fillStyle = c; const x = x0 + gap*k - sz/2;
+      ctx.beginPath(); ctx.roundRect ? ctx.roundRect(x, ys - sz/2, sz, sz, sz*0.25) : ctx.rect(x, ys - sz/2, sz, sz); ctx.fill();
+    });
+    ctx.strokeStyle = '#000'; ctx.lineWidth = H*0.06; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    const cxk = x0 + gap*2; ctx.beginPath(); ctx.moveTo(cxk - sz*0.24, ys); ctx.lineTo(cxk - sz*0.05, ys + sz*0.2); ctx.lineTo(cxk + sz*0.26, ys - sz*0.2); ctx.stroke();
   } else if (name === 'net') {
     const pts = [[cx, cy], [W*0.2, H*0.22], [W*0.8, H*0.22], [W*0.2, H*0.78], [W*0.8, H*0.78]];
     ctx.strokeStyle = '#888'; ctx.lineWidth = H*0.04;
