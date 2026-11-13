@@ -396,14 +396,14 @@ a.scard{cursor:pointer}
 .scard:hover .ic{transform:scale(1.1) rotate(-4deg)}
 .scard .ic img{width:100%;height:100%;object-fit:contain}
 .scard .ic .mono{width:52px;height:52px;border-radius:13px;display:grid;place-items:center;font:700 19px var(--mono);color:#06110c;background:linear-gradient(135deg,var(--c1),var(--c2))}
-.scard b{font-weight:600;font-size:15px;text-align:center;line-height:1.25;letter-spacing:.01em}
+.scard b{font-weight:600;font-size:15px;text-align:center;line-height:1.25;letter-spacing:.01em;overflow-wrap:anywhere}
 .scard em{position:absolute;top:10px;right:10px;font:500 10px var(--mono);font-style:normal;color:var(--mint);border:1px solid rgba(142,240,198,.4);background:rgba(142,240,198,.08);border-radius:6px;padding:1px 6px}
-.scard small{position:absolute;bottom:9px;font:11px var(--mono);color:var(--dim)}
+.scard small{margin-top:-10px;font:11px var(--mono);color:var(--dim);max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .tbnote{font-family:var(--mono);font-size:12px;color:var(--dim);margin-top:20px;display:none}
 .sgrid.tb ~ .tbnote{display:block}
 html[data-lang=en] .sgrid.tb ~ .tbnote.ru,html[data-lang=ru] .sgrid.tb ~ .tbnote.en{display:none}
 @media (max-width:1000px){.sgrid{grid-template-columns:repeat(4,minmax(0,1fr))}}
-@media (max-width:640px){.sgrid{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.scard{border-radius:14px;gap:10px}.scard .ic,.scard .ic .mono{width:40px;height:40px}.scard b{font-size:12.5px}.stabs button{padding:10px 13px;font-size:14px}}
+@media (max-width:640px){.sgrid{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.scard{border-radius:14px;gap:9px;aspect-ratio:auto;min-height:104px;padding:14px 6px}.scard .ic,.scard .ic .mono{width:34px;height:34px}.scard .ic .mono{font-size:14px;border-radius:10px}.scard b{font-size:12px}.scard small{display:none}.scard em{top:6px;right:6px;font-size:9px;padding:0 4px}.stabs button{padding:10px 13px;font-size:14px}}
 @media (prefers-reduced-motion:reduce){.scard{animation:none;opacity:1;transform:none}}
 .lsline{font-family:var(--mono);font-size:14px;color:var(--muted);margin-top:40px}
 .lsline b{color:var(--mint);font-weight:400}
@@ -1581,6 +1581,7 @@ function movePill(){
   const b = stabs.querySelector('button.on'), pill = stabs.querySelector('.stpill');
   if (!b || !pill) return;
   pill.style.width = b.offsetWidth + 'px'; pill.style.transform = 'translateX(' + b.offsetLeft + 'px)';
+  if (stabs.scrollWidth > stabs.clientWidth) stabs.scrollTo({left: b.offsetLeft - (stabs.clientWidth - b.offsetWidth) / 2, behavior: 'smooth'});
 }
 if (sgrid && stabs) {
   stabs.addEventListener('click', e => { const b = e.target.closest('button'); if (b && !b.classList.contains('on')) showStack(b.dataset.g); });
