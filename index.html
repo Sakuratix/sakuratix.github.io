@@ -494,7 +494,7 @@ body{animation:pagein .7s ease both}
 .tlog{margin:0;min-height:330px;padding:16px 18px;font-family:var(--mono);font-size:12px;line-height:1.75;color:var(--muted);white-space:pre-wrap;word-break:break-all}
 .tlog b{display:block;font-weight:400;animation:msgin .3s ease forwards;opacity:0}
 .tlog .c{color:var(--fg)} .tlog .c::first-letter{color:var(--mint)}
-.tlog .d{color:#ff8f8f} .tlog .a{color:var(--mint)} .tlog .m{color:var(--blue)}
+.tlog .d{color:#ff8f8f} .tlog .x{color:#ff8f8f;font-weight:500} .tlog .a{color:var(--mint)} .tlog .m{color:var(--blue)}
 .tlog .cur{display:inline-block;width:7px;height:13px;background:var(--mint);vertical-align:-2px;animation:blink 1.1s steps(1) infinite}
 @media (max-width:900px){
   .cases > .case{padding-top:28px}
@@ -848,7 +848,7 @@ html.movie-on,html.movie-on body{overflow:hidden}
       <p class="sub reveal d2 en">Everything is public on GitHub, with a README, green CI and notes on why it is built this way.</p>
       <p class="sub reveal d2 ru">Всё открыто на GitHub: README, зелёный CI и объяснение, почему сделано именно так.</p>
       <div class="workbox reveal d2" id="workbox">
-        <div class="wtabs" role="tablist"><button type="button" class="wtab on" role="tab" data-i="0"><span>01</span>infra-lab</button><button type="button" class="wtab" role="tab" data-i="1"><span>02</span>k3s-gitops</button><button type="button" class="wtab" role="tab" data-i="2"><span>03</span>telegram-relay</button><button type="button" class="wtab" role="tab" data-i="3"><span>04</span>pg-backup-s3</button><button type="button" class="wtab" role="tab" data-i="4"><span>05</span>mikrotik-backup</button><div class="wnav"><button type="button" data-step="-1" aria-label="previous">←</button><button type="button" data-step="1" aria-label="next">→</button></div></div>
+        <div class="wtabs" role="tablist"><button type="button" class="wtab on" role="tab" data-i="0"><span>01</span>infra-lab</button><button type="button" class="wtab" role="tab" data-i="1"><span>02</span>kubectl-why</button><button type="button" class="wtab" role="tab" data-i="2"><span>03</span>platform-ci</button><button type="button" class="wtab" role="tab" data-i="3"><span>04</span>k3s-gitops</button><button type="button" class="wtab" role="tab" data-i="4"><span>05</span>telegram-relay</button><button type="button" class="wtab" role="tab" data-i="5"><span>06</span>pg-backup-s3</button><button type="button" class="wtab" role="tab" data-i="6"><span>07</span>mikrotik-backup</button><div class="wnav"><button type="button" data-step="-1" aria-label="previous">←</button><button type="button" data-step="1" aria-label="next">→</button></div></div>
         <div class="cases">
 <article class="case on">
         <div class="case-txt">
@@ -884,6 +884,70 @@ html.movie-on,html.movie-on body{overflow:hidden}
               <div class="mpanel"><div class="mlabel">p95 latency</div><div class="mstat" data-stat="p95">84<small>ms</small></div></div>
             </div>
             <div class="mchecks"><span>ruff</span><span>pytest</span><span>hadolint</span><span>tf validate</span><span>helm lint</span><span>ansible</span><span>trivy</span><span>push</span></div>
+          </div>
+        </div>
+      </article>
+<article class="case">
+        <div class="case-txt">
+          <div class="case-head"><pre class="ascii" data-icon="lens" aria-hidden="true"></pre><div><h3 class="case-h">kubectl-why</h3>
+          <div class="case-tag"># <span class="en">kubernetes / debugging tool</span><span class="ru">kubernetes / инструмент для отладки</span></div></div></div>
+          <p class="case-lead en">A kubectl plugin in Go that explains in plain words why a pod or deployment is unhealthy: what is wrong, the evidence, and what to try next. <code>kubectl describe</code> shows everything; this does the part you usually do in your head at 3 a.m.</p>
+          <p class="case-lead ru">Плагин для kubectl на Go: человеческим языком объясняет, почему под или деплоймент нездоров. Что сломалось, на чём основан вывод и что делать дальше. <code>kubectl describe</code> показывает всё подряд, а это делает ту часть, которую обычно делаешь в голове в 3 ночи.</p>
+          <ul class="dash en">
+            <li>Recognises OOMKilled, crash loops with exit codes in words, liveness and readiness failures, bad image tags vs. private registries, missing secrets, unschedulable pods, Multi-Attach volumes, stuck Terminating, evictions and stuck rollouts.</li>
+            <li>CI starts a kind cluster, deploys pods broken on purpose and checks each one is explained correctly. The first run found three real bugs that recorded fixtures had missed.</li>
+          </ul>
+          <ul class="dash ru">
+            <li>Распознаёт OOMKilled, крэш-лупы с расшифровкой кода выхода, падающие liveness и readiness, несуществующий тег против приватного registry, отсутствующие секреты, неразмещаемые поды, Multi-Attach томов, зависший Terminating, вытеснение и застрявший rollout.</li>
+            <li>CI поднимает кластер kind, деплоит специально сломанные поды и проверяет, что каждый объяснён правильно. Первый же прогон нашёл три настоящих бага, которые записанные фикстуры пропустили.</li>
+          </ul>
+          <dl class="kv">
+            <div><dt><span class="en">failure modes</span><span class="ru">типов поломок</span></dt><dd>15+</dd></div>
+            <div><dt><span class="en">dependencies</span><span class="ru">зависимостей</span></dt><dd>0</dd></div>
+            <div><dt><span class="en">tested on</span><span class="ru">проверяется на</span></dt><dd><span class="en">real kind cluster</span><span class="ru">живом kind</span></dd></div>
+          </dl>
+          <div class="techs">Go / Kubernetes / kubectl plugin / kind / GoReleaser / krew / GitHub Actions</div>
+          <div class="case-btns">
+            <a class="sbtn" href="https://github.com/Sakuratix/kubectl-why" target="_blank" rel="noopener">↗ Codebase</a>
+            <a class="sbtn" href="https://github.com/Sakuratix/kubectl-why/actions" target="_blank" rel="noopener">↗ CI runs</a>
+          </div>
+        </div>
+        <div class="case-vis">
+          <div class="mock" data-mock="term">
+            <div class="mbar"><i></i><i></i><i></i><span>zsh · prod-cluster</span><em>sample</em></div>
+            <pre class="tlog" data-lines='[["c", "$ kubectl why deploy/api -n shop"], ["x", "✗ Rollout is stuck (progressDeadlineSeconds exceeded)"], ["a", "  → roll back: kubectl rollout undo deployment/api"], ["", ""], ["", "pod/api-7f9c6-x2kq9  CrashLoopBackOff · restarts 7"], ["x", "✗ [app] OOMKilled: went over its memory limit (256Mi)"], ["", "  · last exit: OOMKilled, exit code 137, 2m ago"], ["a", "  → kubectl top pod api-7f9c6-x2kq9 --containers"], ["", ""], ["", "pod/api-7f9c6-pp4mz  ImagePullBackOff"], ["x", "✗ [app] Image or tag doesn&#39;t exist: ghcr.io/acme/api:1.9.0"], ["a", "  → check the tag was actually pushed"]]'></pre>
+          </div>
+        </div>
+      </article>
+<article class="case">
+        <div class="case-txt">
+          <div class="case-head"><pre class="ascii" data-icon="pipe" aria-hidden="true"></pre><div><h3 class="case-h">platform-ci</h3>
+          <div class="case-tag"># <span class="en">ci/cd / supply chain</span><span class="ru">ci/cd / безопасность поставки</span></div></div></div>
+          <p class="case-lead en">Reusable GitHub Actions workflows so every repository gets the same image build, scanning, SBOM, signing and IaC checks from one line of <code>uses:</code> instead of copy-pasted YAML.</p>
+          <p class="case-lead ru">Переиспользуемые GitHub Actions workflow: каждый репозиторий одной строкой <code>uses:</code> получает одинаковую сборку образа, сканирование, SBOM, подпись и проверки IaC вместо копипасты YAML.</p>
+          <ul class="dash en">
+            <li>Images are signed with keyless cosign through GitHub's OIDC token: there is no private key to store or rotate, and a signature proves which workflow built the image.</li>
+            <li>Pull requests only check; push and signing happen from the main branch, so a fork can't publish to the registry. Trivy fails only on vulnerabilities that have a fix.</li>
+          </ul>
+          <ul class="dash ru">
+            <li>Образы подписываются cosign без ключей через OIDC-токен GitHub: нет приватного ключа, который нужно хранить и ротировать, а подпись доказывает, какой workflow собрал образ.</li>
+            <li>Pull request только проверяет, публикация и подпись идут из основной ветки, поэтому форк не положит образ в registry. Trivy валит сборку только на уязвимостях, у которых есть исправление.</li>
+          </ul>
+          <dl class="kv">
+            <div><dt><span class="en">reusable workflows</span><span class="ru">общих workflow</span></dt><dd>3</dd></div>
+            <div><dt><span class="en">signing keys to store</span><span class="ru">ключей подписи хранить</span></dt><dd>0</dd></div>
+            <div><dt><span class="en">used by</span><span class="ru">используется в</span></dt><dd>infra-lab</dd></div>
+          </dl>
+          <div class="techs">GitHub Actions / Docker Buildx / Trivy / SBOM (SPDX) / cosign / Terraform / tflint / Helm / kubeconform / kube-linter</div>
+          <div class="case-btns">
+            <a class="sbtn" href="https://github.com/Sakuratix/platform-ci" target="_blank" rel="noopener">↗ Codebase</a>
+            <a class="sbtn" href="https://github.com/Sakuratix/platform-ci/actions" target="_blank" rel="noopener">↗ CI runs</a>
+          </div>
+        </div>
+        <div class="case-vis">
+          <div class="mock" data-mock="term">
+            <div class="mbar"><i></i><i></i><i></i><span>github actions · infra-lab</span><em>sample</em></div>
+            <pre class="tlog" data-lines='[["c", "$ git push origin main"], ["", "image / hadolint ............................ ok"], ["", "image / buildx  ghcr.io/sakuratix/infra-lab ... ok"], ["d", "image / trivy   2 HIGH (debian base)  → blocked"], ["c", "$ git commit -am &#39;patch base layer&#39; && git push"], ["a", "image / trivy   0 HIGH, 0 CRITICAL ........... ok"], ["", "image / sbom    sbom-3c95fb4.spdx.json ........ ok"], ["m", "image / cosign  signed keyless (GitHub OIDC)"], ["", "terraform / fmt · validate · tflint .......... ok"], ["", "helm / lint · kubeconform · kube-linter ...... ok"]]'></pre>
           </div>
         </div>
       </article>
@@ -1236,6 +1300,24 @@ function drawIcon(ctx, name, W, H){
     ctx.fillStyle = '#e8e8e8'; ctx.beginPath(); ctx.ellipse(cx, H*0.2, w/2, eh, 0, 0, Math.PI*2); ctx.fill();
     ctx.strokeStyle = '#000'; ctx.lineWidth = H*0.035;
     [0.4, 0.6].forEach(k => { ctx.beginPath(); ctx.ellipse(cx, H*k, w/2, eh, 0, 0, Math.PI); ctx.stroke(); });
+  } else if (name === 'lens') {
+    const r = H*0.24, x = cx - W*0.06, y = cy - H*0.06;
+    ctx.strokeStyle = '#fff'; ctx.lineWidth = H*0.07;
+    ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI*2); ctx.stroke();
+    ctx.strokeStyle = '#999'; ctx.lineCap = 'round'; ctx.lineWidth = H*0.1;
+    ctx.beginPath(); ctx.moveTo(x + r*0.75, y + r*0.75); ctx.lineTo(x + r*1.75, y + r*1.75); ctx.stroke();
+    ctx.fillStyle = '#ccc'; ctx.font = 'bold ' + Math.round(H*0.32) + 'px monospace'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText('?', x, y + H*0.01);
+  } else if (name === 'pipe') {
+    const ys = H*0.5, n = 4, gap = W*0.2, x0 = cx - gap*1.5;
+    ctx.strokeStyle = '#777'; ctx.lineWidth = H*0.05;
+    ctx.beginPath(); ctx.moveTo(x0, ys); ctx.lineTo(x0 + gap*3, ys); ctx.stroke();
+    for (let k = 0; k < n; k++) {
+      ctx.fillStyle = k === n - 1 ? '#fff' : ['#bbb','#999','#ddd'][k];
+      ctx.beginPath(); ctx.arc(x0 + gap*k, ys, H*(k === n - 1 ? 0.16 : 0.12), 0, Math.PI*2); ctx.fill();
+    }
+    ctx.strokeStyle = '#000'; ctx.lineWidth = H*0.045; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    const cxk = x0 + gap*3; ctx.beginPath(); ctx.moveTo(cxk - H*0.07, ys); ctx.lineTo(cxk - H*0.015, ys + H*0.06); ctx.lineTo(cxk + H*0.08, ys - H*0.06); ctx.stroke();
   } else if (name === 'net') {
     const pts = [[cx, cy], [W*0.2, H*0.22], [W*0.8, H*0.22], [W*0.2, H*0.78], [W*0.8, H*0.78]];
     ctx.strokeStyle = '#888'; ctx.lineWidth = H*0.04;
