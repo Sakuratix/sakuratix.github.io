@@ -377,6 +377,34 @@ i.en, i.ru{font-style:normal}
 .snip u{text-decoration:none;color:var(--mint)}
 
 /* stack columns */
+.stabs{position:relative;display:flex;gap:4px;margin-top:34px;padding:6px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.01));width:max-content;max-width:100%;overflow-x:auto;scrollbar-width:none;box-shadow:0 10px 40px -20px rgba(0,0,0,.8)}
+.stabs::-webkit-scrollbar{display:none}
+.stabs button{position:relative;z-index:1;display:flex;align-items:center;gap:9px;padding:11px 18px;border:0;background:none;color:var(--muted);font:500 15px var(--sans);border-radius:11px;cursor:pointer;white-space:nowrap;transition:color .25s}
+.stabs button:hover{color:var(--fg)}
+.stabs button.on{color:#06110c}
+.stabs svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.stpill{position:absolute;top:6px;left:0;height:calc(100% - 12px);border-radius:11px;background:linear-gradient(135deg,#a6f6d3,var(--mint) 55%,#6fdcb0);box-shadow:0 0 0 1px rgba(142,240,198,.5),0 8px 28px -6px rgba(142,240,198,.55);transition:transform .45s cubic-bezier(.6,0,.2,1),width .45s cubic-bezier(.6,0,.2,1)}
+.sgrid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:16px;margin-top:26px;min-height:300px;align-content:start}
+.scard{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;aspect-ratio:1/0.92;padding:16px 10px;border-radius:18px;border:1px solid rgba(255,255,255,.06);background:linear-gradient(160deg,#151922 0%,#0d1015 100%);box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 14px 30px -18px rgba(0,0,0,.9);overflow:hidden;color:var(--fg);cursor:default;opacity:0;transform:translateY(14px) scale(.96);animation:scardIn .5s cubic-bezier(.2,.8,.2,1) forwards;animation-delay:calc(var(--i) * 45ms);transition:border-color .3s,box-shadow .3s,translate .3s}
+a.scard{cursor:pointer}
+@keyframes scardIn{to{opacity:1;transform:none}}
+.scard::before{content:"";position:absolute;inset:0;border-radius:inherit;background:radial-gradient(220px circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,.09),transparent 60%);opacity:0;transition:opacity .3s;pointer-events:none}
+.scard::after{content:"";position:absolute;inset:-1px;border-radius:inherit;padding:1px;background:radial-gradient(160px circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,.75),transparent 70%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:opacity .3s;pointer-events:none}
+.scard:hover{translate:0 -4px;border-color:rgba(255,255,255,.14);box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 22px 40px -18px rgba(0,0,0,.95),0 0 32px -12px var(--glow,rgba(142,240,198,.5))}
+.scard:hover::before,.scard:hover::after{opacity:1}
+.scard .ic{width:52px;height:52px;display:grid;place-items:center;transition:transform .35s cubic-bezier(.2,.8,.2,1);filter:drop-shadow(0 6px 14px rgba(0,0,0,.55))}
+.scard:hover .ic{transform:scale(1.1) rotate(-4deg)}
+.scard .ic img{width:100%;height:100%;object-fit:contain}
+.scard .ic .mono{width:52px;height:52px;border-radius:13px;display:grid;place-items:center;font:700 19px var(--mono);color:#06110c;background:linear-gradient(135deg,var(--c1),var(--c2))}
+.scard b{font-weight:600;font-size:15px;text-align:center;line-height:1.25;letter-spacing:.01em}
+.scard em{position:absolute;top:10px;right:10px;font:500 10px var(--mono);font-style:normal;color:var(--mint);border:1px solid rgba(142,240,198,.4);background:rgba(142,240,198,.08);border-radius:6px;padding:1px 6px}
+.scard small{position:absolute;bottom:9px;font:11px var(--mono);color:var(--dim)}
+.tbnote{font-family:var(--mono);font-size:12px;color:var(--dim);margin-top:20px;display:none}
+.sgrid.tb ~ .tbnote{display:block}
+html[data-lang=en] .sgrid.tb ~ .tbnote.ru,html[data-lang=ru] .sgrid.tb ~ .tbnote.en{display:none}
+@media (max-width:1000px){.sgrid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media (max-width:640px){.sgrid{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.scard{border-radius:14px;gap:10px}.scard .ic,.scard .ic .mono{width:40px;height:40px}.scard b{font-size:12.5px}.stabs button{padding:10px 13px;font-size:14px}}
+@media (prefers-reduced-motion:reduce){.scard{animation:none;opacity:1;transform:none}}
 .lsline{font-family:var(--mono);font-size:14px;color:var(--muted);margin-top:40px}
 .lsline b{color:var(--mint);font-weight:400}
 .lsline .cur{display:inline-block;width:8px;height:15px;background:var(--mint);vertical-align:-2px;margin-left:6px;animation:blink 1.1s steps(1) infinite}
@@ -391,7 +419,6 @@ i.en, i.ru{font-style:normal}
 .col li em{font-style:normal;font-size:10px;color:var(--mint);border:1px solid rgba(142,240,198,.35);border-radius:4px;padding:0 4px;margin-left:6px;vertical-align:1px}
 .col.tb a{color:var(--muted);border-bottom:1px dashed var(--line2);transition:color .2s,border-color .2s}
 .col.tb a:hover{color:var(--mint);border-color:var(--mint)}
-.tbnote{font-family:var(--mono);font-size:12px;color:var(--dim);margin-top:28px}
 
 @media (max-width:1100px){
   .nav ul{display:none}
@@ -596,7 +623,6 @@ h2{font-size:clamp(28px,3.4vw,44px)}
 .lsline{margin-top:24px}
 .cols{margin-top:16px;gap:24px}
 .col ul{gap:5px}
-.tbnote{margin-top:16px}
 .certs{margin-top:24px;gap:12px}
 .cert{padding:16px 18px}
 .cert .badge{font-size:22px}
@@ -1003,26 +1029,17 @@ html.movie-on,html.movie-on body{overflow:hidden}
       <h2 class="reveal d1"><span class="en">What I work with</span><span class="ru">С чем я работаю</span></h2>
       <p class="sub reveal d2 en">Tools I have used on real infrastructure, grouped the way I use them. Certified ones are marked.</p>
       <p class="sub reveal d2 ru">Инструменты, с которыми работал на реальной инфраструктуре, сгруппированы так, как я ими пользуюсь. Сертифицированные отмечены.</p>
-      <div class="lsline reveal d2"><b>$</b> ls -1 stack/*<span class="cur"></span></div>
-      <div class="cols" id="cols">
-        <div class="col"><h4>containers/</h4><ul><li>Kubernetes <em>CKA</em></li><li>Docker</li><li>Docker Compose</li><li>Helm</li><li>Argo CD</li><li>k3s</li><li>Ingress-NGINX</li><li>cert-manager</li></ul></div>
-        <div class="col"><h4>delivery-and-iac/</h4><ul><li>Terraform <em>Associate</em></li><li>Ansible</li><li>GitLab CI</li><li>GitHub Actions</li><li>Trivy</li><li>Vault</li><li>SOPS</li><li>Yandex Cloud</li></ul></div>
-        <div class="col"><h4>observability/</h4><ul><li>Prometheus</li><li>Grafana</li><li>Alertmanager</li><li>Loki</li><li>Zabbix</li><li>node_exporter</li></ul></div>
-        <div class="col"><h4>systems-and-data/</h4><ul><li>Linux</li><li>systemd</li><li>Nginx</li><li>MikroTik <em>MTCNA</em></li><li>VPN · WireGuard</li><li>PostgreSQL</li><li>Redis</li><li>Kafka</li><li>TrueNAS / ZFS</li><li>Bash · Python</li></ul></div>
-        <div class="col tb"><h4>toolbox/</h4><ul>
-          <li><a href="https://github.com/yannh/kubeconform" target="_blank" rel="noopener">kubeconform</a></li>
-          <li><a href="https://github.com/FairwindsOps/pluto" target="_blank" rel="noopener">pluto</a></li>
-          <li><a href="https://github.com/doitintl/kube-no-trouble" target="_blank" rel="noopener">kube-no-trouble</a></li>
-          <li><a href="https://github.com/derailed/popeye" target="_blank" rel="noopener">popeye</a></li>
-          <li><a href="https://github.com/stackrox/kube-linter" target="_blank" rel="noopener">kube-linter</a></li>
-          <li><a href="https://github.com/stern/stern" target="_blank" rel="noopener">stern</a></li>
-          <li><a href="https://github.com/terraform-docs/terraform-docs" target="_blank" rel="noopener">terraform-docs</a></li>
-          <li><a href="https://github.com/terraform-linters/tflint" target="_blank" rel="noopener">tflint</a></li>
-          <li><a href="https://github.com/wagoodman/dive" target="_blank" rel="noopener">dive</a></li>
-        </ul></div>
+      <div class="stabs reveal d2" id="stabs" role="tablist">
+        <span class="stpill" aria-hidden="true"></span>
+        <button role="tab" data-g="containers" class="on"><svg viewBox="0 0 24 24"><path d="M12 2 3 7v10l9 5 9-5V7z M3 7l9 5 9-5 M12 12v10"/></svg><span class="en">Containers</span><span class="ru">Контейнеры</span></button>
+        <button role="tab" data-g="delivery"><svg viewBox="0 0 24 24"><path d="M5 15c-1.5 1.5-2 5-2 5s3.5-.5 5-2 M9 15l-3-3c1-4 5-9 13-9 0 8-5 12-9 13z M14 7.5a1.5 1.5 0 1 0 3 0 1.5 1.5 0 1 0-3 0"/></svg><span class="en">Delivery &amp; IaC</span><span class="ru">Доставка и IaC</span></button>
+        <button role="tab" data-g="observability"><svg viewBox="0 0 24 24"><path d="M3 3v18h18 M7 15l4-5 3 3 5-7"/></svg><span class="en">Observability</span><span class="ru">Мониторинг</span></button>
+        <button role="tab" data-g="systems"><svg viewBox="0 0 24 24"><path d="M3 4h18v6H3z M3 14h18v6H3z M7 7h.01 M7 17h.01"/></svg><span class="en">Systems &amp; Data</span><span class="ru">Системы и данные</span></button>
+        <button role="tab" data-g="toolbox"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.2L3 17.8 6.2 21l6.3-6.3a4 4 0 0 0 5.2-5.4l-2.6 2.6-2.4-.6-.6-2.4z"/></svg><span class="en">Toolbox</span><span class="ru">Toolbox</span></button>
       </div>
-      <p class="tbnote reveal en">toolbox/ = lesser-known open-source tools I add to almost every project.</p>
-      <p class="tbnote reveal ru">toolbox/ = малоизвестные open-source инструменты, которые я ставлю почти в каждый проект.</p>
+      <div class="sgrid" id="sgrid" role="tabpanel"></div>
+      <p class="tbnote en" id="tbnote-en">toolbox = lesser-known open-source tools I add to almost every project. Click a card to open the repo.</p>
+      <p class="tbnote ru" id="tbnote-ru">toolbox = малоизвестные open-source инструменты, которые я ставлю почти в каждый проект. Карточка ведёт на репозиторий.</p>
     </div>
   </section>
 
@@ -1523,10 +1540,56 @@ if (wbox) {
 })();
 
 /* ---------- stack columns ---------- */
-const colsEl = document.getElementById('cols');
-if (colsEl) {
-  [...colsEl.querySelectorAll('.col')].forEach((col, ci) => col.querySelectorAll('li').forEach((li, i) => li.style.setProperty('--i', ci * 3 + i)));
-  new IntersectionObserver((es, o) => es.forEach(e => { if (e.isIntersecting) { colsEl.classList.add('in'); o.disconnect(); } }), {threshold:.2}).observe(colsEl);
+const STACK = {
+  containers: [['Kubernetes','kubernetes',0,'CKA'],['Docker','docker'],['Docker Compose','docker'],['Helm','helm','fff'],['Argo CD','argo'],['k3s','k3s'],['Ingress-NGINX','nginx'],['cert-manager',null,'cm']],
+  delivery: [['Terraform','terraform',0,'Associate'],['Ansible','ansible'],['GitLab CI','gitlab'],['GitHub Actions','githubactions'],['Trivy','trivy','6f8cff'],['Vault','vault'],['SOPS',null,'sops'],['Yandex Cloud','yandexcloud']],
+  observability: [['Prometheus','prometheus'],['Grafana','grafana'],['Alertmanager','prometheus'],['Loki','grafana'],['Zabbix',null,'Z'],['node_exporter','prometheus']],
+  systems: [['Linux','linux'],['systemd',null,'sd'],['Nginx','nginx'],['MikroTik','mikrotik','fff','MTCNA'],['WireGuard','wireguard','ff5a5f'],['PostgreSQL','postgresql'],['Redis','redis'],['Kafka','apachekafka','fff'],['TrueNAS / ZFS','truenas'],['Bash','gnubash'],['Python','python']],
+  toolbox: [['kubeconform','yannh/kubeconform'],['pluto','FairwindsOps/pluto'],['kube-no-trouble','doitintl/kube-no-trouble'],['popeye','derailed/popeye'],['kube-linter','stackrox/kube-linter'],['stern','stern/stern'],['terraform-docs','terraform-docs/terraform-docs'],['tflint','terraform-linters/tflint'],['dive','wagoodman/dive']]
+};
+const GLOW = {kubernetes:'#326ce5',docker:'#2496ed',helm:'#7f8dff',argo:'#ef7b4d',k3s:'#ffc61c',nginx:'#009639',terraform:'#844fba',ansible:'#ee0000',gitlab:'#fc6d26',githubactions:'#2088ff',trivy:'#6f8cff',vault:'#ffec6e',yandexcloud:'#5282ff',prometheus:'#e6522c',grafana:'#f46800',linux:'#fcc624',mikrotik:'#9aa4b2',wireguard:'#ff5a5f',postgresql:'#4169e1',redis:'#ff4438',apachekafka:'#cfd3da',truenas:'#0095d5',gnubash:'#4eaa25',python:'#3776ab'};
+const sgrid = document.getElementById('sgrid'), stabs = document.getElementById('stabs');
+function stackCard(item, i, tb){
+  const el = document.createElement(tb ? 'a' : 'div'); el.className = 'scard'; el.style.setProperty('--i', i);
+  let ic;
+  if (tb) {
+    el.href = 'https://github.com/' + item[1]; el.target = '_blank'; el.rel = 'noopener';
+    ic = '<img src="https://cdn.simpleicons.org/github/ffffff" alt="" loading="lazy">';
+    el.innerHTML = '<span class="ic">' + ic + '</span><b>' + item[0] + '</b><small>' + item[1].split('/')[0] + '</small>';
+    el.style.setProperty('--glow', 'rgba(142,240,198,.55)');
+    return el;
+  }
+  const [name, slug, extra, cert] = item;
+  if (slug) {
+    ic = '<img src="https://cdn.simpleicons.org/' + slug + (extra ? '/' + extra : '') + '" alt="" loading="lazy">';
+    el.style.setProperty('--glow', (GLOW[slug] || '#8ef0c6') + '99');
+  } else {
+    ic = '<span class="mono" style="--c1:#a6f6d3;--c2:#7aa2ff">' + extra + '</span>';
+    el.style.setProperty('--glow', 'rgba(142,240,198,.55)');
+  }
+  el.innerHTML = '<span class="ic">' + ic + '</span><b>' + name + '</b>' + (cert ? '<em>' + cert + '</em>' : '');
+  return el;
+}
+function showStack(g){
+  if (!sgrid) return;
+  sgrid.classList.toggle('tb', g === 'toolbox');
+  sgrid.replaceChildren(...STACK[g].map((it, i) => stackCard(it, i, g === 'toolbox')));
+  stabs.querySelectorAll('button').forEach(b => { const on = b.dataset.g === g; b.classList.toggle('on', on); b.setAttribute('aria-selected', on); });
+  movePill();
+}
+function movePill(){
+  const b = stabs.querySelector('button.on'), pill = stabs.querySelector('.stpill');
+  if (!b || !pill) return;
+  pill.style.width = b.offsetWidth + 'px'; pill.style.transform = 'translateX(' + b.offsetLeft + 'px)';
+}
+if (sgrid && stabs) {
+  stabs.addEventListener('click', e => { const b = e.target.closest('button'); if (b && !b.classList.contains('on')) showStack(b.dataset.g); });
+  sgrid.addEventListener('pointermove', e => { const c = e.target.closest('.scard'); if (!c) return; const r = c.getBoundingClientRect(); c.style.setProperty('--mx', (e.clientX - r.left) + 'px'); c.style.setProperty('--my', (e.clientY - r.top) + 'px'); });
+  addEventListener('resize', movePill);
+  new MutationObserver(movePill).observe(document.documentElement, {attributes: true, attributeFilter: ['data-lang']});
+  let shown = false;
+  new IntersectionObserver((es, o) => es.forEach(e => { if (e.isIntersecting && !shown) { shown = true; showStack('containers'); o.disconnect(); } }), {threshold: .1}).observe(sgrid);
+  requestAnimationFrame(movePill); if (document.fonts) document.fonts.ready.then(movePill);
 }
 
 setLang(initLang);
