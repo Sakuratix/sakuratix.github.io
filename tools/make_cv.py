@@ -169,7 +169,7 @@ def render(d: dict) -> str:
     <a href="https://t.me/MountewDew">t.me/MountewDew</a><br>
     <a href="https://github.com/Sakuratix">github.com/Sakuratix</a><br>
     <a href="https://www.linkedin.com/in/klimentii-matveev-59ab38426/">in/klimentii-matveev</a><br>
-    <a href="https://sakuratix.github.io">sakuratix.github.io</a>
+    <a href="https://sakuratox.is-a.dev">sakuratox.is-a.dev</a>
   </div>
 </header>
 <p class="sum" style="margin-top:10pt">{e(d['summary'])}</p>
