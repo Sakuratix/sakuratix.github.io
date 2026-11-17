@@ -70,7 +70,6 @@ header.nav.scrolled{border-bottom-color:var(--line)}
 .dot{width:8px;height:8px;border-radius:50%;background:var(--mint);box-shadow:0 0 0 0 rgba(142,240,198,.6);animation:pulse 2s infinite}
 @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(142,240,198,.5)}70%{box-shadow:0 0 0 10px rgba(142,240,198,0)}100%{box-shadow:0 0 0 0 rgba(142,240,198,0)}}
 h1{font-size:clamp(40px,6.4vw,84px);line-height:1;letter-spacing:-.045em;font-weight:600;margin:26px 0 22px;max-width:12ch}
-h1 .grad{background:linear-gradient(100deg,var(--mint),var(--blue) 70%);-webkit-background-clip:text;background-clip:text;color:transparent}
 .lead{font-size:clamp(17px,1.6vw,20px);color:var(--muted);max-width:520px}
 .lead b{color:var(--fg);font-weight:500}
 .cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}
@@ -173,7 +172,6 @@ h2{font-size:clamp(32px,4.4vw,56px);line-height:1.04;letter-spacing:-.035em;font
 .tool span{font-size:13.5px;color:var(--muted)}
 .tool:hover{background:rgba(20,24,28,.95)}
 .tool:hover b{color:var(--mint)}
-.grad2{background:linear-gradient(100deg,var(--mint),var(--blue));-webkit-background-clip:text;background-clip:text;color:transparent}
 /* skills */
 .skills{margin-top:48px;display:grid;grid-template-columns:240px 1fr;gap:16px;max-width:820px}
 .sk-tabs{display:flex;flex-direction:column;gap:4px}
@@ -718,7 +716,7 @@ html.movie-on,html.movie-on body{overflow:hidden}
   <section class="hero">
     <div class="wrap">
       <div class="status reveal"><span class="dot"></span><span class="en">open to DevOps roles · remote only</span><span class="ru">открыт к предложениям · только удалённо</span></div>
-      <h1 class="reveal d1"><span class="en">Infrastructure that <span class="grad">runs itself</span></span><span class="ru">Инфраструктура, которая <span class="grad">работает сама</span></span></h1>
+      <h1 class="reveal d1"><span class="en">Infrastructure that runs itself</span><span class="ru">Инфраструктура, которая работает сама</span></h1>
       <p class="lead reveal d2 en">Klimentiy Matveev, <b>DevOps engineer</b>. I build CI/CD, run Kubernetes and keep infrastructure in code, so releases ship without manual steps and the team hears about failures before users do.</p>
       <p class="lead reveal d2 ru">Климентий Матвеев, <b>DevOps-инженер</b>. Настраиваю CI/CD, Kubernetes и мониторинг, описываю инфраструктуру кодом. Релизы выходят без ручной работы, а о сбоях команда узнаёт раньше пользователей.</p>
       <div class="cta reveal d3">
@@ -1113,7 +1111,7 @@ html.movie-on,html.movie-on body{overflow:hidden}
   <section class="contact" id="contact">
     <div class="wrap">
       <div class="kicker reveal">06 / <span class="en">contact</span><span class="ru">связь</span></div>
-      <h2 class="reveal d1"><span class="en">Let's <span class="grad2">talk</span></span><span class="ru">Давайте <span class="grad2">поговорим</span></span></h2>
+      <h2 class="reveal d1"><span class="en">Let's talk</span><span class="ru">Давайте поговорим</span></h2>
       <p class="sub reveal d2 en">Looking for a team where I can own CI/CD, Kubernetes and monitoring and get them to the point where they run themselves. I reply within a day.</p>
       <p class="sub reveal d2 ru">Ищу команду, где можно забрать CI/CD, Kubernetes и мониторинг и довести их до уровня «работает само». Отвечаю в течение дня.</p>
       <div class="mail reveal d3">
@@ -2106,7 +2104,7 @@ async function snapshot(){
     const shot = window.html2canvas(document.body, {
       x: scrollX, y: scrollY, width: innerWidth, height: innerHeight, scale: Math.min(1, 1100 / innerWidth),
       backgroundColor: '#0a0b0d', logging: false, useCORS: true,
-      onclone: doc => { const st = doc.createElement('style'); st.textContent = '*,*::before,*::after{animation-delay:-60s!important;animation-play-state:paused!important;transition:none!important}.grad,.grad2{background:none!important;color:#8ef0c6!important}'; doc.head.appendChild(st); },
+      onclone: doc => { const st = doc.createElement('style'); st.textContent = '*,*::before,*::after{animation-delay:-60s!important;animation-play-state:paused!important;transition:none!important}'; doc.head.appendChild(st); },
       ignoreElements: el => el.id === 'gl' || (el.classList && (el.classList.contains('grain') || el.classList.contains('vignette') || el.classList.contains('toast')))
     });
     return await Promise.race([shot, new Promise((_, no) => setTimeout(() => no(new Error('slow')), 3000))]);
