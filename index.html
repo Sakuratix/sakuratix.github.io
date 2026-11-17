@@ -1770,7 +1770,7 @@ const palC = PAL.map(h => new THREE.Color(h)), cW = new THREE.Color('#ffffff');
     const x = s0[i*3], y = s0[i*3+1], z = s0[i*3+2];
     let u = (Math.atan2(z, x)/(Math.PI*2) + .5 + y*.08 + (rnd()-.5)*.16 + 1) % 1;
     const z8 = u*8, k = Math.floor(z8) % 8, f = z8 - Math.floor(z8);
-    const c = rnd()<.07 ? cW : palC[k].clone().lerp(palC[(k+1)%8], f);
+    const c = rnd()<.04 ? cW : palC[k].clone().lerp(palC[(k+1)%8], f);
     col[i*3]=c.r; col[i*3+1]=c.g; col[i*3+2]=c.b; } }
 pos.set(shapes[0]);
 const geo = new THREE.BufferGeometry();
@@ -1799,7 +1799,7 @@ const mat = new THREE.ShaderMaterial({
     void main(){
       float d = length(gl_PointCoord-.5);
       float a = 1. - smoothstep(0., .5, d);
-      gl_FragColor = vec4(vColor, a*a*vA);
+      gl_FragColor = vec4(vColor, min(1., a*a*vA*1.35));
     }`
 });
 const points = new THREE.Points(geo, mat);
@@ -1835,7 +1835,7 @@ const links = [];
     d.sort((p,q)=>p[0]-q[0]); d.slice(0,2).forEach(([,b]) => { if(!links.some(([x,y])=>x===b&&y===a)) links.push([a,b]); }); } }
 const linkPos = new Float32Array(links.length*6);
 const linkGeo = new THREE.BufferGeometry(); linkGeo.setAttribute('position', new THREE.BufferAttribute(linkPos, 3));
-const linkMat = new THREE.LineBasicMaterial({color:0xffffff, transparent:true, opacity:.16, depthWrite:false});
+const linkMat = new THREE.LineBasicMaterial({color:0xffffff, transparent:true, opacity:.28, depthWrite:false});
 group.add(new THREE.LineSegments(linkGeo, linkMat));
 function updateHubs(){
   for(let k=0;k<HN;k++){ const i = hubIdx[k]*3; hubPos[k*3]=pos[i]; hubPos[k*3+1]=pos[i+1]; hubPos[k*3+2]=pos[i+2]; }
@@ -1871,7 +1871,7 @@ function computeFit(){
   fitO = avail < 140 ? 0.3 : 1;
 }
 function resize(){ W = innerWidth; H = innerHeight; renderer.setSize(W, H, false); camera.aspect = W/H; camera.updateProjectionMatrix();
-  baseY = W > 900 ? 0 : .2; mat.uniforms.uSize.value = W < 700 ? 30 : 38; hubMat.uniforms.uSize.value = W < 700 ? 95 : 120; computeFit(); }
+  baseY = W > 900 ? 0 : .2; mat.uniforms.uSize.value = W < 700 ? 30 : 38; hubMat.uniforms.uSize.value = W < 700 ? 110 : 145; computeFit(); }
 addEventListener('resize', resize); resize();
 let fitQueued = false;
 addEventListener('scroll', () => { if (!fitQueued) { fitQueued = true; requestAnimationFrame(() => { fitQueued = false; computeFit(); }); } }, {passive:true});
