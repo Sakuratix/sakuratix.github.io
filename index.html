@@ -896,13 +896,15 @@ html.movie-on,html.movie-on body{overflow:hidden}
           <ul class="dash en">
             <li>Recognises OOMKilled, crash loops with exit codes in words, liveness and readiness failures, bad image tags vs. private registries, missing secrets, unschedulable pods, Multi-Attach volumes, stuck Terminating, evictions and stuck rollouts.</li>
             <li>CI starts a kind cluster, deploys pods broken on purpose and checks each one is explained correctly. The first run found three real bugs that recorded fixtures had missed.</li>
+            <li>Scans the whole cluster with <code>-A</code>, writes Markdown reports for incident tickets and CI summaries, tab-completes as a kubectl plugin, and is fuzzed in CI against arbitrary pod JSON.</li>
           </ul>
           <ul class="dash ru">
             <li>Распознаёт OOMKilled, крэш-лупы с расшифровкой кода выхода, падающие liveness и readiness, несуществующий тег против приватного registry, отсутствующие секреты, неразмещаемые поды, Multi-Attach томов, зависший Terminating, вытеснение и застрявший rollout.</li>
             <li>CI поднимает кластер kind, деплоит специально сломанные поды и проверяет, что каждый объяснён правильно. Первый же прогон нашёл три настоящих бага, которые записанные фикстуры пропустили.</li>
+            <li>Проверяет весь кластер через <code>-A</code>, пишет отчёт в Markdown для тикета или сводки CI, дополняется по Tab как плагин kubectl и фаззится в CI на произвольном JSON подов.</li>
           </ul>
           <dl class="kv">
-            <div><dt><span class="en">failure modes</span><span class="ru">типов поломок</span></dt><dd>15+</dd></div>
+            <div><dt><span class="en">failure modes</span><span class="ru">типов поломок</span></dt><dd>20+</dd></div>
             <div><dt><span class="en">dependencies</span><span class="ru">зависимостей</span></dt><dd>0</dd></div>
             <div><dt><span class="en">tested on</span><span class="ru">проверяется на</span></dt><dd><span class="en">real kind cluster</span><span class="ru">живом kind</span></dd></div>
           </dl>
@@ -934,11 +936,11 @@ html.movie-on,html.movie-on body{overflow:hidden}
             <li>Pull request только проверяет, публикация и подпись идут из основной ветки, поэтому форк не положит образ в registry. Trivy валит сборку только на уязвимостях, у которых есть исправление.</li>
           </ul>
           <dl class="kv">
-            <div><dt><span class="en">reusable workflows</span><span class="ru">общих workflow</span></dt><dd>3</dd></div>
+            <div><dt><span class="en">reusable workflows</span><span class="ru">общих workflow</span></dt><dd>4</dd></div>
             <div><dt><span class="en">signing keys to store</span><span class="ru">ключей подписи хранить</span></dt><dd>0</dd></div>
             <div><dt><span class="en">used by</span><span class="ru">используется в</span></dt><dd>infra-lab</dd></div>
           </dl>
-          <div class="techs">GitHub Actions / Docker Buildx / Trivy / SBOM (SPDX) / cosign / Terraform / tflint / Helm / kubeconform / kube-linter</div>
+          <div class="techs">GitHub Actions / Docker Buildx / Trivy / gitleaks / SBOM (SPDX) / cosign / Terraform / tflint / Helm / kubeconform / kube-linter</div>
           <div class="case-btns">
             <a class="sbtn" href="https://github.com/Sakuratix/platform-ci" target="_blank" rel="noopener">↗ Codebase</a>
             <a class="sbtn" href="https://github.com/Sakuratix/platform-ci/actions" target="_blank" rel="noopener">↗ CI runs</a>
@@ -967,7 +969,7 @@ html.movie-on,html.movie-on body{overflow:hidden}
           </ul>
           <dl class="kv">
             <div><dt><span class="en">kubectl apply after bootstrap</span><span class="ru">kubectl apply после старта</span></dt><dd>0</dd></div>
-            <div><dt><span class="en">components managed from git</span><span class="ru">компонентов из git</span></dt><dd>5</dd></div>
+            <div><dt><span class="en">components managed from git</span><span class="ru">компонентов из git</span></dt><dd>8</dd></div>
             <div><dt><span class="en">manifests checked in CI</span><span class="ru">манифестов проверяется в CI</span></dt><dd><span class="en">all</span><span class="ru">все</span></dd></div>
           </dl>
           <div class="techs">k3s / Argo CD / Helm / ingress-nginx / cert-manager / kube-prometheus-stack / kubeconform</div>
