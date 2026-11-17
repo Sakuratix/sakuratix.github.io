@@ -12,7 +12,7 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500;1,600&family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#0a0b0d; --bg2:#101216; --line:#1d2026; --line2:#2a2e36;
@@ -69,8 +69,6 @@ header.nav.scrolled{border-bottom-color:var(--line)}
 .status{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:13px;color:var(--muted);border:1px solid var(--line2);border-radius:99px;padding:6px 14px 6px 12px;background:rgba(16,18,22,.6)}
 .dot{width:8px;height:8px;border-radius:50%;background:var(--mint);box-shadow:0 0 0 0 rgba(142,240,198,.6);animation:pulse 2s infinite}
 @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(142,240,198,.5)}70%{box-shadow:0 0 0 10px rgba(142,240,198,0)}100%{box-shadow:0 0 0 0 rgba(142,240,198,0)}}
-/* accent words: serif italic in burnished copper, like foil on a letterhead */
-.om{font-family:"Cormorant Garamond",Georgia,"Times New Roman",serif;font-style:italic;font-weight:500;font-size:1.12em;letter-spacing:-.01em;line-height:.9;padding:0 .08em 0 .02em;background:linear-gradient(176deg,#f7dcb0 0%,#e7a35c 38%,#c4733a 68%,#8f4c22 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
 h1{font-size:clamp(40px,6.4vw,84px);line-height:1;letter-spacing:-.045em;font-weight:600;margin:26px 0 22px;max-width:12ch}
 .lead{font-size:clamp(17px,1.6vw,20px);color:var(--muted);max-width:520px}
 .lead b{color:var(--fg);font-weight:500}
@@ -718,7 +716,7 @@ html.movie-on,html.movie-on body{overflow:hidden}
   <section class="hero">
     <div class="wrap">
       <div class="status reveal"><span class="dot"></span><span class="en">open to DevOps roles · remote only</span><span class="ru">открыт к предложениям · только удалённо</span></div>
-      <h1 class="reveal d1"><span class="en">Infrastructure that <em class="om">runs itself</em></span><span class="ru">Инфраструктура, которая <em class="om">работает сама</em></span></h1>
+      <h1 class="reveal d1"><span class="en">Infrastructure that runs itself</span><span class="ru">Инфраструктура, которая работает сама</span></h1>
       <p class="lead reveal d2 en">Klimentiy Matveev, <b>DevOps engineer</b>. I build CI/CD, run Kubernetes and keep infrastructure in code, so releases ship without manual steps and the team hears about failures before users do.</p>
       <p class="lead reveal d2 ru">Климентий Матвеев, <b>DevOps-инженер</b>. Настраиваю CI/CD, Kubernetes и мониторинг, описываю инфраструктуру кодом. Релизы выходят без ручной работы, а о сбоях команда узнаёт раньше пользователей.</p>
       <div class="cta reveal d3">
@@ -1113,7 +1111,7 @@ html.movie-on,html.movie-on body{overflow:hidden}
   <section class="contact" id="contact">
     <div class="wrap">
       <div class="kicker reveal">06 / <span class="en">contact</span><span class="ru">связь</span></div>
-      <h2 class="reveal d1"><span class="en">Let's <em class="om">talk</em></span><span class="ru">Давайте <em class="om">поговорим</em></span></h2>
+      <h2 class="reveal d1"><span class="en">Let's talk</span><span class="ru">Давайте поговорим</span></h2>
       <p class="sub reveal d2 en">Looking for a team where I can own CI/CD, Kubernetes and monitoring and get them to the point where they run themselves. I reply within a day.</p>
       <p class="sub reveal d2 ru">Ищу команду, где можно забрать CI/CD, Kubernetes и мониторинг и довести их до уровня «работает само». Отвечаю в течение дня.</p>
       <div class="mail reveal d3">
@@ -2106,7 +2104,7 @@ async function snapshot(){
     const shot = window.html2canvas(document.body, {
       x: scrollX, y: scrollY, width: innerWidth, height: innerHeight, scale: Math.min(1, 1100 / innerWidth),
       backgroundColor: '#0a0b0d', logging: false, useCORS: true,
-      onclone: doc => { const st = doc.createElement('style'); st.textContent = '*,*::before,*::after{animation-delay:-60s!important;animation-play-state:paused!important;transition:none!important}.om{background:none!important;color:#d98d4c!important}'; doc.head.appendChild(st); },
+      onclone: doc => { const st = doc.createElement('style'); st.textContent = '*,*::before,*::after{animation-delay:-60s!important;animation-play-state:paused!important;transition:none!important}'; doc.head.appendChild(st); },
       ignoreElements: el => el.id === 'gl' || (el.classList && (el.classList.contains('grain') || el.classList.contains('vignette') || el.classList.contains('toast')))
     });
     return await Promise.race([shot, new Promise((_, no) => setTimeout(() => no(new Error('slow')), 3000))]);
